@@ -7,8 +7,8 @@
 
 #define PORT 54000
 
-char* network = "MichielDeRouter"/*"Leacyn"*/;
-char* pass = "100%Domotica";
+char* network = /*"MichielDeRouter"/"Leacyn"*/;
+char* pass = /*"100%Domotica"*/;
 int written = 0;
 WiFiServer wifiServer(PORT);
 
@@ -19,7 +19,6 @@ void setup() {
   // put your setup code here, to run once:
 
   Serial.begin(9600);
-  WiFi.mode(WIFI_STA);
   Serial.println("setting up");
 
   WiFi.begin(network,pass);
@@ -55,7 +54,7 @@ void loop() {
         char s[1280] = {pi.read()};
         Serial.write(s);
 
-        pi.print("Hello from Server");
+        pi.print("Hello from server \n");
 //        int i = 0;
 //        while( i<1280){
 //         pi.write(s[i]);
@@ -84,18 +83,13 @@ void reconnect(){
 }
 
 unsigned int ReadAnalog(){
-  Wire.beginTransmission(0x36);
-  Wire.write(byte(0xA2));          
-  Wire.write(byte(0x03));  
-  Wire.endTransmission(); 
-  
   unsigned int value = 0;
-  Wire.requestFrom(0x36,4);   
+  Wire.requestFrom(0x36,2);   
   value = Wire.read()&0x03;  
   value = value<<8;
   value = value|Wire.read();  
   Serial.print("analog in 0: ");
-  Serial.println(value);  
+  Serial.println(value);   
 
   return value;
 }
