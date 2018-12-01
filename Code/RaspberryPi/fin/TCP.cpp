@@ -30,13 +30,13 @@ TCP::TCP(char *address, int portNumber){
     } 
 }
 
-TCP::sendMsg(string message){
+void TCP::sendMsg(string message){
 	msg = message;
 	send(sock , msg , strlen(msg) , 0 ); 
     clog << "Message sent" << endl; 
 }
 
-TCP::receive(void){
+string TCP::receive(void){
 	valread = recv( sock , buffer,sizeof(buffer),0); 
 	clog << "Message received" << endl;
 	return buffer; 

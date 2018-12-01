@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
-#include "TCP.cpp"
+//#include "TCP.cpp"
 #include "DataBase.cpp"
 
 /*Define SQL login data*/
@@ -15,34 +15,34 @@
 #define WEMOS_PORT 54000
 
 char const *wemosAddress = "192.168.2.1";
-
+int const maxSensor = 3;
 
 using namespace std;
 
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
-	
+
 	/*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 	/*set up connection to WEMOS*/
 	//TCP wemos(wemosAddress, WEMOS_PORT);
-	
+
 	/*LOOP*/
-	while(1){
-		for(int id = 1, id =< MAX_SENSOR, id++){
-			if (int val = sql.queryValue("stateVal", "Sensor", id) != sql.queryValue("prevVal", "Sensor", id)){
-				sql.updateValue("Sensor", "prevVal", val, id);
-				//wemos.sendMsg("toggle");
-			}
+//	while(1){
+	for(int i = 1; i <= maxSensor; i++){
+		if (int val = sql.queryValue("stateVal", "Sensor", i) != sql.queryValue("prevVal", "Sensor", i)){
+			sql.updateValue("Sensor", "prevVal", val, i);
+			//wemos.sendMsg("toggle");
 		}
 	}
-	
+//	}
+
 	//sql.addUser("Willem", "Welkom123");
 	//sql.queryUser();
 
 	sql.closeConnection();
-	
+
 	cout << endl;
 	return 0;
 }

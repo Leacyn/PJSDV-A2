@@ -10,7 +10,7 @@
 
 class TCP {
 	public:
-		TCP(char address, int portNumber);
+		TCP(char *address, int portNumber);
 		void sendMsg(std::string message);
 		std::string receive(void); 
 	protected:
