@@ -13,8 +13,8 @@ class DataBase
 {
 	public:
 		DataBase(std::string path, std::string user, std::string password, std::string db);
-		int queryValue(std::string value, std::string tabel, int id);
-		void updateValue(std::string tabel, std::string valueName, int value, int id);
+		int queryValue(std::string value, std::string table, int id);
+		void updateValue(std::string table, std::string valueName, int value, int id);
 		void closeConnection(void);
 		
 		void addUser(std::string username, std::string password);

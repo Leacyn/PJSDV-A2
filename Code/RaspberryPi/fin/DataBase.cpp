@@ -14,10 +14,10 @@ DataBase::DataBase(string path, string user, string password, string db){
 	}
 }
 
-void DataBase::updateValue(string tabel, string valueName, int value, int id){
+void DataBase::updateValue(string table, string valueName, int value, int id){
 	try {
 		pstmt = con->prepareStatement("UPDATE ? SET ? = ? WHERE id = ?");
-		pstmt->setString(1, tabel);
+		pstmt->setString(1, table);
 		pstmt->setString(2, valueName);
 		pstmt->setInt(3, value);
 		pstmt->setInt(4, id);
@@ -28,14 +28,14 @@ void DataBase::updateValue(string tabel, string valueName, int value, int id){
 	}
 }
 
-int DataBase::query(string value, string tabel, int id){
+int DataBase::queryValue(string value, string table, int id){
 	int result;	
 	try{
 		/* Select Value from tabel where id is id */
   		pstmt = con->prepareStatement("SELECT ? FROM ? WHERE id = ?");
   		pstmt->setString(1, value);
-		pstmt->setString(2, tabel);
-		pstmt->setString(3, id);
+		pstmt->setString(2, table);
+		pstmt->setInt(3, id);
   		res = pstmt->executeQuery();
 
   		/* Fetch in reverse = descending order! */
@@ -52,11 +52,11 @@ int DataBase::query(string value, string tabel, int id){
 }
 
 void DataBase::sqlError(sql::SQLException e){
-  	cout << "# ERR: SQLException in " << __FILE__;
-  	cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-  	cout << "# ERR: " << e.what();
-  	cout << " (MySQL error code: " << e.getErrorCode();
-  	cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+  	cerr << "# ERR: SQLException in " << __FILE__;
+  	cerr << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+  	cerr << "# ERR: " << e.what();
+  	cerr << " (MySQL error code: " << e.getErrorCode();
+  	cerr << ", SQLState: " << e.getSQLState() << " )" << endl;
 }
 
 void DataBase::closeConnection(void){
@@ -75,7 +75,7 @@ void DataBase::queryUser(void){
   		/* Fetch in reverse = descending order! */
   		res->afterLast();
   		while (res->previous())
-    			cout << res->getString("username") << "\t" << res->getString("password") << endl;
+    		clog << res->getString("username") << "\t" << res->getString("password") << endl;
 
 		delete res;
   		delete pstmt;

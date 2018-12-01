@@ -11,7 +11,7 @@
 class TCP {
 	public:
 		TCP(char address, int portNumber);
-		void send(std::string message);
+		void sendMsg(std::string message);
 		std::string receive(void); 
 	protected:
 		int port;

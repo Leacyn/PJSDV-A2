@@ -2,9 +2,9 @@
 
 using namespace std;
 
-TCP::TCP(char address, int portNumber){
+TCP::TCP(char *address, int portNumber){
 	port = portNumber;
-	*serverAddress = address;
+	serverAddress = address;
 	
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
     { 
@@ -30,7 +30,7 @@ TCP::TCP(char address, int portNumber){
     } 
 }
 
-TCP::send(string message){
+TCP::sendMsg(string message){
 	msg = message;
 	send(sock , msg , strlen(msg) , 0 ); 
     clog << "Message sent" << endl; 
