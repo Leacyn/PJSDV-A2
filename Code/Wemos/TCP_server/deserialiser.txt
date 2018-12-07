@@ -1,0 +1,21 @@
+void TCP::serialize_data(TCPmessage *message,char *Data){
+	int *i = (int *)Data;
+
+	*i = TCPmessage.ID; i++
+	char *q = (char *)i;
+	*q = TCPmessage.command; q++;
+	*i = (int *) q;
+	*i = TCPmessage.value; i++; 
+
+
+}
+
+void TCP::deserialize_data(TCPmessage *message ,char *Data){
+	int *i = (int *)Data;
+	TCPmessage.ID = *i; i++
+	char *q = (char*)i;
+	TCPmessage.command = *q;
+	i = (int *)q;
+	TCPmessage.value = *i;
+	
+}

@@ -1,3 +1,4 @@
+#include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <unistd.h>
@@ -13,17 +14,21 @@ int written = 0;
 WiFiServer wifiServer(PORT);
 struct tcpData {
   int id;
-  char command;
+  const char *command;
   int value;
 } tcpData;
 struct tcpData item;
+StaticJsonBuffer<200> jsonBuffer;
+//char jsonExample[] = "{\"id\":50,\"command\":\'r\',\"value\": 1500}";
+//JsonObject& TCPdata = jsonBuffer.parseObject(jsonExample);
 
 void reconnect();
 unsigned int ReadAnalog();
-void serialiser();
-int deserialise(struct tcpData*, char []);
+int PrintJson(JsonObject&);
 
 void setup() {
+
+  
   // put your setup code here, to run once:
 
   Serial.begin(9600);
@@ -40,7 +45,7 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("---------------------------------------------");
+  Serial.println("\n---------------------------------------------");
   Serial.print("Connected to wifi. Ip address: ");
   Serial.println(WiFi.localIP());
 
@@ -51,10 +56,6 @@ void loop() {
   char *c;
   struct tcpData *msg;
   msg = &item;
-  //  msg->id = 0;
-  //  msg->command = '0';
-  //  msg->value = 0;
-
   // put your main code here, to run repeatedly:
 
   if (WiFi.status() != WL_CONNECTED) {
@@ -67,36 +68,17 @@ void loop() {
  
   int i = 0;
   if (pi) {
-    Serial.println("client connected");
+   Serial.println("client connected");
     while (pi.connected()) {
       while (pi.available() > 0) {
-       char s[64] = {pi.read()};
-       if(i==1) c = s;
-      i++;
-      Serial.println(s);
-      }
-      //        char s[1024] ={pi.read()};
-      //        c = s;
-      //        Serial.println(*c);
-      //
-     
-       //       deserialise(msg, c);
-      //
-              Serial.println(msg->id);
-              Serial.println(msg->command);
-              Serial.println(msg->value);
-      //         for(int i=0;i<sizeof(struct tcpData);i++){
-      //          Serial.print((char)*(msg+i),HEX);
-      //        }
-      
-      pi.print("Hello from server \n");
-      //        int i = 0;
-      //        while( i<1280){
-      //         pi.write(s[i]);
-      //         i++;
-      //        }
-      //        //pi.write(s);
-      //      }
+        Serial.println("recieving:");
+       
+       JsonObject& temp = jsonBuffer.parseObject(pi);
+       if(!temp.success())Serial.println("error parsing");
+       Serial.println("translating");
+       PrintJson(temp);
+                  
+      pi.print("Hello from server \n:");
     }
     pi.stop();
     Serial.println("client disconnected");
@@ -104,7 +86,7 @@ void loop() {
   //    Serial.println(written);
 
 }
-
+}
 
 void reconnect() {
   WiFi.begin(network, pass);
@@ -119,25 +101,30 @@ void reconnect() {
 unsigned int ReadAnalog() {
   unsigned int value = 0;
   Wire.requestFrom(0x36, 2);
-  value = Wire.read() & 0x03;
+  value = Wire.read()&0x03;
   value = value << 8;
-  value = value | Wire.read();
+  value = value|Wire.read();
+  unsigned int temp  = Wire.read(); temp += Wire.read();
   Serial.print("analog in 0: ");
   Serial.println(value);
 
   return value;
 }
 
-int deserialise(struct tcpData* msg, char Data[] ) {
-  int *i = (int *)Data;
-  Serial.println(*i + "Data:" + *Data );
-  msg->id = *i; i++;
-  Serial.println(*i);
-  msg->value = *i;i++;
-  Serial.println(*i);
-  char *q = (char*)i;
-  msg->command = *q;
-  Serial.println(*i);
 
-  return 0;
+
+int PrintJson(JsonObject& json){
+  Serial.print("this is the json message: ");
+  json.printTo(Serial);
+  item.id = json["id"].as<int>();
+  item.command = json["command"].as<char *>();
+  item.value = json["value"].as<int>();
+  Serial.print("\nid: ");
+  Serial.println(item.id);
+  Serial.print("command: ");
+  Serial.println(item.command);
+  Serial.print("value: "); 
+  Serial.println(item.value);
+  //return temp; 
 }
+

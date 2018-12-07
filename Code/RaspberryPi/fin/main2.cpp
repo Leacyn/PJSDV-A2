@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
-//#include "TCP.cpp"
-#include "DataBase.cpp"
+#include "TCP.cpp"
+//#include "DataBase.cpp"
 
 /*Define SQL login data*/
 #define PATH "tcp://127.0.0.1:3306"
@@ -14,7 +14,7 @@
 /*Define WEMOS connection data*/
 #define WEMOS_PORT 54000
 
-char const *wemosAddress = "192.168.2.1";
+char *wemosAddress = (char *)/*"192.168.2.1"*/ "192.168.1.120";
 int const maxSensor = 3;
 
 using namespace std;
@@ -24,26 +24,27 @@ int main(int argc, char** argv){
 	cout << endl;
 
 	/*set up connection to database*/
-	DataBase sql(PATH, USER, PASSWD, DB);
+//	DataBase sql(PATH, USER, PASSWD, DB);
 	/*set up connection to WEMOS*/
-	//TCP wemos(wemosAddress, WEMOS_PORT);
+	TCP wemos(wemosAddress, WEMOS_PORT);
 
 	/*LOOP*/
 //	while(1){
-	for(int i = 1; i <= maxSensor; i++){
-		if (int val = sql.queryValue("stateVal", "Sensor", i) != sql.queryValue("prevVal", "Sensor", i)){
-			sql.updateValue("Sensor", "prevVal", val, i);
-			//wemos.sendMsg("toggle");
-		}
-	}
+//	for(int i = 1; i <= maxSensor; i++){
+//		if (int val = sql.queryValue("stateVal", "Sensor", i) != sql.queryValue("prevVal", "Sensor", i)){
+//			sql.updateValue("Sensor", "prevVal", val, i);
+//			//wemos.sendMsg("toggle");
+//		}
+//	}
 //	}
 
 	//sql.addUser("Willem", "Welkom123");
 	//sql.queryUser();
 
-	sql.closeConnection();
-
-	cout << endl;
+//	sql.closeConnection();
+	wemos.sendMsg((char *) "Hello from client");
+	cout << wemos.receive() << endl;
+	
 	return 0;
 }
 
