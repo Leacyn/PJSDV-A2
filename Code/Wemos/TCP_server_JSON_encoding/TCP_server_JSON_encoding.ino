@@ -8,8 +8,8 @@
 
 #define PORT 54000
 
-char* network = "GeersWifi";///*"MichielDeRouter"*/"Leacyn";
-char* pass =  "Kia7Carens!";//"100%Domotica";
+char* network = "MichielDeRouter"*/"Leacyn";
+char* pass =  "100%Domotica";
 int written = 0;
 WiFiServer wifiServer(PORT);
 struct tcpData {
