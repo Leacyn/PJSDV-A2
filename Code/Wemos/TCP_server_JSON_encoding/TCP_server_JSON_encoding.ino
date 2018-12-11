@@ -8,7 +8,7 @@
 
 #define PORT 54000
 
-char* network = "MichielDeRouter"*/"Leacyn";
+char* network = "MichielDeRouter"/*"Leacyn"*/;
 char* pass =  "100%Domotica";
 int written = 0;
 WiFiServer wifiServer(PORT);
