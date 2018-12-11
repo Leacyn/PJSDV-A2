@@ -8,8 +8,8 @@
 
 #define PORT 54000
 
-char* network = /*"MichielDeRouter"*/"Leacyn";
-char* pass =  "100%Domotica";
+char* network = "GeersWifi";///*"MichielDeRouter"*/"Leacyn";
+char* pass =  "Kia7Carens!";//"100%Domotica";
 int written = 0;
 WiFiServer wifiServer(PORT);
 struct tcpData {
@@ -25,6 +25,7 @@ StaticJsonBuffer<200> jsonBuffer;
 void reconnect();
 unsigned int ReadAnalog();
 int PrintJson(JsonObject&);
+String returnValue(WiFiClient);
 
 void setup() {
 
@@ -70,16 +71,22 @@ void loop() {
   if (pi) {
    Serial.println("client connected");
     while (pi.connected()) {
-      while (pi.available() > 0) {
+      while (pi.available() > 0 && i==0) {
+        i = 1;
         Serial.println("recieving:");
-       
+//       char s[128] = {pi.read()};
+//       Serial.println(s);
        JsonObject& temp = jsonBuffer.parseObject(pi);
        if(!temp.success())Serial.println("error parsing");
        Serial.println("translating");
        PrintJson(temp);
+       
+       pi.print(returnValue(pi));
                   
-      pi.print("Hello from server \n:");
+    //  pi.print("Hello from server \n:");
     }
+    jsonBuffer.clear();
+    pi.flush();
     pi.stop();
     Serial.println("client disconnected");
   }
@@ -128,3 +135,14 @@ int PrintJson(JsonObject& json){
   //return temp; 
 }
 
+String returnValue(WiFiClient pi){
+  String returnVal;
+  jsonBuffer.clear();
+  JsonObject& msg = jsonBuffer.createObject();
+  msg["id"].set(item.id + 1);
+  msg["value"].set(item.value + 1500);
+  msg["command"] = "w";
+  msg.printTo(Serial);
+  msg.printTo(returnVal);
+  return returnVal;
+}
