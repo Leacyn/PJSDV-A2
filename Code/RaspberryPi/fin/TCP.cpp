@@ -5,6 +5,12 @@ using namespace std;
 
 //message 
 
+struct TCPmessage{
+   			int ID;
+   			char command;
+   			int value;
+   		};
+
 TCP::TCP(char  *address, int portNumber){
 	port = portNumber;
 	serverAddress = address;
@@ -33,40 +39,76 @@ TCP::TCP(char  *address, int portNumber){
     } 
 }
 
-void TCP::sendMsg(char* message){
-	*msg = *message;
-	send(sock , msg , strlen(msg) , 0 ); 
-    std::cout << "Message sent /n"; 
+void TCP::sendMsg(char *msg){
+	char *message = msg;
+	send(sock , message , strlen(message) , 0 ); 
+    std::cout << "Message sent \n"; 
+}
+
+
+void TCP::sendMsg(int id, char *cmd, int Value){
+	string smsg= encode(id,cmd,Value);
+	cout << smsg;
+	char *message = new char[smsg.length()+1];
+	strcpy(message, smsg.c_str());
+	send(sock , message , strlen(message)+1 , 0 ); 
+    std::cout << "Message sent \n";
+    free(message); 
+
 }
 
 std::string TCP::receive(void){
-	valread = recv( sock , buffer,sizeof(buffer),0); 
+	valread = recv( sock , buffer,sizeof(buffer),0);
+//	JsonObject& message = jBuffer.parseObject(valread);
+//	if(!message.success())cout<< "parserfail";
+//	int id, value;
+//	char * command;
+//	id = message["id"].as<int>();
+//	value = message["value"].as<int>();
+//	strcpy(command, message["command"].as<char*>());
+//	std::cout << id <<"|" << command << "|" << value;
 	std::cout << "Message received";
-	return buffer; 
+	close(sock); 
+	return buffer;
 }
 
-void TCP::serialize_data(char *Data){
+std::string TCP::recieveJson(void){
+	
+	int recieved = recv(sock, buffer,sizeof(buffer) + 1, 0);
+	cout << (string)buffer <<"    |     " << recieved << endl;
+	JsonObject& message = jBuffer.parseObject((string)buffer);
+	
+	if(!message.success()) cout << "parserfail";
+	else {message.printTo(cout);}
+	cout << message.get<signed int>("id") << "|" << message.get<char *>("command") << "|" << message.get<signed int>("value") << "\n\r ";
+
+	return buffer;
+}
+
+
+string TCP::encode(int id, char *command, int value){
+	string buffer;
+	JsonObject& message = jBuffer.createObject();
+	message["id"] = id;
+	message["command"] = (char *)command;
+	message["value"] = value;
+
+	message.printTo(buffer);
+	jBuffer.clear();
+
+	return buffer;
+}
+/*
+void TCP::decode(TCPmessage message ,char *Data){
 	int *i = (int *)Data;
-
-	/*set data equal to the data of *i */
-	/*increase pointer*/
-	i++;
-	/*repeat till all items are copied. unfortunatle no loop implementation yet due to different data types 
-	if a character * string is defined in struct, then cast i to an char* (yes that works like a charm)
-	*/
-
-
+	message.ID = *i; 		i++;
+	char *q = (char*)i;
+	message.command = *q;	q++;
+	i = (int *)q;
+	message.value = *i; 	i++;
 
 }
+*/
 
-void TCP::deserialize_data(char *Data){
-	int *i = (int *)Data;
-	/*set struct member equal to the data of *i */
-	/*increase pointer*/
-	i++;
-	/*repeat till all items are copied. unfortunatle no loop implementation yet due to different data types 
-	if a character * string is defined in struct, then cast i to an char* (yes that works like a charm)
-	*/
-}
 
 

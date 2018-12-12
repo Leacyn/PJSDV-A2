@@ -14,35 +14,44 @@ DataBase::DataBase(string path, string user, string password, string db){
 	}
 }
 
-void DataBase::updateValue(string table, string valueName, int value, int id){
+void DataBase::setStateValSensor(int id, int value){
+        try {
+                pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ? WHERE id = ?");
+                pstmt->setInt(1, value);
+                pstmt->setInt(2, id);
+                pstmt->executeUpdate();
+                delete pstmt;
+        } catch (sql::SQLException &e) {
+                sqlError(e);
+        }
+}
+
+
+void DataBase::setPrevValSensor(int id, int value){
 	try {
-		pstmt = con->prepareStatement("UPDATE ? SET ? = ? WHERE id = ?");
-		pstmt->setString(1, table);
-		pstmt->setString(2, valueName);
-		pstmt->setInt(3, value);
-		pstmt->setInt(4, id);
-    	pstmt->executeUpdate();
+		pstmt = con->prepareStatement("UPDATE Sensor SET prevVal = ? WHERE id = ?");
+		pstmt->setInt(1, value);
+		pstmt->setInt(2, id);
+    		pstmt->executeUpdate();
   		delete pstmt;
   	} catch (sql::SQLException &e) {
   		sqlError(e);
 	}
 }
 
-int DataBase::queryValue(string value, string table, int id){
-	int result;	
+int DataBase::sensorNewState(int id){
+	int result;
 	try{
 		/* Select Value from tabel where id is id */
-  		pstmt = con->prepareStatement("SELECT ? FROM ? WHERE id = ?");
-  		pstmt->setString(1, value);
-		pstmt->setString(2, table);
-		pstmt->setInt(3, id);
+  		pstmt = con->prepareStatement("SELECT prevVal, stateVal FROM Sensor WHERE id = ?");
+		pstmt->setInt(1, id);
   		res = pstmt->executeQuery();
-
-  		/* Fetch in reverse = descending order! */
-  		res->afterLast();
-  		while (res->previous())
-    			result = res->getInt(value);
-
+		while (res->next()){
+  			result = res->getInt("stateVal");
+			if (result == res->getInt("prevVal")){
+				result = 0;
+			}
+		}
 		delete res;
   		delete pstmt;
   	} catch (sql::SQLException &e){

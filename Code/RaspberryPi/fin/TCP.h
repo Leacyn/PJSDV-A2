@@ -9,30 +9,29 @@
 #include <arpa/inet.h>
 #include <string>
 #include <string.h>
+#include "ArduinoJson-v5.13.4.h"
 
 class TCP {
 	
 
 	public:
 		TCP(char *address, int portNumber);
-		void sendMsg(char* msg);
-		std::string receive(void); 
+		void sendMsg(char * msg);
+		void sendMsg(int id, char *cmd, int Value);
+		std::string receive(void);
+		std::string recieveJson(void);
 	protected:
+		StaticJsonBuffer<200> jBuffer;
 		int port;
 		char *serverAddress;
 		struct sockaddr_in address; 
-    	int sock = 0;
-		int valread = 0; 
+    	int sock;
+		int valread; 
     	struct sockaddr_in serv_addr; 
     	char msg[256];
-   		char buffer[265]; 
-   		struct TCPmessage{
-   			uint16_t ID;
-   			char command;
-   			char data[128];
-   		};
-		void serialize_data();
-		void deserialize_data();
+   		char buffer[256]; 
+		std::string encode(int id, char *cmd, int value);
+		//void decode(TCPmessage message ,char *Data);
 };
 
 #endif

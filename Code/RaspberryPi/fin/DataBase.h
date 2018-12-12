@@ -13,10 +13,12 @@ class DataBase
 {
 	public:
 		DataBase(std::string path, std::string user, std::string password, std::string db);
-		int queryValue(std::string value, std::string table, int id);
-		void updateValue(std::string table, std::string valueName, int value, int id);
 		void closeConnection(void);
-		
+
+		void setStateValSensor(int id, int value);
+		void setPrevValSensor(int id, int value);
+		int sensorNewState(int id);
+
 		void addUser(std::string username, std::string password);
 		void queryUser(void);
 	protected:
