@@ -59,14 +59,6 @@ void TCP::sendMsg(int id, char *cmd, int Value){
 
 std::string TCP::receive(void){
 	valread = recv( sock , buffer,sizeof(buffer),0);
-//	JsonObject& message = jBuffer.parseObject(valread);
-//	if(!message.success())cout<< "parserfail";
-//	int id, value;
-//	char * command;
-//	id = message["id"].as<int>();
-//	value = message["value"].as<int>();
-//	strcpy(command, message["command"].as<char*>());
-//	std::cout << id <<"|" << command << "|" << value;
 	std::cout << "Message received";
 	close(sock); 
 	return buffer;
@@ -98,17 +90,6 @@ string TCP::encode(int id, char *command, int value){
 
 	return buffer;
 }
-/*
-void TCP::decode(TCPmessage message ,char *Data){
-	int *i = (int *)Data;
-	message.ID = *i; 		i++;
-	char *q = (char*)i;
-	message.command = *q;	q++;
-	i = (int *)q;
-	message.value = *i; 	i++;
-
-}
-*/
 
 
 
