@@ -4,13 +4,13 @@
 using namespace std;
 
 //message 
-
+/*
 struct TCPmessage{
    			int ID;
    			char command;
    			int value;
    		};
-
+*/
 TCP::TCP(char  *address, int portNumber){
 	port = portNumber;
 	serverAddress = address;
