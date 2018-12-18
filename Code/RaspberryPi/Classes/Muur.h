@@ -1,4 +1,4 @@
-#ifdef MUUR_H
+#ifndef MUUR_H
 #define MUUR_H
 
 class Muur{
@@ -9,6 +9,6 @@ private:
 protected:
 
 
-}
+};
 
 #endif
