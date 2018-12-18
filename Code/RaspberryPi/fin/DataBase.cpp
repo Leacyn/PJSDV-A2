@@ -61,9 +61,9 @@ int DataBase::sensorNewState(int id){
 }
 
 void DataBase::sqlError(sql::SQLException e){
-  	cerr << "# ERR: SQLException in " << __FILE__;
+  	cerr << "CRIT, SQLException in " << __FILE__;
   	cerr << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-  	cerr << "# ERR: " << e.what();
+  	cerr << "CRIT, " << e.what();
   	cerr << " (MySQL error code: " << e.getErrorCode();
   	cerr << ", SQLState: " << e.getSQLState() << " )" << endl;
 }
@@ -84,7 +84,7 @@ void DataBase::queryUser(void){
   		/* Fetch in reverse = descending order! */
   		res->afterLast();
   		while (res->previous())
-    		clog << res->getString("username") << "\t" << res->getString("password") << endl;
+    		clog << "LOG, " << res->getString("username") << "\t" << res->getString("password") << endl;
 
 		delete res;
   		delete pstmt;
@@ -98,7 +98,7 @@ void DataBase::addUser(string username, string password){
 		pstmt = con->prepareStatement("INSERT INTO User(username, password) VALUES (?, ?)");
 		pstmt->setString(1, username);
 		pstmt->setString(2, password);
-    	pstmt->executeUpdate();
+    		pstmt->executeUpdate();
   		delete pstmt;
   	} catch (sql::SQLException &e) {
   		sqlError(e);

@@ -11,27 +11,31 @@
 #include <string.h>
 #include "ArduinoJson-v5.13.4.h"
 
+struct TCPmessage{
+        signed int ID;
+        std::string command;
+        signed int value;
+};
+
+
 class TCP {
 	
 
 	public:
 		TCP(char *address, int portNumber);
-		void sendMsg(char * msg);
-		void sendMsg(int id, char *cmd, int Value);
-		std::string receive(void);
-		std::string recieveJson(void);
+		void sendMsg(int id, std::string cmd, int Value);
+		std::string receiveJson(void);
 	protected:
 		StaticJsonBuffer<200> jBuffer;
 		int port;
 		char *serverAddress;
 		struct sockaddr_in address; 
-    	int sock;
+    		int sock;
 		int valread; 
-    	struct sockaddr_in serv_addr; 
-    	char msg[256];
+    		struct sockaddr_in serv_addr; 
    		char buffer[256]; 
-		std::string encode(int id, char *cmd, int value);
-		//void decode(TCPmessage message ,char *Data);
+		std::string encode(int id, std::string cmd, int value);
+		TCPmessage msg;
 };
 
 #endif

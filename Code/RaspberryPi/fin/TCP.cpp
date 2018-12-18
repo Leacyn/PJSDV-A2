@@ -1,88 +1,73 @@
-#include "TCP.h"
+#include "TCP.h" 
 #include <iostream>
 
 using namespace std;
 
 //message 
-/*
-struct TCPmessage{
-   			int ID;
-   			char command;
-   			int value;
-   		};
-*/
+
+
 TCP::TCP(char  *address, int portNumber){
 	port = portNumber;
 	serverAddress = address;
-	
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
-    { 
-        cerr << endl << "Socket creation error" << endl; 
- //       throw runtime_error("failed to connect");
-    } 
-   
-    memset(&serv_addr, '0', sizeof(serv_addr)); 
-   
-    serv_addr.sin_family = AF_INET; 
-    serv_addr.sin_port = htons(port);
-       
-    // Convert IPv4 and IPv6 addresses from text to binary form 
-    if(inet_pton(AF_INET, serverAddress, &serv_addr.sin_addr)<=0){ 
-        cerr << endl << "Invalid address / Address not supported" << endl; 
- //       throw runtime_error("failed to connect");
-    } 
-    //connect
-    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) 
-    { 
-        cerr << endl << "Connection Failed" << endl; 
- //       throw runtime_error("failed to connect");
-    } 
+
+    	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        	cerr << endl << "CRIT, Socket creation error" << endl;
+    	}
+    	memset(&serv_addr, '0', sizeof(serv_addr));
+
+    	serv_addr.sin_family = AF_INET;
+    	serv_addr.sin_port = htons(port);
+
+    	/* Convert IPv4 and IPv6 addresses from text to binary form */
+    	if(inet_pton(AF_INET, serverAddress, &serv_addr.sin_addr)<=0){
+    	    	cerr << endl << "CRIT, Invalid address / Address not supported" << endl;
+   	}
+	/*connect*/
+    	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+        	cerr << endl << "CRIT, Connection Failed" << endl;
+    	}
 }
 
-void TCP::sendMsg(char *msg){
-	char *message = msg;
-	send(sock , message , strlen(message) , 0 ); 
-    std::cout << "Message sent \n"; 
-}
-
-
-void TCP::sendMsg(int id, char *cmd, int Value){
+void TCP::sendMsg(int id, std::string cmd, int Value){
+	jBuffer.clear();
 	string smsg= encode(id,cmd,Value);
-	cout << smsg;
-	char *message = new char[smsg.length()+1];
+	//cout << "LOG, " << smsg;
+	char *message = new char[smsg.length()];
 	strcpy(message, smsg.c_str());
-	send(sock , message , strlen(message)+1 , 0 ); 
-    std::cout << "Message sent \n";
-    free(message); 
+	send(sock , message , strlen(message) , 0 );
+	cout << "Message sent";
+	receiveJson();
+	cout << endl << "(" << id << " " << msg.ID << ")" << "(" << cmd << " " <<  msg.command << ")" << "(" << Value << " " << msg.value << ")" << endl;
+	if(id == msg.ID && !(cmd.compare(msg.command)) && Value == msg.value){
+		cout << " Message varified" << endl;
+	}
 
+	free(message);
 }
 
-std::string TCP::receive(void){
-	valread = recv( sock , buffer,sizeof(buffer),0);
-	std::cout << "Message received";
-	close(sock); 
-	return buffer;
-}
+std::string TCP::receiveJson(void){
 
-std::string TCP::recieveJson(void){
-	
 	int recieved = recv(sock, buffer,sizeof(buffer) + 1, 0);
-	cout << (string)buffer <<"    |     " << recieved << endl;
+	//cout << (string)buffer <<"    |     " << recieved;
 	JsonObject& message = jBuffer.parseObject((string)buffer);
-	
+
 	if(!message.success()) cout << "parserfail";
-	else {message.printTo(cout);}
-	cout << message.get<signed int>("id") << "|" << message.get<char *>("command") << "|" << message.get<signed int>("value") << "\n\r ";
+	//else {message.printTo(cout);}
+	msg.ID = message.get<signed int>("id");
+	msg.command =  message.get<std::string>("command");
+	//strcpy(msg.command,message.get<std::string>("command").c_str());
+	//msg.command = message.get<std::string>("command").c_str();
+	msg.value = message.get<signed int>("value");
 
 	return buffer;
 }
 
 
-string TCP::encode(int id, char *command, int value){
+string TCP::encode(int id, std::string command, int value){
 	string buffer;
 	JsonObject& message = jBuffer.createObject();
 	message["id"] = id;
-	message["command"] = (char *)command;
+	message["command"] = command;
 	message["value"] = value;
 
 	message.printTo(buffer);
