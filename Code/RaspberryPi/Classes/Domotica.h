@@ -1,5 +1,5 @@
-#ifndef Domotica_h
-#define Domotica_h
+#ifndef DOMOTICA_H
+#define DOMOTICA_H
 
 
 
