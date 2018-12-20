@@ -7,6 +7,8 @@
 #ifndef STOEL_H
 #define STOEL_H
 
+#include "Device.h"
+
 
 class Stoel: public Device{
 

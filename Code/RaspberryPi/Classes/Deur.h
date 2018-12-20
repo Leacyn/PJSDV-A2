@@ -7,6 +7,8 @@
 #ifndef DEUR_H
 #define DEUR_H
 
+#include "Device.h"
+
 
 class Deur : public Device{
 public:

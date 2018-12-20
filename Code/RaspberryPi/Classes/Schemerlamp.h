@@ -7,6 +7,8 @@
 #ifndef SCHEMERLAMP_H
 #define SCHEMERLAMP_H
 
+#include "Device.h"
+
 class Schemerlamp : public Device {
 public:
 private:

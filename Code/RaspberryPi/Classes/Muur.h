@@ -7,6 +7,8 @@
 #ifndef MUUR_H
 #define MUUR_H
 
+#include "Device.h"
+
 class Muur : public Device{
 public:
 

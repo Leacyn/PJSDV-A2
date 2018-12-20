@@ -7,6 +7,7 @@
 #ifndef BED_H
 #define BED_H
 
+#include "Device.h"
 
 class BED : class Device{
 public:

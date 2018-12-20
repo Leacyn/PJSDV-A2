@@ -7,6 +7,8 @@
 #ifndef ZUIL_H
 #define ZUIL_H
 
+#include "Device.h"
+
 class Zuil: public Device{
 public:
 private:

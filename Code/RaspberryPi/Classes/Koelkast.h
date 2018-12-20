@@ -7,6 +7,7 @@
 #ifndef KOELKAST_H
 #define KOELKAST_H
 
+#include "Device.h"
 
 class Koelkast : public Device{
 public
