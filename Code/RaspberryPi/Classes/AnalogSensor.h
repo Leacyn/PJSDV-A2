@@ -1,3 +1,10 @@
+/*-----------------------------------
+  Analog Sensor class decleration
+  version: 0.1
+  contributors:
+  Vincent Geers 13009672
+----------------------------------*/
+
 #ifndef ANALOGSENSOR_H
 #define ANALOGSENSOR_H
 
