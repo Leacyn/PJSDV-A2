@@ -8,13 +8,17 @@
 #define STOEL_H
 
 #include "Device.h"
-
+#include "Actuator.h"
+#include "AnalogSensor.h"
 
 class Stoel: public Device{
 
 public:
+  Stoel(int ID_trilmotor, ID_drukSensor);
 
 private:
+  Actuator trilMotor;
+  AnalogSensor drukSensor;
 
 protected:
 

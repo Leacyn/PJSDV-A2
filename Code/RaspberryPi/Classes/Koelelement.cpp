@@ -6,7 +6,7 @@
 ----------------------------------*/
 #include "Koelelement.h"
 
-Koelelement::Koelelement(){
+Koelelement::Koelelement(int id, int temp):ID(id), Temp(temp){
 
 }
 

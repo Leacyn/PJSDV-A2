@@ -7,7 +7,7 @@
 #include "Muur.h"
 
 
-Muur::Muur(){
+Muur::Muur(int ID_Venster, int ID_LDR): Venster(ID_Venster) ,LDR(ID_LDR){
 
 
 }

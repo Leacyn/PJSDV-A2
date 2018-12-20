@@ -8,11 +8,15 @@
 #define MUUR_H
 
 #include "Device.h"
+#include "Actuator.h"
+#include "AnalogSensor.h"
 
 class Muur : public Device{
 public:
-
+  Muur(int ID_Venster, int ID_LDR);
 private:
+  Actuator Venster;
+  AnalogSensor LDR;
 
 protected:
 

@@ -8,7 +8,7 @@
 
 
 
-Deur::Deur(){
+Deur::Deur(int ID_switch, int ID_servo): doorSwitch(ID_switch), doorServo(ID_servo){
 
 
 

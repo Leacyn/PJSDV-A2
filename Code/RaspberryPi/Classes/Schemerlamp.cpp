@@ -7,7 +7,7 @@
 #include "Schemerlamp.h"
 
 
-Schemerlamp::schemerlamp(){
+Schemerlamp::schemerlamp(int ID_led, int ID_Sensor):beweginssensor(ID_Sensor), led(ID_led){
 
 
 }

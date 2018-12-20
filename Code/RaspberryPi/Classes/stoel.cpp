@@ -7,7 +7,7 @@
 #include "stoel.h"
 
 
-Stoel::Stoel(){
+Stoel::Stoel(int ID_trilmotor, int ID_drukSensor):trilMotor(ID_trilmotor), drukSensor(ID_drukSensor){
 
 
 

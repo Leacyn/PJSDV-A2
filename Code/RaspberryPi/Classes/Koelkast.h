@@ -8,15 +8,20 @@
 #define KOELKAST_H
 
 #include "Device.h"
+#include "Koelelement.h"
+#include "Switch.h"
+
 
 class Koelkast : public Device{
-public
-
-
+public:
+Koelkast(int id_deur, int id_koeling);
+setTemp(int temprature);
+getTemp();
+getDoor();
 
 private:
-
-
+Koelelement koeling;
+Switch deursensor;
 
 protected:
 

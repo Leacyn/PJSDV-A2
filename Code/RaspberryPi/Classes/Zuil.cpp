@@ -6,7 +6,7 @@
 ----------------------------------*/
 #include "Zuil.h"
 
-Zuil::Zuil(){
+Zuil::Zuil(int ID_rookmelder, int ID_Beeper, int ID_Switch): Rookmelder(ID_rookmelder), Beeper(ID_Beeper), zuilSwitch(ID_Switch){
 
 
 };

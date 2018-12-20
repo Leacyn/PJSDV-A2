@@ -8,11 +8,16 @@
 #define DEUR_H
 
 #include "Device.h"
-
+#include "Switch.h"
+#include "Actuator.h"
 
 class Deur : public Device{
 public:
+  Deur(int ID_switch, int ID_servo);
+
 private:
+  Swtich doorSwitch;
+  Actuator doorServo;
 protected:
 };
 

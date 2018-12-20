@@ -8,7 +8,7 @@
 #include "Bed.h"
 
 
-Bed::Bed(){
+Bed::Bed(int ID_Switch, int ID_Led,int ID_drukSensor):bedSwitch(ID_Switch), bedLED(ID_Led), DrukSensor(ID_drukSensor){
 
 
 }

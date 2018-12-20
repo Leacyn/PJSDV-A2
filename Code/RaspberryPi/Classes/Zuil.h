@@ -8,10 +8,17 @@
 #define ZUIL_H
 
 #include "Device.h"
+#include "Switch.h"
+#inlcude "Actuator.h"
+#include "AnalogSensor.h"
 
 class Zuil: public Device{
 public:
+  Zuil(int ID_Beeper, int ID_rookmelder, int ID_Switch);
 private:
+  AnalogSensor Rookmelder;
+  Switch zuilSwitch;
+  Actuator Beeper;
 protected:
 };
 

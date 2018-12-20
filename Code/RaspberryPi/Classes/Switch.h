@@ -10,8 +10,10 @@
 
 class Switch: Public Device{
 Public:
-  int checkState(int id);
+
   Switch(int id);
+  int checkState(int id);
+  int changeState(int id, int value);
 private:
   int ID;
   int State;

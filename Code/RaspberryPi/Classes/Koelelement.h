@@ -4,13 +4,16 @@
   contributors:
   Vincent Geers 13009672
 ----------------------------------*/
-#efndef KOELELEMENT_H
+#ifndef KOELELEMENT_H
 #define KOELELEMENT_H
 
 
 class Koelelement{
 public:
+  Koelelement(int ID,int Temp);
 private:
+  int ID, Temp;
+  bool On;
 protected:
 };
 
