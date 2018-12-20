@@ -7,7 +7,7 @@
 #ifndef MUUR_H
 #define MUUR_H
 
-class Muur{
+class Muur : public Device{
 public:
 
 private:

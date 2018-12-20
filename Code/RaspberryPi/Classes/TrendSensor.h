@@ -12,5 +12,6 @@
 class TrendSensor: public AnalogSensor{
 public:
   int logState(int id);
+  TrendSensor(int id);
 
 };

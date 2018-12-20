@@ -8,7 +8,7 @@
 #define BED_H
 
 
-class BED{
+class BED : class Device{
 public:
 
 

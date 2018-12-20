@@ -8,7 +8,7 @@
 #define KOELKAST_H
 
 
-class Koelkast{
+class Koelkast : public Device{
 public
 
 

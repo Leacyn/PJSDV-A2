@@ -8,7 +8,7 @@
 #define SWITCH_H
 
 
-class Switch{
+class Switch: Public Device{
 Public:
   int checkState(int id);
   Switch(int id);

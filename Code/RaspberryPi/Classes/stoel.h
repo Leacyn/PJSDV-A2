@@ -8,7 +8,7 @@
 #define STOEL_H
 
 
-class Stoel{
+class Stoel: public Device{
 
 public:
 

@@ -7,7 +7,7 @@
 #ifndef SCHEMERLAMP_H
 #define SCHEMERLAMP_H
 
-class Schemerlamp {
+class Schemerlamp : public Device {
 public:
 private:
 protected:

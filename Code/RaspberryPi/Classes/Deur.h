@@ -8,7 +8,7 @@
 #define DEUR_H
 
 
-class Deur{
+class Deur : public Device{
 public:
 private:
 protected:

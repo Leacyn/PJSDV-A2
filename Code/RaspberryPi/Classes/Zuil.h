@@ -7,7 +7,7 @@
 #ifndef ZUIL_H
 #define ZUIL_H
 
-class Zuil{
+class Zuil: public Device{
 public:
 private:
 protected:

@@ -13,7 +13,7 @@ public:
   int getState(int id);
   AnalogSensor(int id);
 private:
-  int ID, State;
+  
 protected:
-
+  int ID, State;
 };
