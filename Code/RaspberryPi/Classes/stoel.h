@@ -8,8 +8,6 @@
 #define STOEL_H
 
 #include "Device.h"
-#include "Actuator.h"
-#include "AnalogSensor.h"
 
 class Stoel: public Device{
 

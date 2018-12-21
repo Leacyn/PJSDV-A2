@@ -8,8 +8,7 @@
 #define DEUR_H
 
 #include "Device.h"
-#include "Switch.h"
-#include "Actuator.h"
+
 
 class Deur : public Device{
 public:

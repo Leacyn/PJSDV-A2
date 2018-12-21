@@ -8,8 +8,6 @@
 #define SCHEMERLAMP_H
 
 #include "Device.h"
-#include "Switch.h"
-#include "Actuator.h"
 
 class Schemerlamp : public Device {
 public:

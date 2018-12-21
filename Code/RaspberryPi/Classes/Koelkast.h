@@ -8,8 +8,6 @@
 #define KOELKAST_H
 
 #include "Device.h"
-#include "Koelelement.h"
-#include "Switch.h"
 
 
 class Koelkast : public Device{

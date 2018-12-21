@@ -8,10 +8,6 @@
 #define BED_H
 
 #include "Device.h"
-#include "Switch.h"
-#include "Actuator.h"
-#include "AnalogSensor.h"
-#include "TrendSensor.h"
 
 class BED : class Device{
 public:

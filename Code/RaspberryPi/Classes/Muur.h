@@ -8,8 +8,7 @@
 #define MUUR_H
 
 #include "Device.h"
-#include "Actuator.h"
-#include "AnalogSensor.h"
+
 
 class Muur : public Device{
 public:
