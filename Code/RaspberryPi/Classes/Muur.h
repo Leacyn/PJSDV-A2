@@ -13,13 +13,9 @@
 class Muur : public Device{
 public:
   Muur(int ID_Venster, int ID_LDR);
+  int[2] check();
 private:
-  Actuator Venster;
-  AnalogSensor LDR;
-
-protected:
-
-
+  std::map<int key, std::string type> IO;
 };
 
 #endif

@@ -12,12 +12,9 @@
 class Schemerlamp : public Device {
 public:
   Schemerlamp(int ID_led, int ID_Sensor);
-
+  int[2] check();
 private:
-  Switch beweginssensor;
-  Actuator led;
-
-protected:
+  std::map<int key, std::string type> IO;
 };
 
 #endif

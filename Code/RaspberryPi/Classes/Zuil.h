@@ -8,15 +8,15 @@
 #define ZUIL_H
 
 #include "Device.h"
+#include <map>
 
 class Zuil: public Device{
 public:
   Zuil(int ID_Beeper, int ID_rookmelder, int ID_Switch);
+  int[2] check();
 private:
-  AnalogSensor Rookmelder;
-  Switch zuilSwitch;
-  Actuator Beeper;
-protected:
+  std::map<int key, std::string type> IO;
+
 };
 
 #endif

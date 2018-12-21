@@ -8,17 +8,14 @@
 #define BED_H
 
 #include "Device.h"
+#include <map>
 
 class BED : class Device{
 public:
   BED(int ID_Switch, int ID_Led, int ID_drukSensor);
-
+  int[2] check();
 private:
-  Switch bedSwitch;
-  Actuator bedLED;
-  TrendSensor DrukSensor;
-
-};
+  std::map<int key, std::string type> IO;
 
 
 #endif

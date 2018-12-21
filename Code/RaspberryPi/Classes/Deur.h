@@ -8,16 +8,14 @@
 #define DEUR_H
 
 #include "Device.h"
-
+#include <map>
 
 class Deur : public Device{
 public:
   Deur(int ID_switch, int ID_servo);
-
+  int[2] check();
 private:
-  Swtich doorSwitch;
-  Actuator doorServo;
-protected:
+  std::map<int key, std::string type> IO;
 };
 
 #endif

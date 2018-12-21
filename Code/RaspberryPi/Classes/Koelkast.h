@@ -15,13 +15,12 @@ public:
 Koelkast(int id_deur, int id_koeling);
 setTemp(int temprature);
 getTemp();
-getDoor();
+int[2] check();
 
 private:
-Koelelement koeling;
-Switch deursensor;
+std::map<int id, std::string type> IO;
 
-protected:
+
 
 
 };
