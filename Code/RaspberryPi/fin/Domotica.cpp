@@ -24,11 +24,8 @@ int main(int argc, char** argv){
     {15,fridge},{16,fridge},
     {17,door},{18,door},{19,door}
   };
-<<<<<<< HEAD
 
   /*set up connection to database*/
-=======
->>>>>>> e43793a3fa881ecbd0a76978dfa3c80e070c21a3
 	DataBase sql(PATH, USER, PASSWD, DB);
 
 
@@ -36,7 +33,8 @@ int main(int argc, char** argv){
 	while(1){
     for(int i = 1; i <= maxSensor; i++){
 	       if (int val = sql.queryValue("stateVal", "Sensor", i) != sql.queryValue("prevVal", "Sensor", i)){
-			       sql.updateValue("Sensor", "prevVal", val, i);
+			        sql.updateValue("Sensor", "prevVal", val, i);
+              devices[i].changeValue(i,val);
 		     }
 	  }
 	}
