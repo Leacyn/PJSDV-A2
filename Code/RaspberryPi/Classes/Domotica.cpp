@@ -1,12 +1,12 @@
 /*-----------------------------------
-  Domotica class definition
+  Domotica main definition
   version: 0.1
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
   ----------------------------------*/
 
-
+#include "Domotica.h"
 
 int const maxSensor = 3;
 
@@ -17,9 +17,8 @@ int main(int argc, char** argv){
 	cout << endl;
 
 	/*set up connection to database*/
-//	DataBase sql(PATH, USER, PASSWD, DB);
-	/*set up connection to WEMOS*/
-	TCP wemos(wemosAddress, WEMOS_PORT);
+	DataBase sql(PATH, USER, PASSWD, DB);
+
 
 	/*LOOP*/
 //	while(1){

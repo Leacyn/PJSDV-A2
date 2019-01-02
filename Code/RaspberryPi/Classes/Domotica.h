@@ -1,5 +1,5 @@
 /*-----------------------------------
-  Domotica class definition
+  Domotica includes
   version: 0.1
   contributors:
   Vincent Geers 13009672
