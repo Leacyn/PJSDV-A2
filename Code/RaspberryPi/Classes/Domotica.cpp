@@ -19,7 +19,7 @@ int main(int argc, char** argv){
 	/*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 
-
+ksljfh
 	/*LOOP*/
 //	while(1){
 //	for(int i = 1; i <= maxSensor; i++){
