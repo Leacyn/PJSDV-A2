@@ -11,7 +11,7 @@
 
 
 Koelkast::Koelkast(char *ipaddress):Device(ipaddress) {
-  IO = std::map<int key, std::string type , int prevVal>{{15, "Sensor", 0},{16, "Actuator",0}};
+  IO = std::map<int key, int prevVal>{{15, 0},{16,0}};
 
 }
 
@@ -19,4 +19,18 @@ Koelkast::Koelkast(char *ipaddress):Device(ipaddress) {
 Koelkast::~Koelkast(){
 
 
+}
+
+
+
+std::map Koelkast::check(){
+  std::map<int id, int val> returnmap;
+  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
+    int check = device.sendRead(i->first)
+    if(check != IO[i]){
+      IO[i->first] = check;
+      returnmap[i->first] = check;
+    }
+  }
+    return returnmap;
 }

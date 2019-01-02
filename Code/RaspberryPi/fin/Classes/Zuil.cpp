@@ -8,10 +8,23 @@
 #include "Zuil.h"
 
 Zuil::Zuil(char *ipaddress): Device(ipaddress){
-  IO = std::map<int key, str::string type, int prevVal>{{8, "Sensor", 0}, {9, "Actuator", 0}, {10, "Sensor", 0}};
+  IO = std::map<int key, int prevVal>{{8, 0}, {9, 0}, {10, 0}};
 
 };
 
 Zuil::~Zuil(){
 
+}
+
+
+std::map Zuil::check(){
+  std::map<int id, int val> returnmap;
+  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
+    int check = device.sendRead(i->first)
+    if(check != IO[i]){
+      IO[i->first] = check;
+      returnmap[i->first] = check;
+    }
+  }
+    return returnmap;
 }

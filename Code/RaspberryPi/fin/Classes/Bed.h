@@ -18,7 +18,7 @@ public:
   std::map check();
 private:
   TCP device;
-  extern std::map<int key, std::string type, int lastVal> IO;
+  extern std::map<int key, int lastVal> IO;
 
 
 #endif

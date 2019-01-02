@@ -9,7 +9,7 @@
 
 
 Stoel::Stoel(char *ipaddress): Device(ipaddress){
-  IO = std::map<int key, std::string type, int prevVal>{{4,"Sensor",0},{5, "Actuator",0}};
+  IO = std::map<int key, int prevVal>{{4,0},{5,0}};
 
 }
 
@@ -20,4 +20,17 @@ Stoel::~Stoel(){
 
 
 
+}
+
+
+std::map Stoel::check(){
+  std::map<int id, int val> returnmap;
+  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
+    int check = device.sendRead(i->first)
+    if(check != IO[i]){
+      IO[i->first] = check;
+      returnmap[i->first] = check;
+    }
+  }
+    return returnmap;
 }

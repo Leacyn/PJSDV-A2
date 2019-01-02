@@ -18,11 +18,11 @@ public:
   Koelkast(int id_deur, int id_koeling);
   setTemp(int temprature);
   getTemp();
-  int[2] check();
+  std::map check();
 
 private:
   TCP Device;
-  extend std::map<int id, std::string type, int prevVal> IO;
+  extend std::map<int id, int prevVal> IO;
 
 
 
