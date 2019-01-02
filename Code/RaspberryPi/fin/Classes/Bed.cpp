@@ -24,7 +24,10 @@ std::map Bed::check(){
     for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
       int check = device.sendRead(i->first)
       if(check != IO[i]){
+<<<<<<< HEAD
         IO[i->first] = check;
+=======
+>>>>>>> 736ebd4ef5f2767909c5c6e986829139228c989f
         returnmap[i->first] = check;
       }
     }
