@@ -1,3 +1,9 @@
+/*-----------------------------------
+  Zuil class Definition
+  version: 0.1
+  contributors:
+  Stijn van Es 17018498
+----------------------------------*/
 #include "DataBase.h"
 
 using namespace std;
@@ -104,5 +110,3 @@ void DataBase::addUser(string username, string password){
   		sqlError(e);
 	}
 }
-
-

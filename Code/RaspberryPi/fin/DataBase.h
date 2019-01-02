@@ -1,3 +1,10 @@
+/*-----------------------------------
+  Zuil class decleration
+  version: 0.1
+  contributors:
+  Stijn van Es 17018498
+----------------------------------*/
+
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -31,5 +38,3 @@ class DataBase
 };
 
 #endif
-
-

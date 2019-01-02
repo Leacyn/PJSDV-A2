@@ -3,6 +3,7 @@
   version: 0.1
   contributors:
   Vincent Geers 13009672
+  Stijn van Es 17018498
 ----------------------------------*/
 #ifndef KOELKAST_H
 #define KOELKAST_H

@@ -1,3 +1,9 @@
+/*-----------------------------------
+  Zuil class decleration
+  version: 0.1
+  contributors:
+  Vincent Geers 13009672
+----------------------------------*/
 #ifndef TCP_H
 #define TCP_H
 
