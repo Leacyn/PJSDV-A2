@@ -9,7 +9,8 @@
 
 
 
-Koelkast::Koelkast(int id_deur, int id_koeling):deursensor(id_deur), koeling(id_koeling) {
+Koelkast::Koelkast(char *ipaddress):Device(ipaddress) {
+  IO = std::map<int key, std::string type , int prevVal>{{15, "Sensor", 0},{16, "Actuator",0}};
 
 }
 

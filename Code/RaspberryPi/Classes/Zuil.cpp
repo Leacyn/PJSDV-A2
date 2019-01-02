@@ -6,8 +6,8 @@
 ----------------------------------*/
 #include "Zuil.h"
 
-Zuil::Zuil(int ID_rookmelder, int ID_Beeper, int ID_Switch): Rookmelder(ID_rookmelder), Beeper(ID_Beeper), zuilSwitch(ID_Switch){
-
+Zuil::Zuil(char *ipaddress): Device(ipaddress){
+  IO = std::map<int key, str::string type, int prevVal>{{8, "Sensor", 0}, {9, "Actuator", 0}, {10, "Sensor", 0}};
 
 };
 
