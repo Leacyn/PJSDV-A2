@@ -21,11 +21,11 @@ Bed::~Bed(){
 
 std::map Bed::check(){
     std::map<int id, int val> returnmap;
-    for(std::map::iterator i = IO.begin(); i!=IO.end(); ++i)
+    for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
       int check = device.sendRead(i)
       if(check != IO[i]){
         returnmap[i] = check;
       }
-
+    }
       return returnmap;
 }
