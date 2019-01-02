@@ -32,17 +32,21 @@ int main(int argc, char** argv){
 
 	/*LOOP*/
 	while(1){
-
+    Device dev = door;
     for(std::map::iterator it = deviceID.begin(); it!=deviceID.end(); ++it){/*for each device ID*/
-      id++;
-    //for(int i = 1; i <= totalSensors; i++){
-      if (int val = sql.queryValue("stateVal", "Sensor", id) != sql.queryValue("prevVal", "Sensor", id)){
-        sql.updateValue("Sensor", "prevVal", val, id);
-        devicesID[id].changeValue(id,val);
+
+      if (int val = sql.queryValue("stateVal", "Sensor", it->first) != sql.queryValue("prevVal", "Sensor", it->first)){
+        sql.updateValue("Sensor", "prevVal", val, it->first);
+        devicesID[it->first].changeValue(it->first,val);
 		  }
-    }
-    for(int i = 0; i < totaldevices; i++){
-      changes = devices[i].check();
+      if (it->second != dev){
+        changes = it->second.check();
+        for(std::map::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
+          sql.updateValue("Sensor", "prevVal", i->second, i->first);
+          sql.updateValue("Sensor", "stateVal", i->second, i->first);
+        }
+      }
+    dev = it->second;
     }
 
 
