@@ -7,7 +7,7 @@
 #include "Device.h"
 
 
-Device::Device(std::string wemosAddress): ServerAddress(wemosAddress){
+Device::Device(char *wemosAddress): ServerAddress(wemosAddress){
 
 }
 
