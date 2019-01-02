@@ -7,7 +7,8 @@
 #include "Schemerlamp.h"
 
 
-Schemerlamp::schemerlamp(int ID_led, int ID_Sensor):beweginssensor(ID_Sensor), led(ID_led){
+Schemerlamp::schemerlamp(char *): beweginssensor(ID_Sensor), led(ID_led){
+  IO = std::map<int key, std::string, int prevVal>{{6, "Actuator", 0}, {7, "Sensor", 0}};
 
 
 }

@@ -9,14 +9,16 @@
 
 #include "Device.h"
 #include <map>
+#include "../fin/TCP.h"
 
 class Stoel: public Device{
 
 public:
-  Stoel(int ID_trilmotor, ID_drukSensor);
+  Stoel(char *ipaddress);
   int[2] check();
 private:
-  std::map<int key, std::string type> IO;
+  TCP Device;
+  std::map<int key, std::string type, int prevVal> IO;
 
 };
 

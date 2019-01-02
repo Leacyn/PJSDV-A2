@@ -8,13 +8,16 @@
 #define SCHEMERLAMP_H
 
 #include "Device.h"
+#include <map>
+#include "../fin/TCP.h"
 
 class Schemerlamp : public Device {
 public:
-  Schemerlamp(int ID_led, int ID_Sensor);
+  Schemerlamp(char * );
   int[2] check();
 private:
-  std::map<int key, std::string type> IO;
+  TCP Device;
+  extend std::map<int key, std::string type, int prevVal> IO;
 };
 
 #endif

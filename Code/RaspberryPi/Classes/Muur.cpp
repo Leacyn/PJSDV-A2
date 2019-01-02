@@ -7,9 +7,9 @@
 #include "Muur.h"
 
 
-Muur::Muur(int ID_Venster, int ID_LDR): Venster(ID_Venster) ,LDR(ID_LDR){
-
-
+Muur::Muur(char *ipaddress): Device(ipaddress){
+  IO = std::map<int key, std::string, int prevVal>{{11, "Sensor", 0}, {12,"Sensor",0}, {13,"Actuator",0}, {14, "Actuator", 0}};
+  
 }
 
 Muur::~Muur(){
