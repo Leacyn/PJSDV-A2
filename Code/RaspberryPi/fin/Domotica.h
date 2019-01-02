@@ -28,7 +28,7 @@
 #define DB "domotics"
 
 std::map<int id, Device dev> deviceID;
-
+std::map<int id, int val> changes;
 
 Koelkast fridge((char*)"10.5.5.101"),
 Bed bed((char*)"10.5.5.102"),
