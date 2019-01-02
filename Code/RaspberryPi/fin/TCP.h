@@ -22,20 +22,24 @@ class TCP {
 	
 
 	public:
+		void sendWrite(int id, int val);
+		int sendRead(int id);
 		TCP(char *address, int portNumber);
-		void sendMsg(int id, std::string cmd, int Value);
 		std::string receiveJson(void);
 	protected:
 		StaticJsonBuffer<200> jBuffer;
-		int port;
 		char *serverAddress;
-		struct sockaddr_in address; 
-    		int sock;
+		char buffer[256];
+		int port;
+		int sock;
 		int valread; 
+		struct sockaddr_in address; 
     		struct sockaddr_in serv_addr; 
-   		char buffer[256]; 
-		std::string encode(int id, std::string cmd, int value);
 		TCPmessage msg;
+   		 
+		std::string encode(int id, std::string cmd, int value);
+		void sendMsg(int id, std::string cmd, int Value);
+		
 };
 
 #endif
