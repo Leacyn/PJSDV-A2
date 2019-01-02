@@ -10,7 +10,7 @@
 
 #include "Device.h"
 #include <map>
-#include "../fin/TCP.h"
+#include "../TCP.h"
 
 class Stoel: public Device{
 

@@ -9,7 +9,7 @@
 #define KOELKAST_H
 
 #include "Device.h"
-#include "../fin/TCP.h"
+#include "../TCP.h"
 #include <map>
 
 
