@@ -3,19 +3,22 @@
   version: 0.1
   contributors:
   Vincent Geers 13009672
+  Stijn van Es 17018498
 ----------------------------------*/
 #ifndef BED_H
 #define BED_H
 
 #include "Device.h"
+#include "../fin/TCP.h"
 #include <map>
 
-class BED : class Device{
+class Bed : class Device{
 public:
-  BED(int ID_Switch, int ID_Led, int ID_drukSensor);
+  Bed(char *ipaddress);
   int[2] check();
 private:
-  std::map<int key, std::string type> IO;
+  TCP device;
+  extern std::map<int key, std::string type, int lastVal> IO;
 
 
 #endif

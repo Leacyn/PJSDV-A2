@@ -9,13 +9,15 @@
 
 #include "Device.h"
 #include <map>
+#include "../fin/TCP.h"
 
 class Deur : public Device{
 public:
-  Deur(int ID_switch, int ID_servo);
+  Deur(char *ipaddress);
   int[2] check();
 private:
-  std::map<int key, std::string type> IO;
+  TCP device;
+  extern std::map<int key, std::string type, int prevVal> IO;
 };
 
 #endif

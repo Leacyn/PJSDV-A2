@@ -7,10 +7,9 @@
 #include "stoel.h"
 
 
-Stoel::Stoel(int ID_trilmotor, int ID_drukSensor):trilMotor(ID_trilmotor), drukSensor(ID_drukSensor){
-
-
-
+Stoel::Stoel(char *ipaddress): Device(ipaddress){
+  IO = std::map<int key, std::string type, int prevVal>{{4,"Sensor",0},{5, "Actuator",0}};
+  
 }
 
 

@@ -3,13 +3,14 @@
   version: 0.1
   contributors:
   Vincent Geers 13009672
+  Stijn van Es 17018498
 ----------------------------------*/
 #include "Deur.h"
 
 
 
-Deur::Deur(int ID_switch, int ID_servo): doorSwitch(ID_switch), doorServo(ID_servo){
-
+Deur::Deur(char *ipaddress): Device(ipaddress){
+ IO = std::map<int key,std::string type ,int lastVal> {{17,"Actuator",0},{18,"Actuator",0},{19,"Sensor",0}};
 
 
 }

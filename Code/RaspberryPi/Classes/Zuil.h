@@ -9,12 +9,14 @@
 
 #include "Device.h"
 #include <map>
+#include "../fin/TPC.h"
 
 class Zuil: public Device{
 public:
-  Zuil(int ID_Beeper, int ID_rookmelder, int ID_Switch);
+  Zuil(char *ipaddress);
   int[2] check();
 private:
+  TCP Device;
   std::map<int key, std::string type> IO;
 
 };
