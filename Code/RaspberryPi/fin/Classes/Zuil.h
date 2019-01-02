@@ -9,7 +9,7 @@
 
 #include "Device.h"
 #include <map>
-#include "../fin/TPC.h"
+#include "../TPC.h"
 
 class Zuil: public Device{
 public:

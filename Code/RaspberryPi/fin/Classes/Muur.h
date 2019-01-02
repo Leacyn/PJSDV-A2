@@ -9,7 +9,7 @@
 
 #include "Device.h"
 #include <map>
-#include "../fin/TCP.h"
+#include "../TCP.h"
 
 
 class Muur : public Device{

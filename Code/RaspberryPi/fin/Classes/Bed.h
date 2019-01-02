@@ -9,7 +9,7 @@
 #define BED_H
 
 #include "Device.h"
-#include "../fin/TCP.h"
+#include "../TCP.h"
 #include <map>
 
 class Bed : class Device{
