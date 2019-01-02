@@ -1,6 +1,6 @@
 /*-----------------------------------
   Bed class decleration
-  version: 0.1
+  version: 0.3
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
@@ -15,7 +15,7 @@
 class Bed : class Device{
 public:
   Bed(char *ipaddress);
-  int[2] check();
+  std::map check();
 private:
   TCP device;
   extern std::map<int key, std::string type, int lastVal> IO;
