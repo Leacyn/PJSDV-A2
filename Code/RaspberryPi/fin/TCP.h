@@ -1,11 +1,11 @@
 #ifndef TCP_H
 #define TCP_H
 
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
-#include <unistd.h> 
+#include <unistd.h>
 #include <netdb.h>
-#include <netinet/in.h> 
+#include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string>
 #include <string.h>
@@ -19,7 +19,7 @@ struct TCPmessage{
 
 
 class TCP {
-	
+
 
 	public:
 		void sendWrite(int id, int val);
@@ -32,14 +32,14 @@ class TCP {
 		char buffer[256];
 		int port;
 		int sock;
-		int valread; 
-		struct sockaddr_in address; 
-    		struct sockaddr_in serv_addr; 
+		int valread;
+		struct sockaddr_in address;
+    		struct sockaddr_in serv_addr;
 		TCPmessage msg;
-   		 
+
 		std::string encode(int id, std::string cmd, int value);
 		void sendMsg(int id, std::string cmd, int Value);
-		
+
 };
 
 #endif

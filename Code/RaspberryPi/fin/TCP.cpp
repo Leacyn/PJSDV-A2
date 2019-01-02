@@ -1,9 +1,9 @@
-#include "TCP.h" 
+#include "TCP.h"
 #include <iostream>
 
 using namespace std;
 
-//message 
+//message
 
 
 TCP::TCP(char  *address, int portNumber){
@@ -76,5 +76,12 @@ string TCP::encode(int id, std::string command, int value){
 	return buffer;
 }
 
+TCP::sendWrite(int id, int val){
+	sendMsg(id,"w", val);
+}
 
 
+int TCP::sendRead(int id, int val){
+	sendMsg(id, "r", val);
+	return msg.value;
+}
