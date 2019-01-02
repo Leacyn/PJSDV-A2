@@ -15,10 +15,10 @@
 class Zuil: public Device{
 public:
   Zuil(char *ipaddress);
-  int[2] check();
+  std::map check();
 private:
   TCP Device;
-  std::map<int key, std::string type> IO;
+  std::map<int key,int prevval> IO;
 
 };
 

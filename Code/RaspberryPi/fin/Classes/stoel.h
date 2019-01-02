@@ -16,10 +16,10 @@ class Stoel: public Device{
 
 public:
   Stoel(char *ipaddress);
-  int[2] check();
+  std::map check();
 private:
   TCP Device;
-  std::map<int key, std::string type, int prevVal> IO;
+  std::map<int key, int prevVal> IO;
 
 };
 

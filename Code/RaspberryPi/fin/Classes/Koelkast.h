@@ -18,7 +18,7 @@ public:
   Koelkast(int id_deur, int id_koeling);
   setTemp(int temprature);
   getTemp();
-  int[2] check();
+  std::map check();
 
 private:
   TCP Device;
