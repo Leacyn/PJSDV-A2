@@ -19,6 +19,7 @@
 #include "Classes/Schemerlamp.h"
 #include "Classes/Stoel.h"
 #include "Classes/zuil.h"
+#include "Classes/Device.h"
 
 /*Define SQL login data*/
 #define PATH "tcp://127.0.0.1:3306"
@@ -26,10 +27,12 @@
 #define PASSWD "100%Domotica"
 #define DB "domotics"
 
-Koelkast fridge("10.5.5.101");
-Bed bed("10.5.5.102");
-Deur door("10.5.5.103");
-Muur wall("10.5.5.104");
-Schemerlamp lamp("10.5.5.105");
-Stoel chair("10.5.5.106");
-zuil column("10.5.5.107");
+std::map<int id, Device dev> devices;
+
+Koelkast fridge((char*)"10.5.5.101");
+Bed bed((char*)"10.5.5.102");
+Deur door((char*)"10.5.5.103");
+Muur wall((char*)"10.5.5.104");
+Schemerlamp lamp((char*)"10.5.5.105");
+Stoel chair((char*)"10.5.5.106");
+zuil column((char*)"10.5.5.107");

@@ -17,7 +17,15 @@ int main(int argc, char** argv){
 	cout << endl;
 
 	/*set up connection to database*/
-
+  devices = map<int, Device> {
+    {1,bed},{2,bed},{3,bed},
+    {4,chair},{5,chair},
+    {6,lamp},{7,lamp},
+    {8,column},{9,column},{10,column},
+    {11,wall},{12,wall},{13,wall},{14,wall},
+    {15,fridge},{16,fridge},
+    {17,door},{18,door},{19,door}
+  }
 	DataBase sql(PATH, USER, PASSWD, DB);
 
 
