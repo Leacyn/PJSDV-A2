@@ -14,7 +14,7 @@
 class Device{
 
 public:
-  Device(std::string wemosAddress);
+  Device(char *wemosAddress);
   changeValue(int id, int value);
 
 private:
