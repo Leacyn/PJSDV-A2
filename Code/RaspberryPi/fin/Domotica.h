@@ -27,12 +27,14 @@
 #define PASSWD "100%Domotica"
 #define DB "domotics"
 
-std::map<int id, Device dev> devices;
+std::map<int id, Device dev> deviceID;
 
-Koelkast fridge((char*)"10.5.5.101");
-Bed bed((char*)"10.5.5.102");
-Deur door((char*)"10.5.5.103");
-Muur wall((char*)"10.5.5.104");
-Schemerlamp lamp((char*)"10.5.5.105");
-Stoel chair((char*)"10.5.5.106");
-zuil column((char*)"10.5.5.107");
+Device devices[] = {
+  Koelkast fridge((char*)"10.5.5.101"),
+  Bed bed((char*)"10.5.5.102"),
+  Deur door((char*)"10.5.5.103"),
+  Muur wall((char*)"10.5.5.104"),
+  Schemerlamp lamp((char*)"10.5.5.105"),
+  Stoel chair((char*)"10.5.5.106"),
+  zuil column((char*)"10.5.5.107"),
+}

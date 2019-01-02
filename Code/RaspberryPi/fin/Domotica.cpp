@@ -8,14 +8,15 @@
 
 #include "Domotica.h"
 
-int const maxSensor = 3;
+int const totalSensors = 19;
+int const totaldevices = 7;
 
 using namespace std;
 
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
-  devices = map<int, Device> {
+  deviceID = map<int, Device> {
     {1,bed},{2,bed},{3,bed},
     {4,chair},{5,chair},
     {6,lamp},{7,lamp},
@@ -31,12 +32,17 @@ int main(int argc, char** argv){
 
 	/*LOOP*/
 	while(1){
-    for(int i = 1; i <= maxSensor; i++){
-	       if (int val = sql.queryValue("stateVal", "Sensor", i) != sql.queryValue("prevVal", "Sensor", i)){
-			        sql.updateValue("Sensor", "prevVal", val, i);
-              devices[i].changeValue(i,val);
-		     }
-	  }
+    for(int i = 1; i <= totalSensors; i++){
+      if (int val = sql.queryValue("stateVal", "Sensor", i) != sql.queryValue("prevVal", "Sensor", i)){
+        sql.updateValue("Sensor", "prevVal", val, i);
+        devicesID[i].changeValue(i,val);
+		  }
+    }
+    for(int i = 0; i < totaldevices; i++){
+      devices[i].check();
+    }
+
+
 	}
 
 	sql.closeConnection();
