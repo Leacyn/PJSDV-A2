@@ -15,8 +15,6 @@ using namespace std;
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
-
-	/*set up connection to database*/
   devices = map<int, Device> {
     {1,bed},{2,bed},{3,bed},
     {4,chair},{5,chair},
@@ -25,7 +23,9 @@ int main(int argc, char** argv){
     {11,wall},{12,wall},{13,wall},{14,wall},
     {15,fridge},{16,fridge},
     {17,door},{18,door},{19,door}
-  }
+  };
+
+  /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 
 
