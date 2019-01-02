@@ -8,7 +8,7 @@
 #include "Zuil.h"
 
 Zuil::Zuil(char *ipaddress): Device(ipaddress){
-  IO = std::map<int key, str::string type, int prevVal>{{8, 0}, {9, 0}, {10, 0}};
+  IO = std::map<int key, int prevVal>{{8, 0}, {9, 0}, {10, 0}};
 
 };
 

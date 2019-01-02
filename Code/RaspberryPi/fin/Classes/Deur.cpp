@@ -10,7 +10,7 @@
 
 
 Deur::Deur(char *ipaddress): Device(ipaddress){
- IO = std::map<int key,std::string type ,int lastVal> {{17,"Actuator",0},{18,"Actuator",0},{19,"Sensor",0}};
+ IO = std::map<int key, int lastVal> {{17,0},{18,0},{19,0}};
 
 
 }
@@ -33,5 +33,5 @@ std::map Deur::check(){
       returnmap[i->first] = check;
     }
   }
-    return returnmap; 
+    return returnmap;
 }

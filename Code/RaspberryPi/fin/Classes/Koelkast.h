@@ -22,7 +22,7 @@ public:
 
 private:
   TCP Device;
-  extend std::map<int id, std::string type, int prevVal> IO;
+  extend std::map<int id, int prevVal> IO;
 
 
 
