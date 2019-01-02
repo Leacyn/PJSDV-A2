@@ -83,5 +83,6 @@ TCP::sendWrite(int id, int val){
 
 int TCP::sendRead(int id, int val){
 	sendMsg(id, "r", val);
+	receiveJson();
 	return msg.value;
 }
