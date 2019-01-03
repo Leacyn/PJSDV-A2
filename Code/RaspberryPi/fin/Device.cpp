@@ -37,3 +37,12 @@ std::map<int,int> Device::check(){
   }
     return returnmap;
 }
+
+
+std::vector<int> Device::getIDs(){
+  std::vector<int> idlist;
+  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
+    idlist.push_back(i->first);
+  }
+  return idlist;
+}
