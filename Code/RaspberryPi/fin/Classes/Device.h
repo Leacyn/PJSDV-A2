@@ -17,6 +17,7 @@ class Device{
 public:
   Device(char *wemosAddress, std::map<int,int>IOlist);
   void changeValue(int id, int value);
+  std::map<int,int> check();
 
 private:
   std::map<int, int> IO;
