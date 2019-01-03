@@ -38,10 +38,10 @@ int main(int argc, char** argv){
         //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
       }
     }
-    for(map<int, Device>::iterator it = deviceID.begin(); it!=deviceID.end(); ++it){/*for each device ID*/
+    for(map<int, Device>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
       if (it->second != dev){
         changes = it->second.check();
-        for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
+        for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
           sql.setPrevValSensor(i->first, i->second);
           sql.setStateValSensor(i->first, i->second);
         }
