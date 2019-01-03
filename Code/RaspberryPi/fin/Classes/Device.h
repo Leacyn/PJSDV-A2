@@ -15,11 +15,11 @@
 class Device{
 
 public:
-  Device(char *wemosAddress);
+  Device(char *wemosAddress, std::map<int,int>IOlist);
   void changeValue(int id, int value);
 
 private:
-
+  std::map<int, int> IO;
   char* ServerAddress;
   TCP Client;
 
