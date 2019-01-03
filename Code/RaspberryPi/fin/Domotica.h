@@ -21,5 +21,6 @@
 #define PASSWD "100%Domotica"
 #define DB "domotics"
 
+std::map<int id, Device dev> deviceIDs;
 std::map<string name, Device dev> devices;
 std::map<int id, int val> changes;
