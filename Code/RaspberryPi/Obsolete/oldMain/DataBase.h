@@ -9,7 +9,7 @@
 #define DATABASE_H
 
 #include "mysql_connection.h"
-#include <map>
+
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
@@ -29,13 +29,12 @@ class DataBase
 		void addUser(std::string username, std::string password);
 		void queryUser(void);
 	protected:
-		std::map<int id, int val> changes;
 		sql::Driver *driver;
-  	sql::Connection *con;
-  	sql::Statement *stmt;
-  	sql::ResultSet *res;
-  	sql::PreparedStatement *pstmt;
-  	void sqlError(sql::SQLException e);
+  		sql::Connection *con;
+  		sql::Statement *stmt;
+  		sql::ResultSet *res;
+  		sql::PreparedStatement *pstmt;
+  		void sqlError(sql::SQLException e);
 };
 
 #endif

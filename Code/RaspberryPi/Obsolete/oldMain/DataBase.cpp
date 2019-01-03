@@ -1,5 +1,5 @@
 /*-----------------------------------
-  DataBase class Definition
+  Zuil class Definition
   version: 0.1
   contributors:
   Stijn van Es 17018498
@@ -43,23 +43,6 @@ void DataBase::setPrevValSensor(int id, int value){
   } catch (sql::SQLException &e) {
   	sqlError(e);
 	}
-}
-
-map<int, int> DataBase::checkStateChange(){
-	try{
-		/* Select Value + id from tabel where value changed */
-		stmt = con->createStatement();
-		res = stmt->executeQuery("Select id, stateVal from Sensor WHERE stateVal != prevVal;");
-		while (res->next()){
-  		result = res->getInt("stateVal");
-		}
-	}
-	delete res;
-  delete pstmt;
-  } catch (sql::SQLException &e){
-		sqlError(e);
-	}
-	return result;
 }
 
 int DataBase::sensorNewState(int id){

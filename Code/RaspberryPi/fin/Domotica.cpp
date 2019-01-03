@@ -32,7 +32,7 @@ int main(int argc, char** argv){
 
 	/*LOOP*/
 	while(1){
-    for(std::map::iterator it = deviceID.begin(); it!=deviceID.end(); ++it){/*for each device ID*/
+    for(map<int, Device>::iterator it = deviceID.begin(); it!=deviceID.end(); ++it){/*for each device ID*/
       if (int val = sql.sensorNewState(it->first)){
 				sql.setPrevValSensor(it->first, val);
         devicesID[it->first].changeValue(it->first,val);
@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 			}
       if (it->second != dev){
         changes = it->second.check();
-        for(std::map::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
+        for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
           sql.setPrevValSensor(i->first, i->second);
           sql.setStateValSensor(i->first, i->second);
         }
