@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 #include "deviceStruct.h"
 #include "Device.h"
 

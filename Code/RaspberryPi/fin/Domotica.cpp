@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 
   vector<struct deviceData> data = sql.getDeviceData();
   int deviceAmount = 0;
-  for(struct deviceData i : data){
+  for(struct deviceData i : data){/*create device for each device in the database*/
     deviceAmount ++;
     Device dev(i.ipAddress,i.startId,i.idAmount);
     devices.insert(pair<string, Device>(i.name,dev));
@@ -41,17 +41,17 @@ int main(int argc, char** argv){
         //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
       }
     }
-    for(map<int, Device>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
-      if (it->second != dev){
+
+    
+    for(map<string, Device>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
         changes = it->second.check();
         for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
           sql.setPrevValSensor(i->first, i->second);
           sql.setStateValSensor(i->first, i->second);
         }
-      }
-      dev = it->second;
     }
-	}
+  }
+
 	sql.closeConnection();
 	return 0;
 }
