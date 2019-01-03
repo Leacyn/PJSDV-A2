@@ -28,25 +28,24 @@ int main(int argc, char** argv){
   int id = 0;
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
-
+  Device dev = door;
 
 	/*LOOP*/
 	while(1){
-    Device dev = door;
     for(std::map::iterator it = deviceID.begin(); it!=deviceID.end(); ++it){/*for each device ID*/
-
-      if (int val = sql.queryValue("stateVal", "Sensor", it->first) != sql.queryValue("prevVal", "Sensor", it->first)){
-        sql.updateValue("Sensor", "prevVal", val, it->first);
+      if (int val = sql.sensorNewState(it->first)){
+				sql.setPrevValSensor(it->first, val);
         devicesID[it->first].changeValue(it->first,val);
-		  }
+        //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
+			}
       if (it->second != dev){
         changes = it->second.check();
         for(std::map::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
-          sql.updateValue("Sensor", "prevVal", i->second, i->first);
-          sql.updateValue("Sensor", "stateVal", i->second, i->first);
+          sql.setPrevValSensor(i->first, i->second);
+          sql.setStateValSensor(i->first, i->second);
         }
       }
-    dev = it->second;
+      dev = it->second;
     }
 
 
