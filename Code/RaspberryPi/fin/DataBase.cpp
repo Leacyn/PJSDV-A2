@@ -38,10 +38,10 @@ void DataBase::setPrevValSensor(int id, int value){
 		pstmt = con->prepareStatement("UPDATE Sensor SET prevVal = ? WHERE id = ?");
 		pstmt->setInt(1, value);
 		pstmt->setInt(2, id);
-    		pstmt->executeUpdate();
-  		delete pstmt;
-  	} catch (sql::SQLException &e) {
-  		sqlError(e);
+    pstmt->executeUpdate();
+  	delete pstmt;
+  } catch (sql::SQLException &e) {
+  	sqlError(e);
 	}
 }
 
