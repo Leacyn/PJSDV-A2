@@ -30,6 +30,7 @@ vector<struct deviceData> DataBase::getDeviceData(){
 			data.ipAddress = res->getString("ipAddress");
 			data.startId = res->getInt("startId");
 			data.idAmount = res->getInt("idAmount");
+			data.name = res->getString("name");
 			v.push_back(data);
 		}
 	}

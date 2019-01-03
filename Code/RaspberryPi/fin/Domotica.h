@@ -20,13 +20,5 @@
 #define PASSWD "100%Domotica"
 #define DB "domotics"
 
-std::map<int id, Device dev> devices;
+std::map<string name, Device dev> devices;
 std::map<int id, int val> changes;
-
-Device fridge((char*)"10.5.5.101"),
-Device bed((char*)"10.5.5.102"),
-Device door((char*)"10.5.5.103"),
-Device wall((char*)"10.5.5.104"),
-Device lamp((char*)"10.5.5.105"),
-Device chair((char*)"10.5.5.106"),
-Device column((char*)"10.5.5.107"),

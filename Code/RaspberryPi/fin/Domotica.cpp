@@ -30,7 +30,7 @@ int main(int argc, char** argv){
   for(struct deviceData i : data){
     deviceAmount ++;
     Device dev(i.ipAddress,i.startId,i.idAmount);
-    devices.insert(pair<int, Device>(deviceAmount,dev));
+    devices.insert(pair<string, Device>(i.name,dev));
   }
 
 	/*LOOP*/
