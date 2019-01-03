@@ -41,8 +41,8 @@ int main(int argc, char** argv){
       if (it->second != dev){
         changes = it->second.check();
         for(std::map::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
-          sql.setPrevValSensor(it->first, it->second);
-          sql.setStateValSensor(it->first, it->second);
+          sql.setPrevValSensor(i->first, i->second);
+          sql.setStateValSensor(i->first, i->second);
         }
       }
       dev = it->second;
