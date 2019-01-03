@@ -11,6 +11,8 @@
 #define PORT 54000
 
 #include "TCP.h"
+#include <map>
+#include <vector>
 
 class Device{
 
@@ -18,6 +20,7 @@ public:
   Device(char *wemosAddress, int startID, int sensorAmount);
   void changeValue(int id, int value);
   std::map<int,int> check();
+  std::vector<int> getIDs();
 
 private:
   std::map<int, int> IO;
