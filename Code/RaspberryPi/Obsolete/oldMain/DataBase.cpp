@@ -1,5 +1,5 @@
 /*-----------------------------------
-  DataBase class Definition
+  Zuil class Definition
   version: 0.1
   contributors:
   Stijn van Es 17018498
@@ -21,15 +21,15 @@ DataBase::DataBase(string path, string user, string password, string db){
 }
 
 void DataBase::setStateValSensor(int id, int value){
-	try {
-  	pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ? WHERE id = ?");
-    pstmt->setInt(1, value);
-    pstmt->setInt(2, id);
-    pstmt->executeUpdate();
-    delete pstmt;
-  } catch (sql::SQLException &e) {
-    sqlError(e);
-  }
+        try {
+                pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ? WHERE id = ?");
+                pstmt->setInt(1, value);
+                pstmt->setInt(2, id);
+                pstmt->executeUpdate();
+                delete pstmt;
+        } catch (sql::SQLException &e) {
+                sqlError(e);
+        }
 }
 
 
@@ -42,28 +42,6 @@ void DataBase::setPrevValSensor(int id, int value){
   	delete pstmt;
   } catch (sql::SQLException &e) {
   	sqlError(e);
-	}
-}
-
-int DataBase::checkStateChange(){
-	changes.clear();
-	try{
-		/* Select Value + id from tabel where value changed */
-		stmt = con->createStatement();
-		res = stmt->executeQuery("Select id, stateVal from Sensor WHERE stateVal != prevVal;");
-		while (res->next()){
-			changes.insert(pair<int, int>(res->getInt("id"),res->getInt("stateVal")));
-		}
-	}
-	delete res;
-  delete stmt;
-  } catch (sql::SQLException &e){
-		sqlError(e);
-	}
-	if(changes.empty()){
-		return 0;/*if no changes return 0*/
-	}else{
-		return 1;
 	}
 }
 
