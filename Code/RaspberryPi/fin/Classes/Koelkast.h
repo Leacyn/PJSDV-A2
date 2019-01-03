@@ -19,6 +19,7 @@ public:
   setTemp(int temprature);
   getTemp();
   std::map check();
+  void changeValue(int id, int val);
 
 private:
   TCP Device;

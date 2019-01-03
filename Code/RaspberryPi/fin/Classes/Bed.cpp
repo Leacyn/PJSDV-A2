@@ -22,11 +22,18 @@ Bed::~Bed(){
 std::map Bed::check(){
     std::map<int id, int val> returnmap;
     for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-      int check = device.sendRead(i->first)
+      int check = Client.sendRead(i->first)
       if(check != IO[i]){
         IO[i->first] = check;
         returnmap[i->first] = check;
       }
     }
       return returnmap;
+}
+
+
+void Bed::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+
 }

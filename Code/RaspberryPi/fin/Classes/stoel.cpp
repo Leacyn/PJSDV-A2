@@ -34,3 +34,9 @@ std::map Stoel::check(){
   }
     return returnmap;
 }
+
+void Stoel::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+
+}

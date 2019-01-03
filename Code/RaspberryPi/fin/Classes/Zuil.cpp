@@ -28,3 +28,9 @@ std::map Zuil::check(){
   }
     return returnmap;
 }
+
+void Zuil::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+
+}

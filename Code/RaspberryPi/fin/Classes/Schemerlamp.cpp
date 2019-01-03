@@ -8,7 +8,7 @@
 #include "Schemerlamp.h"
 
 
-Schemerlamp::schemerlamp(char *): beweginssensor(ID_Sensor), led(ID_led){
+Schemerlamp::schemerlamp(char *ipaddress):Device(ipaddress){
   IO = std::map<int key, int prevVal>{{6, 0}, {7, 0}};
 
 
@@ -28,4 +28,10 @@ std::map Schemerlamp::check(){
     }
   }
     return returnmap;
+}
+
+void Schemerlamp::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+    
 }

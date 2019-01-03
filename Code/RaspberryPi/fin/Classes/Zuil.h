@@ -16,6 +16,7 @@ class Zuil: public Device{
 public:
   Zuil(char *ipaddress);
   std::map check();
+  void changeValue(int id, int val);
 private:
   TCP Device;
   std::map<int key,int prevval> IO;

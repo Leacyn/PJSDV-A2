@@ -34,3 +34,9 @@ std::map Koelkast::check(){
   }
     return returnmap;
 }
+
+void Koelkast::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+
+}

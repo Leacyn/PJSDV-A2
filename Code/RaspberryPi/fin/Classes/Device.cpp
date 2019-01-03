@@ -8,10 +8,15 @@
 #include "Device.h"
 
 
-Device::Device(char *wemosAddress): ServerAddress(wemosAddress){
+Device::Device(char *wemosAddress): ServerAddress(wemosAddress), Client(Server Address,PORT){
 
 }
 
 Device::~Device(){
 
+}
+
+
+void Device::changeValue(int id, int value){
+  Client.sendWrite(id, value);
 }

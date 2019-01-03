@@ -28,3 +28,9 @@ std::map Muur::check(){
   }
     return returnmap;
 }
+
+void Muur::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+
+}

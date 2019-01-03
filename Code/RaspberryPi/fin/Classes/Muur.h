@@ -17,6 +17,7 @@ class Muur : public Device{
 public:
   Muur(char *ipaddress);
   std::map check();
+  void changeValue(int id, int val);
 private:
   TCP Device;
   extend std::map<int key, int prevVal> IO;

@@ -35,3 +35,9 @@ std::map Deur::check(){
   }
     return returnmap;
 }
+
+void Deur::changeValue(int id, int val){
+  Client.sendWrite(id,val);
+  IO[id] = val;
+
+}

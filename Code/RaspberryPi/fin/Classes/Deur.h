@@ -16,6 +16,7 @@ class Deur : public Device{
 public:
   Deur(char *ipaddress);
   std::map check();
+  void changeValue(int id, int val);
 private:
   TCP device;
   extern std::map<int key, int prevVal> IO;

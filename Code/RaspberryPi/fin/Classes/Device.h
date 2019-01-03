@@ -16,12 +16,12 @@ class Device{
 
 public:
   Device(char *wemosAddress);
-  changeValue(int id, int value);
+  void changeValue(int id, int value);
 
 private:
 
-  std::string ServerAddress;
-  TCP Client(ServerAddress, PORT);
+  char* ServerAddress;
+  TCP Client;
 
 protected:
 
