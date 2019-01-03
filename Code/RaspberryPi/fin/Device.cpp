@@ -1,6 +1,6 @@
 /*-----------------------------------
   Device class definition
-  version: 0.1
+  version: 0.4
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
