@@ -27,7 +27,7 @@ vector<struct deviceData> DataBase::getDeviceData(){
 		res = stmt->executeQuery("SELECT * FROM Device");
 		while (res->next()){
 			struct deviceData data;
-			data.ipAddress = res->getString("ipAddress");
+			data.ipAddress = res->getString("ipAddress").c_str();
 			data.startId = res->getInt("startId");
 			data.idAmount = res->getInt("idAmount");
 			data.name = res->getString("name");

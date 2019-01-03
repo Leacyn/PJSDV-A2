@@ -13,15 +13,7 @@ using namespace std;
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
-  // devices = map<int, Device> {
-  //   {1,bed},{2,bed},{3,bed},
-  //   {4,chair},{5,chair},
-  //   {6,lamp},{7,lamp},
-  //   {8,column},{9,column},{10,column},
-  //   {11,wall},{12,wall},{13,wall},{14,wall},
-  //   {15,fridge},{16,fridge},
-  //   {17,door},{18,door},{19,door}
-  // };
+
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 
@@ -48,14 +40,15 @@ int main(int argc, char** argv){
 
 
     for(map<int, Device>::iterator it = deviceIDs.begin(); it!=deviceIDs.end(); ++it){/*for each device*/
-        changes = it->second.check();
-        for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
-          sql.setPrevValSensor(i->first, i->second);
-          sql.setStateValSensor(i->first, i->second);
-        }
+      changes = it->second.check();
+      for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
+        sql.setPrevValSensor(i->first, i->second);
+        sql.setStateValSensor(i->first, i->second);
+      }
     }
-  }
 
-	sql.closeConnection();
+
+  }
+  sql.closeConnection();
 	return 0;
 }
