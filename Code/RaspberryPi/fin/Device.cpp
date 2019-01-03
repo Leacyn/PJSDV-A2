@@ -1,6 +1,6 @@
 /*-----------------------------------
   Device class definition
-  version: 0.1
+  version: 0.4
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
@@ -8,7 +8,7 @@
 #include "Device.h"
 
 
-Device::Device(char *wemosAddress, std::map<int,int> IOlist): ServerAddress(wemosAddress), Client(Server Address,PORT),IO(IOlist),{
+Device::Device(char *wemosAddress, std::map<int,int> IOlist): ServerAddress(wemosAddress), Client(wemosAddress,PORT),IO(IOlist),{
 
 }
 
@@ -22,7 +22,7 @@ void Device::changeValue(int id, int value){
   IO[id] = value;
 }
 
-std::map<int,int> Koelkast::check(){
+std::map<int,int> Device::check(){
   std::map<int id, int val> returnmap;
   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
     int check = device.sendRead(i->first)
