@@ -10,6 +10,7 @@
 
 #include "mysql_connection.h"
 #include <map>
+#include <vector>
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
@@ -26,7 +27,7 @@ class DataBase
 		void setStateValSensor(int id, int value);
 		void setPrevValSensor(int id, int value);
 		int sensorNewState(int id);
-
+		std::vector<struct deviceData> DataBase::getDeviceData();
 		void addUser(std::string username, std::string password);
 		void queryUser(void);
 	protected:

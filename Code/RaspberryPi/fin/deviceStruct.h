@@ -1,6 +1,6 @@
 
 struct deviceData{
-  char *ipaddress;
+  char *ipAddress;
   int startId;
   int idAmount;
-}
+};

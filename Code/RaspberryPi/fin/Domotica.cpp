@@ -8,15 +8,12 @@
 
 #include "Domotica.h"
 
-//int const totalSensors = 19;
-int const totaldevices = 7;
-
 using namespace std;
 
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
-  deviceID = map<int, Device> {
+  devices = map<int, Device> {
     {1,bed},{2,bed},{3,bed},
     {4,chair},{5,chair},
     {6,lamp},{7,lamp},
@@ -25,7 +22,6 @@ int main(int argc, char** argv){
     {15,fridge},{16,fridge},
     {17,door},{18,door},{19,door}
   };
-  int id = 0;
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
   Device dev = door;
@@ -34,7 +30,7 @@ int main(int argc, char** argv){
 	while(1){
     if(sql.checkStateChange()){
       for(map<int,int>::iterator it = sql.changes.begin(); it != sql.changes.end(); ++it){
-        devicesID[it->first].changeValue(it->first,it->second);
+        devices[it->first].changeValue(it->first,it->second);
         //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
       }
     }

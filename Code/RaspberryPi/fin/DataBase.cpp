@@ -20,6 +20,27 @@ DataBase::DataBase(string path, string user, string password, string db){
 	}
 }
 
+vector<struct deviceData> DataBase::getDeviceData(){
+	vector<struct deviceData> v;
+	try{
+		stmt = con->createStatement();
+		res = stmt->executeQuery("SELECT * FROM Device");
+		while (res->next()){
+			struct deviceData data;
+			data.ipAddress = res->getString("ipAddress");
+			data.startId = res->getInt("startId");
+			data.idAmount = res->getInt("idAmount");
+			v.push_back(data);
+		}
+	}
+	delete res;
+  delete stmt;
+  } catch (sql::SQLException &e){
+		sqlError(e);
+	}
+	return v;
+}
+
 void DataBase::setStateValSensor(int id, int value){
 	try {
   	pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ? WHERE id = ?");
@@ -35,7 +56,7 @@ void DataBase::setStateValSensor(int id, int value){
 void DataBase::reset(){
 	try {
 		stmt = con->createStatement();
-		stmt->executeUpdate("update Sensor set prevVal = stateVal");
+		stmt->executeUpdate("UPDATE Sensor SET prevVal = stateVal");
 		delete stmt;
 	} catch (sql::SQLException &e) {
 		sqlError(e);
@@ -60,7 +81,7 @@ int DataBase::checkStateChange(){
 	try{
 		/* Select Value + id from tabel where value changed */
 		stmt = con->createStatement();
-		res = stmt->executeQuery("Select id, stateVal from Sensor WHERE stateVal != prevVal;");
+		res = stmt->executeQuery("SELECT id, stateVal FROM Sensor WHERE stateVal != prevVal");
 		while (res->next()){
 			changes.insert(pair<int, int>(res->getInt("id"),res->getInt("stateVal")));
 		}
@@ -70,6 +91,7 @@ int DataBase::checkStateChange(){
   } catch (sql::SQLException &e){
 		sqlError(e);
 	}
+	reset();
 	if(changes.empty()){
 		return 0;/*if no changes return 0*/
 	}else{
