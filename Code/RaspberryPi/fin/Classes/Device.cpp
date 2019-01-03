@@ -8,7 +8,7 @@
 #include "Device.h"
 
 
-Device::Device(char *wemosAddress): ServerAddress(wemosAddress), Client(Server Address,PORT){
+Device::Device(char *wemosAddress, std::map<int,int> IOlist): ServerAddress(wemosAddress), Client(Server Address,PORT),IO(IOlist),{
 
 }
 
