@@ -13,18 +13,25 @@ using namespace std;
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
-  devices = map<int, Device> {
-    {1,bed},{2,bed},{3,bed},
-    {4,chair},{5,chair},
-    {6,lamp},{7,lamp},
-    {8,column},{9,column},{10,column},
-    {11,wall},{12,wall},{13,wall},{14,wall},
-    {15,fridge},{16,fridge},
-    {17,door},{18,door},{19,door}
-  };
+  // devices = map<int, Device> {
+  //   {1,bed},{2,bed},{3,bed},
+  //   {4,chair},{5,chair},
+  //   {6,lamp},{7,lamp},
+  //   {8,column},{9,column},{10,column},
+  //   {11,wall},{12,wall},{13,wall},{14,wall},
+  //   {15,fridge},{16,fridge},
+  //   {17,door},{18,door},{19,door}
+  // };
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
-  Device dev = door;
+
+  vector<struct deviceData> data = sql.getDeviceData();
+  int deviceAmount = 0;
+  for(struct deviceData i : data){
+    deviceAmount ++;
+    Device dev(i.ipAddress,i.startId,i.idAmount);
+    devices.insert(pair<string, Device>(i.name,dev));
+  }
 
 	/*LOOP*/
 	while(1){
