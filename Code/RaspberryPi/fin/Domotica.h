@@ -11,15 +11,8 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "DataBase.cpp"
-#include "Classes/Bed.h"
-#include "Classes/Deur.h"
-#include "Classes/Koelkast.h"
-#include "Classes/Muur.h"
-#include "Classes/Schemerlamp.h"
-#include "Classes/Stoel.h"
-#include "Classes/zuil.h"
-#include "Classes/Device.h"
+#include "deviceStruct.h"
+#include "Device.h"
 
 /*Define SQL login data*/
 #define PATH "tcp://127.0.0.1:3306"
