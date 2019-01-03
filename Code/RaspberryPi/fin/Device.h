@@ -15,7 +15,7 @@
 class Device{
 
 public:
-  Device(char *wemosAddress, std::map<int,int>IOlist);
+  Device(char *wemosAddress, int startID, int sensorAmount);
   void changeValue(int id, int value);
   std::map<int,int> check();
 
