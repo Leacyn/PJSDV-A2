@@ -32,13 +32,12 @@ int main(int argc, char** argv){
 
 	/*LOOP*/
 	while(1){
-    if(sql.checkStateChange()){
-      for(map<int,int>::iterator it = sql.changes.begin(); it != sql.changes.end(); ++it){
-        devicesID[it->first].changeValue(it->first,it->second);
-        //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
-      }
-    }
     for(map<int, Device>::iterator it = deviceID.begin(); it!=deviceID.end(); ++it){/*for each device ID*/
+      if (int val = sql.sensorNewState(it->first)){
+				sql.setPrevValSensor(it->first, val);
+        devicesID[it->first].changeValue(it->first,val);
+        //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
+			}
       if (it->second != dev){
         changes = it->second.check();
         for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each value change*/
@@ -48,7 +47,10 @@ int main(int argc, char** argv){
       }
       dev = it->second;
     }
+
+
 	}
+
 	sql.closeConnection();
 	return 0;
 }

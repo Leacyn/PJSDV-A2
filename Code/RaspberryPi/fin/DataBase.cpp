@@ -32,6 +32,16 @@ void DataBase::setStateValSensor(int id, int value){
   }
 }
 
+void DataBase::reset(){
+	try {
+		stmt = con->createStatement();
+		stmt->executeUpdate("update Sensor set prevVal = stateVal");
+		delete stmt;
+	} catch (sql::SQLException &e) {
+		sqlError(e);
+	}
+}
+
 
 void DataBase::setPrevValSensor(int id, int value){
 	try {

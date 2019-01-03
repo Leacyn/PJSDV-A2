@@ -19,6 +19,7 @@
 class DataBase
 {
 	public:
+		std::map<int id, int val> changes;
 		DataBase(std::string path, std::string user, std::string password, std::string db);
 		void closeConnection(void);
 		int checkStateChange();
@@ -29,12 +30,12 @@ class DataBase
 		void addUser(std::string username, std::string password);
 		void queryUser(void);
 	protected:
-		std::map<int id, int val> changes;
 		sql::Driver *driver;
   	sql::Connection *con;
   	sql::Statement *stmt;
   	sql::ResultSet *res;
   	sql::PreparedStatement *pstmt;
+		void reset();
   	void sqlError(sql::SQLException e);
 };
 
