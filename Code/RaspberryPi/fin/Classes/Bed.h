@@ -14,4 +14,5 @@
 
 class Bed : class Device{
 public:
-  std::map check();
+  std::map check(std::map<int, int> IO);
+}

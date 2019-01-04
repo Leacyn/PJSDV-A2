@@ -14,7 +14,7 @@
 
 class DOOr : public Device{
 public:
-  std::map check();
+  std::map check(std::map<int, int> IO);
 };
 
 #endif

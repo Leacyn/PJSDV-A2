@@ -8,14 +8,6 @@
 #include "Lamp.h"
 
 
-std::map Lamp::check(){
-  std::map<int id, int val> returnmap;
-  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-    int check = device.sendRead(i->first)
-    if(check != IO[i]){
-      IO[i->first] = check;
-      returnmap[i->first] = check;
-    }
-  }
-    return returnmap;
+std::map Lamp::check(std::map<int, int> IO){
+
 }
