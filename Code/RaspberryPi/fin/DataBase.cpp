@@ -24,23 +24,57 @@ vector<struct deviceData> DataBase::getDeviceData(){
 	vector<struct deviceData> v;
 	try{
 		stmt = con->createStatement();
-		res = stmt->executeQuery("SELECT * FROM Device");
-		while (res->next()){
-			struct deviceData data;
-			data.ipAddress = res->getString("ipAddress").c_str();
-			data.startId = res->getInt("startId");
-			data.idAmount = res->getInt("idAmount");
-			data.name = res->getString("name");
-			v.push_back(data);
+		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
+
+		string prevDev = NULL;//= res->getString("device").c_str();
+		string IP;
+		vector<int> IDs;
+    //cout << prevName << res->getInt("sensor_id")<<endl<<endl;
+		while(res->next()){
+			string currDev = res->getString("device").c_str();
+			if (prevDev == NULL || prevDev!=currDev){
+				if (prevDev != NULL){
+					struct deviceData data;
+					data.name = prevDev;
+					data.ipAddress = IP;
+					data.IDs = IDs;
+					v.push_back(data);
+					IDs.clear;
+				}
+				IP = res->getString("ip").c_str();
+			}
+			IDs.push_back(res->getInt("sensor_id"));
+			prevDev = currDev;
 		}
-	}
-	delete res;
-  delete stmt;
-  } catch (sql::SQLException &e){
+		delete res;
+  	delete stmt;
+  }catch(sql::SQLException &e){
 		sqlError(e);
 	}
 	return v;
 }
+
+// vector<struct deviceData> DataBase::getDeviceData(){
+// 	vector<struct deviceData> v;
+// 	try{
+// 		stmt = con->createStatement();
+// 		res = stmt->executeQuery("SELECT * FROM Devices");
+// 		while (res->next()){
+// 			struct deviceData data;
+// 			data.ipAddress = res->getString("ipAddress").c_str();
+// 			data.startId = res->getInt("startId");
+// 			data.idAmount = res->getInt("idAmount");
+// 			data.name = res->getString("name");
+// 			v.push_back(data);
+// 		}
+// 	}
+// 	delete res;
+//   delete stmt;
+//   } catch (sql::SQLException &e){
+// 		sqlError(e);
+// 	}
+// 	return v;
+// }
 
 void DataBase::setStateValSensor(int id, int value){
 	try {
@@ -86,9 +120,8 @@ int DataBase::checkStateChange(){
 		while (res->next()){
 			changes.insert(pair<int, int>(res->getInt("id"),res->getInt("stateVal")));
 		}
-	}
-	delete res;
-  delete stmt;
+		delete res;
+  	delete stmt;
   } catch (sql::SQLException &e){
 		sqlError(e);
 	}
@@ -98,27 +131,6 @@ int DataBase::checkStateChange(){
 	}else{
 		return 1;
 	}
-}
-
-int DataBase::sensorNewState(int id){
-	int result;
-	try{
-		/* Select Value from tabel where id is id */
-  		pstmt = con->prepareStatement("SELECT prevVal, stateVal FROM Sensor WHERE id = ?");
-		pstmt->setInt(1, id);
-  		res = pstmt->executeQuery();
-		while (res->next()){
-  			result = res->getInt("stateVal");
-			if (result == res->getInt("prevVal")){
-				result = 0;
-			}
-		}
-		delete res;
-  		delete pstmt;
-  	} catch (sql::SQLException &e){
-		sqlError(e);
-	}
-	return result;
 }
 
 void DataBase::sqlError(sql::SQLException e){
@@ -134,34 +146,4 @@ void DataBase::closeConnection(void){
 	delete stmt;
 	delete res;
 	delete pstmt;
-}
-
-void DataBase::queryUser(void){
-	try{
-		/* Select in ascending order */
-  		pstmt = con->prepareStatement("SELECT username, password FROM User ORDER BY username ASC");
-  		res = pstmt->executeQuery();
-
-  		/* Fetch in reverse = descending order! */
-  		res->afterLast();
-  		while (res->previous())
-    		clog << "LOG, " << res->getString("username") << "\t" << res->getString("password") << endl;
-
-		delete res;
-  		delete pstmt;
-  	} catch (sql::SQLException &e){
-		sqlError(e);
-	}
-}
-
-void DataBase::addUser(string username, string password){
-	try {
-		pstmt = con->prepareStatement("INSERT INTO User(username, password) VALUES (?, ?)");
-		pstmt->setString(1, username);
-		pstmt->setString(2, password);
-    		pstmt->executeUpdate();
-  		delete pstmt;
-  	} catch (sql::SQLException &e) {
-  		sqlError(e);
-	}
 }

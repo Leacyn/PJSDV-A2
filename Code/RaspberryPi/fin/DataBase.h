@@ -9,8 +9,11 @@
 #define DATABASE_H
 
 #include "mysql_connection.h"
+#include "deviceStruct.h"
 #include <map>
 #include <vector>
+#include <string>
+#include <stdlib.h>
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
@@ -20,16 +23,13 @@
 class DataBase
 {
 	public:
-		std::map<int id, int val> changes;
+		std::map<int, int> changes;/*id,val*/
 		DataBase(std::string path, std::string user, std::string password, std::string db);
 		void closeConnection(void);
 		int checkStateChange();
 		void setStateValSensor(int id, int value);
 		void setPrevValSensor(int id, int value);
-		int sensorNewState(int id);
-		std::vector<struct deviceData> DataBase::getDeviceData();
-		void addUser(std::string username, std::string password);
-		void queryUser(void);
+		std::vector<struct deviceData> getDeviceData();
 	protected:
 		sql::Driver *driver;
   	sql::Connection *con;
