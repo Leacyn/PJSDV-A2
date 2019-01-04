@@ -26,10 +26,10 @@ vector<struct deviceData> DataBase::getDeviceData(){
 		stmt = con->createStatement();
 		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
 
-		string prevDev = "";//= res->getString("device").c_str();
+		string prevDev = "";
 		string IP;
 		vector<int> IDs;
-    //cout << prevName << res->getInt("sensor_id")<<endl<<endl;
+
 		while(res->next()){
 			string currDev = res->getString("device").c_str();
 			if (prevDev == "" || prevDev!=currDev){
@@ -59,27 +59,7 @@ vector<struct deviceData> DataBase::getDeviceData(){
 	return v;
 }
 
-// vector<struct deviceData> DataBase::getDeviceData(){
-// 	vector<struct deviceData> v;
-// 	try{
-// 		stmt = con->createStatement();
-// 		res = stmt->executeQuery("SELECT * FROM Devices");
-// 		while (res->next()){
-// 			struct deviceData data;
-// 			data.ipAddress = res->getString("ipAddress").c_str();
-// 			data.startId = res->getInt("startId");
-// 			data.idAmount = res->getInt("idAmount");
-// 			data.name = res->getString("name");
-// 			v.push_back(data);
-// 		}
-// 	}
-// 	delete res;
-//   delete stmt;
-//   } catch (sql::SQLException &e){
-// 		sqlError(e);
-// 	}
-// 	return v;
-// }
+
 
 void DataBase::setStateValSensor(int id, int value){
 	try {
