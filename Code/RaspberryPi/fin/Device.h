@@ -15,14 +15,16 @@
 class Device{
 
 public:
-  Device(char *wemosAddress, int startID, int sensorAmount);
+  Device(char *wemosAddress,std::string name, std::vector<int> ids);
   void changeValue(int id, int value);
   std::map<int,int> check();
 
 private:
   std::map<int, int> IO;
+  std::vector<int> sensorIDs;
   char* ServerAddress;
   TCP Client;
+  std::string name;
 
 protected:
 
