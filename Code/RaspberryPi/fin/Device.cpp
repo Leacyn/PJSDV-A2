@@ -9,7 +9,6 @@
 
 
 Device::Device(char *wemosAddress, int startID, int sensorAmount): ServerAddress(wemosAddress), Client(wemosAddress,PORT){
-  .
   std::map<int,int> tempMap;
   for(int i = startID; i<=(startID+(sensorAmount-1));i++){
     tempMap[i] = 0;
@@ -37,13 +36,4 @@ std::map<int,int> Device::check(){
     }
   }
     return returnmap;
-}
-
-
-std::vector<int> Device::getIDs(){
-  std::vector<int> idlist;
-  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-    idlist.push_back(i->first);
-  }
-  return idlist;
 }

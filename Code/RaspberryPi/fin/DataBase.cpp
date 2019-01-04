@@ -26,26 +26,31 @@ vector<struct deviceData> DataBase::getDeviceData(){
 		stmt = con->createStatement();
 		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
 
-		string prevDev = NULL;//= res->getString("device").c_str();
+		string prevDev = "";//= res->getString("device").c_str();
 		string IP;
 		vector<int> IDs;
     //cout << prevName << res->getInt("sensor_id")<<endl<<endl;
 		while(res->next()){
 			string currDev = res->getString("device").c_str();
-			if (prevDev == NULL || prevDev!=currDev){
-				if (prevDev != NULL){
+			if (prevDev == "" || prevDev!=currDev){
+				if (prevDev != ""){
 					struct deviceData data;
 					data.name = prevDev;
 					data.ipAddress = IP;
 					data.IDs = IDs;
 					v.push_back(data);
-					IDs.clear;
+					IDs.clear();
 				}
 				IP = res->getString("ip").c_str();
 			}
 			IDs.push_back(res->getInt("sensor_id"));
 			prevDev = currDev;
 		}
+		struct deviceData finalData;
+		finalData.name = prevDev;
+		finalData.ipAddress = IP;
+		finalData.IDs = IDs;
+		v.push_back(finalData);
 		delete res;
   	delete stmt;
   }catch(sql::SQLException &e){

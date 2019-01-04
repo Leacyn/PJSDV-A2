@@ -17,17 +17,18 @@ int main(int argc, char** argv){
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 
-  vector<struct deviceData> data = sql.getDeviceData();
+  vector<struct deviceData> test = sql.getDeviceData();
   int deviceAmount = 0;
-  for(struct deviceData i : data){/*create device for each device in the database*/
-    deviceAmount ++;
-    Device dev(i.ipAddress,i.startId,i.idAmount);
-    vector<int> ids = dev.getIDs();
-    for (int id : ids){
+  for (struct deviceData d : data){
+    deviceAmount++;
+    Device dev(d.ipAddress, d.name,d.IDs);
+    for (int id : d.IDs){
       deviceIDs.insert(pair<int, Device>(id,dev));
     }
     devices.insert(pair<string, Device>(i.name,dev));
-  }
+}
+
+
 
 	/*LOOP*/
 	while(1){
