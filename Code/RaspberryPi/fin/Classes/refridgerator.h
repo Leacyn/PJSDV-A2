@@ -5,15 +5,14 @@
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#ifndef REFRIDGERATOR_H
-#define REFRIDGERATOR_H
+#ifndef FRIDGE_H
+#define FRIDGE_H
 
-#include "Device.h"
-#include "../TCP.h"
+
 #include <map>
 
 
-class refridgerator : public Device{
+class Fridge : public Device{
   std::map check(std::map<int, int> IO);
 };
 

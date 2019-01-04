@@ -8,11 +8,10 @@
 #ifndef CHAIR_H
 #define CHAIR_H
 
-#include "Device.h"
-#include <map>
-#include "../TCP.h"
 
-class Chair: public Device{
+#include <map>
+
+class Chair{
 
 public:
   std::map check(std::map<int, int> IO);

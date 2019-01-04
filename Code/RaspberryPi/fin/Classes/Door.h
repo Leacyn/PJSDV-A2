@@ -8,11 +8,9 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include "Device.h"
 #include <map>
-#include "../TCP.h"
 
-class DOOr : public Device{
+class Door{
 public:
   std::map check(std::map<int, int> IO);
 };

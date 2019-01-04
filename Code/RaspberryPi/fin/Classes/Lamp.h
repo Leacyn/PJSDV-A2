@@ -8,11 +8,9 @@
 #ifndef LAMP_H
 #define LAMP_H
 
-#include "Device.h"
 #include <map>
-#include "../TCP.h"
 
-class Lamp : public Device {
+class Lamp{
 public:
   std::map check(std::map<int, int> IO);
 };

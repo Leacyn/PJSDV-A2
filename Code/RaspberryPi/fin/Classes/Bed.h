@@ -8,11 +8,9 @@
 #ifndef BED_H
 #define BED_H
 
-#include "Device.h"
-#include "../TCP.h"
 #include <map>
 
-class Bed : class Device{
+class Bed{
 public:
   std::map check(std::map<int, int> IO);
 }

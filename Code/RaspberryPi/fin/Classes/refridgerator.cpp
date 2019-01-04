@@ -5,11 +5,11 @@
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#include "refridgerator.h"
+#include "Fridge.h"
 
 
 
 
-std::map refridgerator::check(std::map<int, int> IO){
+std::map Fridge::check(std::map<int, int> IO){
 
 }

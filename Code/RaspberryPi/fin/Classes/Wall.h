@@ -8,12 +8,10 @@
 #ifndef WALL_H
 #define WALL_H
 
-#include "Device.h"
 #include <map>
-#include "../TCP.h"
 
 
-class Wall : public Device{
+class Wall{
 public:
   std::map check(std::map<int, int> IO);
 

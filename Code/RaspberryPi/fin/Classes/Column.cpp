@@ -5,8 +5,8 @@
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#include "Zuil.h"
+#include "Column.h"
 
-std::map Zuil::check(std::map<int, int> IO){
+std::map Column::check(std::map<int, int> IO){
 
 }

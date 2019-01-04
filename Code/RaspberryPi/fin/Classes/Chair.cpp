@@ -8,5 +8,5 @@
 #include "Chair.h"
 
 std::map Chair::check(std::map<int, int> IO){
-
+  
 }

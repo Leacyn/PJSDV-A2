@@ -5,14 +5,12 @@
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#ifndef ZUIL_H
-#define ZUIL_H
+#ifndef COLUMN_H
+#define COLUMN_H
 
-#include "Device.h"
 #include <map>
-#include "../TPC.h"
 
-class Zuil: public Device{
+class Column{
 public:
   std::map check(std::map<int, int> IO);
 };
