@@ -13,6 +13,7 @@
 
 
 class Fridge : public Device{
+public:
   std::map check(std::map<int, int> IO);
 };
 
