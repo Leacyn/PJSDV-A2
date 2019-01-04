@@ -33,11 +33,12 @@ void Device::changeValue(int id, int value){
 std::map<int,int> Device::check(){
   std::map<int id, int val> returnmap;
   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-    int check = device.sendRead(i->first)
+    int check = device.sendRead(i->first);
     if(check != IO[i]){
       IO[i->first] = check;
       returnmap[i->first] = check;
     }
   }
-    return returnmap;
+  dev.check(IO);
+  return returnmap;
 }
