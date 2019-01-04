@@ -12,6 +12,11 @@ Device::Device(char *wemosAddress, std::string Name, std::vector<int> ids): Serv
   switch(name){
     case "bed": Bed dev;
     case "chair": Chair dev;
+    case "lamp": Lamp dev;
+    case "column": Column dev;
+    case "wall": Wall dev;
+    case "fridge": Fridge dev;
+    case "door": Door dev;
   }
 }
 
