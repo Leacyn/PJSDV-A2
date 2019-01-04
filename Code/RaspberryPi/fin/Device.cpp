@@ -24,8 +24,6 @@ Device::Device(char *wemosAddress, std::string Name, std::vector<int> ids): Serv
     tempmap[i] = 0;
   }
   IO = tempmap;
-
-
 }
 
 Device::~Device(){
@@ -39,7 +37,7 @@ void Device::changeValue(int id, int value){
 }
 
 std::map<int,int> Device::check(){
-  std::map<int id, int val> returnmap;
+  std::map<int, int> returnmap;
   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
     int check = device.sendRead(i->first);
     if(check != IO[i]){
@@ -47,6 +45,6 @@ std::map<int,int> Device::check(){
       returnmap[i->first] = check;
     }
   }
-  dev.check(IO);
+  IO = dev.check(IO);
     return returnmap;
 }
