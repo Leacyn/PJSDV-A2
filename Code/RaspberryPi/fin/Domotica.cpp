@@ -1,6 +1,6 @@
 /*-----------------------------------
   Domotica main definition
-  version: 0.1
+  version: 1.0
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498

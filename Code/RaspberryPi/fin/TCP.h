@@ -1,6 +1,6 @@
 /*-----------------------------------
-  Zuil class decleration
-  version: 0.1
+  TCP class decleration
+  version: 1.0
   contributors:
   Vincent Geers 13009672
 ----------------------------------*/

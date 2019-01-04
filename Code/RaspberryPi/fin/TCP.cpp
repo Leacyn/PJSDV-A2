@@ -1,6 +1,6 @@
 /*-----------------------------------
-  Zuil class Definition
-  version: 0.1
+  TCP class Definition
+  version: 1.0
   contributors:
   Vincent Geers 13009672
 ----------------------------------*/

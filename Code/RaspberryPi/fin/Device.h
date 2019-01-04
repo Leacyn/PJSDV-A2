@@ -1,6 +1,6 @@
 /*-----------------------------------
   Device class decleration
-  version: 0.4
+  version: 1.0
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
@@ -11,6 +11,13 @@
 #define PORT 54000
 
 #include "TCP.h"
+#include "Bed.h"
+#include "Chair.h"
+#include "Column.h"
+#include "Door.h"
+#include "Lamp.h"
+#include "Fridge.h"
+#include "Wall.h"
 
 class Device{
 

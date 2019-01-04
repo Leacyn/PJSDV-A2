@@ -1,6 +1,6 @@
 /*-----------------------------------
-  Zuil class decleration
-  version: 0.1
+  DataBase class decleration
+  version: 1.0
   contributors:
   Stijn van Es 17018498
 ----------------------------------*/

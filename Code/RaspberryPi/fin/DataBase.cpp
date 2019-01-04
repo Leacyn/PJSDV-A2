@@ -1,6 +1,6 @@
 /*-----------------------------------
   DataBase class Definition
-  version: 0.1
+  version: 1.0
   contributors:
   Stijn van Es 17018498
 ----------------------------------*/

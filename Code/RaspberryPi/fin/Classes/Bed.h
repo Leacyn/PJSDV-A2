@@ -1,6 +1,6 @@
 /*-----------------------------------
   Bed class decleration
-  version: 0.3
+  version: 1.0
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
