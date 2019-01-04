@@ -21,7 +21,7 @@ int main(int argc, char** argv){
   int deviceAmount = 0;
   for (struct deviceData d : data){
     deviceAmount++;
-    Device dev(d.ipAddress, d.name,d.IDs);
+    Device dev(d.ipAddress.c_str(), d.name,d.IDs);
     for (int id : d.IDs){
       deviceIDs.insert(pair<int, Device>(id,dev));
     }
