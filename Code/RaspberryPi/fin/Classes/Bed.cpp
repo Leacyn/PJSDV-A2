@@ -9,14 +9,6 @@
 #include "Bed.h"
 
 
-std::map Bed::check(){
-    std::map<int id, int val> returnmap;
-    for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-      int check = Client.sendRead(i->first)
-      if(check != IO[i]){
-        IO[i->first] = check;
-        returnmap[i->first] = check;
-      }
-    }
-      return returnmap;
+std::map Bed::check(std::map<int, int> IO){
+
 }
