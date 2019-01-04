@@ -15,7 +15,7 @@
 class Device{
 
 public:
-  Device(char *wemosAddress,std::string name, std::vector<int> ids);
+  Device(char *wemosAddress,std::string Name, std::vector<int> ids);
   void changeValue(int id, int value);
   std::map<int,int> check();
 
