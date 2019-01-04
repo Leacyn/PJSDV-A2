@@ -5,29 +5,16 @@
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#ifndef KOELKAST_H
-#define KOELKAST_H
+#ifndef REFRIDGERATOR_H
+#define REFRIDGERATOR_H
 
 #include "Device.h"
 #include "../TCP.h"
 #include <map>
 
 
-class Koelkast : public Device{
-public:
-  Koelkast(int id_deur, int id_koeling);
-  setTemp(int temprature);
-  getTemp();
+class refridgerator : public Device{
   std::map check();
-  void changeValue(int id, int val);
-
-private:
-  TCP Device;
-  extend std::map<int id, int prevVal> IO;
-
-
-
-
 };
 
 

@@ -1,29 +1,14 @@
 /*-----------------------------------
-  Koelkast class Definiiton
+  Muur class definitions
   version: 0.1
   contributors:
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#include "Koelkast.h"
+#include "Wall.h"
 
 
-
-
-Koelkast::Koelkast(char *ipaddress):Device(ipaddress) {
-  IO = std::map<int key, int prevVal>{{15, 0},{16,0}};
-
-}
-
-
-Koelkast::~Koelkast(){
-
-
-}
-
-
-
-std::map Koelkast::check(){
+std::map Wall::check(){
   std::map<int id, int val> returnmap;
   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
     int check = device.sendRead(i->first)
@@ -33,10 +18,4 @@ std::map Koelkast::check(){
     }
   }
     return returnmap;
-}
-
-void Koelkast::changeValue(int id, int val){
-  Client.sendWrite(id,val);
-  IO[id] = val;
-
 }

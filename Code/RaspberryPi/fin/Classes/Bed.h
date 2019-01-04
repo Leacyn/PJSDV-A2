@@ -14,12 +14,4 @@
 
 class Bed : class Device{
 public:
-  Bed(char *ipaddress);
   std::map check();
-  void changeValue(int id, int val);
-private:
-  TCP device;
-  extern std::map<int key, int lastVal> IO;
-
-
-#endif

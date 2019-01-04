@@ -5,21 +5,16 @@
   Vincent Geers 13009672
   Stijn van Es 17018498
 ----------------------------------*/
-#ifndef SCHEMERLAMP_H
-#define SCHEMERLAMP_H
+#ifndef LAMP_H
+#define LAMP_H
 
 #include "Device.h"
 #include <map>
 #include "../TCP.h"
 
-class Schemerlamp : public Device {
+class Lamp : public Device {
 public:
-  Schemerlamp(char *);
   std::map check();
-  void changeValue(int id, int val);
-private:
-  TCP Device;
-  extend std::map<int key, int prevVal> IO;
 };
 
 #endif
