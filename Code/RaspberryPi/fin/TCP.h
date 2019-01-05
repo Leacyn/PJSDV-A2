@@ -40,7 +40,7 @@ class TCP {
 		int sock;
 		int valread;
 		struct sockaddr_in address;
-    		struct sockaddr_in serv_addr;
+    struct sockaddr_in serv_addr;
 		TCPmessage msg;
 
 		std::string encode(int id, std::string cmd, int value);

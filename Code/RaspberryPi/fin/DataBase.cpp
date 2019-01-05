@@ -17,7 +17,9 @@ DataBase::DataBase(string path, string user, string password, string db){
   		con->setSchema(db);
 	} catch (sql::SQLException &e) {
   		sqlError(e);
+			return;
 	}
+	clog << "Database connected" << endl;
 }
 
 vector<struct deviceData> DataBase::getDeviceData(){
@@ -64,6 +66,7 @@ vector<struct deviceData> DataBase::getDeviceData(){
 void DataBase::setStateValSensor(int id, int value){
 	try {
   	pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ? WHERE id = ?");
+
     pstmt->setInt(1, value);
     pstmt->setInt(2, id);
     pstmt->executeUpdate();

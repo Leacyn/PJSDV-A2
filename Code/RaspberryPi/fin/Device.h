@@ -11,13 +11,16 @@
 #define PORT 54000
 
 #include "TCP.h"
-#include "Bed.h"
-#include "Chair.h"
-#include "Column.h"
-#include "Door.h"
-#include "Lamp.h"
-#include "Fridge.h"
-#include "Wall.h"
+// #include "Classes/Default"
+//
+// #include "Classes/Bed.h"
+// #include "Classes/Chair.h"
+// #include "Classes/Column.h"
+// #include "Classes/Door.h"
+// #include "Classes/Lamp.h"
+// #include "Classes/Fridge.h"
+// #include "Classes/Wall.h"
+
 
 class Device{
 

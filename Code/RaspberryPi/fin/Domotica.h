@@ -13,15 +13,15 @@
 #include <map>
 #include <vector>
 #include "deviceStruct.h"
-//#include "Device.h"
+#include "Device.h"
 #include "DataBase.h"
 
 /*Define SQL login data*/
 #define PATH "tcp://127.0.0.1:3306"
-#define USER "monitor"
-#define PASSWD "100%Domotica"
+#define USER "editor"
+#define PASSWD "100%Domotics"
 #define DB "domotics"
 
-std::map<int id, Device dev> deviceIDs;
-std::map<string name, Device dev> devices;
-std::map<int id, int val> changes;
+std::map<int, Device> deviceIDs;    /*id, device*/
+std::map<string, Device> devices;   /*name, device*/
+std::map<int, int> changes;         /*id, value*/

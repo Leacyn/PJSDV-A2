@@ -10,20 +10,31 @@
 
 
 Device::Device(char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
-  switch(name){
-    case "bed": Bed dev;
-    case "chair": Chair dev;
-    case "door": Door dev;
-    case "lamp": Lamp dev;
-    case "fridge": Fride dev;
-    case "wall": Wall dev;
-    case "column": Column dev;
-  }
+  // switch(name){
+  //   case "bed": Bed dev;
+  //     break;
+  //   case "chair": Chair dev;
+  //     break;
+  //   case "door": Door dev;
+  //     break;
+  //   case "lamp": Lamp dev;
+  //     break;
+  //   case "fridge": Fride dev;
+  //     break;
+  //   case "wall": Wall dev;
+  //     break;
+  //   case "column": Column dev;
+  //     break;
+  //   default: Default dev;
+  //     cerr << "WARNING: No Logic Class Found For Type: " << name << ". ::Using Default::" << endl;
+  //     break;
+  // }
   std::map<int,int> tempmap;
   for(int i:sensorids){
     tempmap[i] = 0;
   }
   IO = tempmap;
+  clog << name << " connected";
 }
 
 Device::~Device(){
@@ -45,6 +56,6 @@ std::map<int,int> Device::check(){
       returnmap[i->first] = check;
     }
   }
-  IO = dev.check(IO);
-    return returnmap;
+  //IO = dev.check(IO);
+  return returnmap;
 }
