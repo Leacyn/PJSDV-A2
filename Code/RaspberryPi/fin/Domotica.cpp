@@ -23,9 +23,9 @@ int main(int argc, char** argv){
     deviceAmount++;
     Device dev(d.ipAddress.c_str(), d.name,d.IDs);
     for (int id : d.IDs){
-      deviceIDs[id] = dev;
+      deviceIDs.insert(make_pair<int, Device>(id, dev);//deviceIDs[id] = dev;
     }
-    devices[d.name]=dev;
+    devices.insert(make_pair<string, Device>(d.name, dev);//devices[d.name]=dev;
 	}
 	clog << endl << "devices have been initialised" << endl << endl;
 
