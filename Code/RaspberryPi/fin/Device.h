@@ -16,15 +16,15 @@
 #include <iostream>
 
 #include "TCP.h"
-// #include "Classes/Default"
-//
-// #include "Classes/Bed.h"
-// #include "Classes/Chair.h"
-// #include "Classes/Column.h"
-// #include "Classes/Door.h"
-// #include "Classes/Lamp.h"
-// #include "Classes/Fridge.h"
-// #include "Classes/Wall.h"
+#include "Classes/Default"
+
+#include "Classes/Bed.h"
+#include "Classes/Chair.h"
+#include "Classes/Column.h"
+#include "Classes/Door.h"
+#include "Classes/Lamp.h"
+#include "Classes/Fridge.h"
+#include "Classes/Wall.h"
 
 
 class Device{
@@ -40,9 +40,6 @@ private:
   const char* ServerAddress;
   TCP Client;
   std::string name;
-
-protected:
-
 };
 
 #endif

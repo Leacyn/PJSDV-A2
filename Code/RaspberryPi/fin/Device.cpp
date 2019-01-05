@@ -10,28 +10,28 @@
 
 
 Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
-  // switch(name){
-  //   case "bed": Bed dev;
-  //     break;
-  //   case "chair": Chair dev;
-  //     break;
-  //   case "door": Door dev;
-  //     break;
-  //   case "lamp": Lamp dev;
-  //     break;
-  //   case "fridge": Fride dev;
-  //     break;
-  //   case "wall": Wall dev;
-  //     break;
-  //   case "column": Column dev;
-  //     break;
-  //   default: Default dev;
-  //     cerr << "WARNING: No Logic Class Found For Type: " << name << ". ::Using Default::" << endl;
-  //     break;
-  // }
+  switch(name){
+    case "bed": Bed dev;
+      break;
+    case "chair": Chair dev;
+      break;
+    case "door": Door dev;
+      break;
+    case "lamp": Lamp dev;
+      break;
+    case "fridge": Fride dev;
+      break;
+    case "wall": Wall dev;
+      break;
+    case "column": Column dev;
+      break;
+    default: Default dev;
+      cerr << "WARNING: No Logic Class Found For Type: " << name << ". ::Using Default::" << endl;
+      break;
+  }
   std::map<int,int> tempmap;
   for(int i:sensorIDs){
-    tempmap[i] = 0;
+    tempmap[i] = (int)0;
   }
   IO = tempmap;
   std::clog << name << " connected" << std::endl;
@@ -41,7 +41,6 @@ Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids)
 
 void Device::changeValue(int id, int value){
   Client.sendWrite(id, value);
-  std::cout << id << ", " << value;//deze line wordt niet meer uitgevoerd. De functie hierboven wel.
   IO[id] = value;
 }
 
@@ -54,6 +53,6 @@ std::map<int,int> Device::check(){
       returnmap[i->first] = check;
     }
   }
-  //IO = dev.check(IO);
+  IO = dev.check(IO);
   return returnmap;
 }
