@@ -10,6 +10,11 @@
 
 #define PORT 54000
 
+#include <map>
+#include <vector>
+#include <string>
+#include <iostream>
+
 #include "TCP.h"
 // #include "Classes/Default"
 //

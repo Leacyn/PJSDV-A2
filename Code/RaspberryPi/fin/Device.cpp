@@ -30,16 +30,13 @@ Device::Device(char *wemosAddress, std::string Name, std::vector<int> ids): Serv
   //     break;
   // }
   std::map<int,int> tempmap;
-  for(int i:sensorids){
+  for(int i:sensorIDs){
     tempmap[i] = 0;
   }
   IO = tempmap;
-  clog << name << " connected";
+  std::clog << name << " connected" << endl;
 }
 
-Device::~Device(){
-
-}
 
 
 void Device::changeValue(int id, int value){
@@ -50,8 +47,8 @@ void Device::changeValue(int id, int value){
 std::map<int,int> Device::check(){
   std::map<int, int> returnmap;
   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-    int check = device.sendRead(i->first);
-    if(check != IO[i]){
+    int check = Client.sendRead(i->first);
+    if(check != IO[i->first]){
       IO[i->first] = check;
       returnmap[i->first] = check;
     }
