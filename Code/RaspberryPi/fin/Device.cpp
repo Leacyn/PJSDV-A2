@@ -9,7 +9,7 @@
 #include "Device.h"
 
 
-Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), sensorIDs(ids), name(Name){
+Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
   // switch(name){
   //   case "bed": Bed dev;
   //     break;
@@ -41,6 +41,7 @@ Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids)
 
 void Device::changeValue(int id, int value){
   Client.sendWrite(id, value);
+  std::cout << id << ", " << value;//deze line wordt niet meer uitgevoerd. De functie hierboven wel.
   IO[id] = value;
 }
 
