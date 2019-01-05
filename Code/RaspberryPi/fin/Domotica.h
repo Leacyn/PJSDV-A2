@@ -13,7 +13,8 @@
 #include <map>
 #include <vector>
 #include "deviceStruct.h"
-#include "Device.h"
+//#include "Device.h"
+#include "DataBase.h"
 
 /*Define SQL login data*/
 #define PATH "tcp://127.0.0.1:3306"

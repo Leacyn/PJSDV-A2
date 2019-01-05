@@ -17,16 +17,16 @@ int main(int argc, char** argv){
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 
-  vector<struct deviceData> test = sql.getDeviceData();
-  int deviceAmount = 0;
-  for (struct deviceData d : data){
-    deviceAmount++;
-    Device dev(d.ipAddress.c_str(), d.name,d.IDs);
-    for (int id : d.IDs){
-      deviceIDs.insert(pair<int, Device>(id,dev));
-    }
-    devices.insert(pair<string, Device>(i.name,dev));
-}
+  // vector<struct deviceData> test = sql.getDeviceData();
+  // int deviceAmount = 0;
+  // for (struct deviceData d : data){
+  //   deviceAmount++;
+  //   Device dev(d.ipAddress.c_str(), d.name,d.IDs);
+  //   for (int id : d.IDs){
+  //     deviceIDs.insert(pair<int, Device>(id,dev));
+  //   }
+  //   devices.insert(pair<string, Device>(i.name,dev));
+	// }
 
 
 
@@ -34,19 +34,19 @@ int main(int argc, char** argv){
 	while(1){
     if(sql.checkStateChange()){
       for(map<int,int>::iterator it = sql.changes.begin(); it != sql.changes.end(); ++it){
-        devices[it->first].changeValue(it->first,it->second);
-        //clog << "value changed ID:'" << i << "' Value:'" << val << "'" << endl;
+        //devices[it->first].changeValue(it->first,it->second);
+        clog << "value changed ID:'" << it->first << "' Value:'" << it->second << "'" << endl;
       }
     }
 
 
-    for(map<int, Device>::iterator it = deviceIDs.begin(); it!=deviceIDs.end(); ++it){/*for each device*/
-      changes = it->second.check();
-      for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
-        sql.setPrevValSensor(i->first, i->second);
-        sql.setStateValSensor(i->first, i->second);
-      }
-    }
+    // for(map<int, Device>::iterator it = deviceIDs.begin(); it!=deviceIDs.end(); ++it){/*for each device*/
+    //   changes = it->second.check();
+    //   for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
+    //     sql.setPrevValSensor(i->first, i->second);
+    //     sql.setStateValSensor(i->first, i->second);
+    //   }
+    // }
 
 
   }
