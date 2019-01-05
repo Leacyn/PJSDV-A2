@@ -30,11 +30,12 @@
 class Device{
 
 public:
-  Device(const char *wemosAddress,std::string Name, std::vector<int> ids);
+  Device(const char *wemosAddress,std::string Name, std::vector<int> ids, std::map<int, std::string> types);
   void changeValue(int id, int value);
   std::map<int,int> check();
 
 private:
+  std::map<int, std::string> idType;
   std::map<int, int> IO;
   std::vector<int> sensorIDs;
   const char* ServerAddress;

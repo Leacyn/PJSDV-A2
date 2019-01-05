@@ -21,11 +21,11 @@ int main(int argc, char** argv){
   int deviceAmount = 0;
   for (struct deviceData d : data){
     deviceAmount++;
-    Device *dev = new Device (d.ipAddress.c_str(), d.name,d.IDs);
+    Device *dev = new Device (d.ipAddress.c_str(), d.name,d.IDs, d.idType);
     for (int id : d.IDs){
-      deviceIDs.insert(pair<int, Device*>(id, dev));//deviceIDs[id] = dev;
+      deviceIDs.insert(pair<int, Device*>(id, dev));
     }
-    devices.insert(pair<string, Device*>(d.name, dev));//devices[d.name]=dev;
+    devices.insert(pair<string, Device*>(d.name, dev));
 	}
 	clog << endl << "devices have been initialised" << endl << endl;
 

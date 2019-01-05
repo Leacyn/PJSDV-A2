@@ -9,7 +9,7 @@
 #include "Device.h"
 
 
-Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
+Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids, std::map<int, std::string> types): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids), idType(types){
   switch(name){
     case "bed": Bed dev;
       break;
@@ -31,7 +31,7 @@ Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids)
   }
   std::map<int,int> tempmap;
   for(int i:sensorIDs){
-    tempmap[i] = (int)0;
+    tempmap[i] = 0;
   }
   IO = tempmap;
   std::clog << name << " connected" << std::endl;
