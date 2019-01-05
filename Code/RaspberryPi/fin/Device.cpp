@@ -53,6 +53,11 @@ std::map<int,int> Device::check(){
       returnmap[i->first] = check;
     }
   }
-  IO = dev.check(IO);
+  IO = checkLogic();
   return returnmap;
+}
+
+std::map<std::string, int> Device::checkLogic(){
+  
+  IO = dev.check(IO);
 }

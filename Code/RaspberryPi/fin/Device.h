@@ -41,6 +41,7 @@ private:
   const char* ServerAddress;
   TCP Client;
   std::string name;
+  std::map<int, int> checkLogic();
 };
 
 #endif
