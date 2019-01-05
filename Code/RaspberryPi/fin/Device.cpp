@@ -34,7 +34,7 @@ Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids)
     tempmap[i] = 0;
   }
   IO = tempmap;
-  std::clog << name << " connected" << endl;
+  std::clog << name << " connected" << std::endl;
 }
 
 
