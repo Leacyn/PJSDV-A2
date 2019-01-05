@@ -42,8 +42,8 @@ int main(int argc, char** argv){
     }
 
 
-    for(map<string, Device>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
-      changes = it->second->check();
+    for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
+      changes = (it->second)->check();
       for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
         sql.setPrevValSensor(i->first, i->second);
         sql.setStateValSensor(i->first, i->second);
