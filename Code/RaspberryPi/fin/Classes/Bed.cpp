@@ -10,5 +10,9 @@
 
 
 std::map Bed::check(std::map<int, int> IO){
-
+  if (IO["switch"]){
+    IO["led"]=1;
+  }else{
+    IO["led"]=0;
+  }
 }
