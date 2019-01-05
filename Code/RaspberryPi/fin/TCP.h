@@ -30,11 +30,11 @@ class TCP {
 	public:
 		void sendWrite(int id, int val);
 		int sendRead(int id);
-		TCP(char *address, int portNumber);
+		TCP(const char *address, int portNumber);
 		std::string receiveJson(void);
 	protected:
 		StaticJsonBuffer<200> jBuffer;
-		char *serverAddress;
+		const char *serverAddress;
 		char buffer[256];
 		int port;
 		int sock;

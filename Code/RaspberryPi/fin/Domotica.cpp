@@ -17,7 +17,7 @@ int main(int argc, char** argv){
   /*set up connection to database*/
 	DataBase sql(PATH, USER, PASSWD, DB);
 
-  vector<struct deviceData> test = sql.getDeviceData();
+  vector<struct deviceData> data = sql.getDeviceData();
   int deviceAmount = 0;
   for (struct deviceData d : data){
     deviceAmount++;
@@ -25,7 +25,7 @@ int main(int argc, char** argv){
     for (int id : d.IDs){
       deviceIDs.insert(pair<int, Device>(id,dev));
     }
-    devices.insert(pair<string, Device>(i.name,dev));
+    devices.insert(pair<string, Device>(d.name,dev));
 	}
 	clog << endl << "devices have been initialised" << endl << endl;
 

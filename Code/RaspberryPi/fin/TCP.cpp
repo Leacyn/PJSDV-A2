@@ -12,7 +12,7 @@ using namespace std;
 //message
 
 
-TCP::TCP(char  *address, int portNumber){
+TCP::TCP(const char  *address, int portNumber){
 	port = portNumber;
 	serverAddress = address;
 	clog << endl << "connecting to " << serverAddress << ", " << port << endl;
