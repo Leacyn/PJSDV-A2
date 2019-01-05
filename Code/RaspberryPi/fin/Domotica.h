@@ -23,5 +23,5 @@
 #define DB "domotics"
 
 std::map<int, Device> deviceIDs;    /*id, device*/
-std::map<string, Device> devices;   /*name, device*/
+std::map<std::string, Device> devices;   /*name, device*/
 std::map<int, int> changes;         /*id, value*/

@@ -82,14 +82,14 @@ string TCP::encode(int id, std::string command, int value){
 	return buffer;
 }
 
-TCP::sendWrite(int id, int val){
+void TCP::sendWrite(int id, int val){
 	//sendMsg(id,"w", val);
 	clog << "send {w, "  << id << ", " << val << "}" << endl;
 }
 
 
-int TCP::sendRead(int id, int val){
-	// sendMsg(id, "r", val);
+int TCP::sendRead(int id){
+	// sendMsg(id, "r", 0);
 	// receiveJson();
 	// return msg.value;
 	return 1;
