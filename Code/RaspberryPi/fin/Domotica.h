@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <utility>
 #include "deviceStruct.h"
 #include "Device.h"
 #include "DataBase.h"
