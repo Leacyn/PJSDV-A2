@@ -16,21 +16,21 @@ TCP::TCP(const char  *address, int portNumber){
 	port = portNumber;
 	serverAddress = address;
 	clog << endl << "connecting to " << serverAddress << ", " << port << endl;
-  // if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-  // 	cerr << endl << "CRIT, Socket creation error" << endl;
-  // }
-  // memset(&serv_addr, '0', sizeof(serv_addr));
-	// serv_addr.sin_family = AF_INET;
-  // serv_addr.sin_port = htons(port);
-	//
-  // /* Convert IPv4 and IPv6 addresses from text to binary form */
-  // if(inet_pton(AF_INET, serverAddress, &serv_addr.sin_addr)<=0){
-  // 	cerr << endl << "CRIT, Invalid address / Address not supported" << endl;
-  // }
-	// /*connect*/
-  // if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
-  // 	cerr << endl << "CRIT, Connection Failed" << endl;
-  // }
+  if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+  	cerr << endl << "CRIT, Socket creation error" << endl;
+  }
+  memset(&serv_addr, '0', sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+  serv_addr.sin_port = htons(port);
+
+  /* Convert IPv4 and IPv6 addresses from text to binary form */
+  if(inet_pton(AF_INET, serverAddress, &serv_addr.sin_addr)<=0){
+  	cerr << endl << "CRIT, Invalid address / Address not supported" << endl;
+  }
+	/*connect*/
+  if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+  	cerr << endl << "CRIT, Connection Failed" << endl;
+  }
 }
 
 void TCP::sendMsg(int id, std::string cmd, int Value){
@@ -82,18 +82,18 @@ string TCP::encode(int id, std::string command, int value){
 }
 
 void TCP::sendWrite(int id, int val){
-	//sendMsg(id,"w", val);
+	sendMsg(id,"w", val);
 	clog << "send {w, "  << id << ", " << val << "}" << endl;
 }
 
 
 int TCP::sendRead(int id){
-	//sendMsg(id, "r", 0);
-	//receiveJson();
-	//return msg.value;
-	if (id==2){
-		return 1;
-	} else {
-		return 0;
-	}
+	sendMsg(id, "r", 0);
+	receiveJson();
+	return msg.value;
+	// if (id==2){
+	// 	return 1;
+	// } else {
+	// 	return 0;
+	// }
 }

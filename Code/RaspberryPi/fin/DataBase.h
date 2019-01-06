@@ -24,8 +24,8 @@ class DataBase
 {
 	public:
 		std::map<int, int> changes;/*id,val*/
-		std::map<int, string> getTypes();
-		std::map<int, string> getNames();
+		std::map<int, std::string> getTypes();
+		std::map<int, std::string> getNames();
 		DataBase(std::string path, std::string user, std::string password, std::string db);
 		void closeConnection(void);
 		int checkStateChange();
@@ -33,8 +33,8 @@ class DataBase
 		void setPrevValSensor(int id, int value);
 		std::vector<struct deviceData> getDeviceData();
 	protected:
-		std::map<int, string> types;
-		std::map<int, string> names;
+		std::map<int, std::string> types;
+		std::map<int, std::string> names;
 		sql::Driver *driver;
   	sql::Connection *con;
   	sql::Statement *stmt;

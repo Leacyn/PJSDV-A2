@@ -6,7 +6,7 @@
   Stijn van Es 17018498
   ----------------------------------*/
 
-#include "logic.h"
+#include "Logic.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ map<string, int> logic(map<string, int> IO){
   if (IO["bed_switch"]){
     IO["bed_led"]=toggle("bed_led");
   }
-  
+
 
 /* volgende statements:
 

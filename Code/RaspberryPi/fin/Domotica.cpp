@@ -10,14 +10,16 @@
 
 using namespace std;
 
+/*set up connection to database*/
+DataBase sqlDB(PATH, USER, PASSWD, DB);
+
 int main(int argc, char** argv){
 	/*SETUP*/
 	cout << endl;
 
-  /*set up connection to database*/
-	DataBase sql(PATH, USER, PASSWD, DB);
 
-  vector<struct deviceData> data = sql.getDeviceData();
+
+  vector<struct deviceData> data = sqlDB.getDeviceData();
   int deviceAmount = 0;
   for (struct deviceData d : data){
     deviceAmount++;
@@ -31,8 +33,8 @@ int main(int argc, char** argv){
 
 	/*LOOP*/
 	while(1){
-    if(sql.checkStateChange()){/*Returns true when changes have been made on website*/
-      for(map<int,int>::iterator it = sql.changes.begin(); it != sql.changes.end(); ++it){/*all changes are set to the sql.changes map with id, value*/
+    if(sqlDB.checkStateChange()){/*Returns true when changes have been made on website*/
+      for(map<int,int>::iterator it = sqlDB.changes.begin(); it != sqlDB.changes.end(); ++it){/*all changes are set to the sql.changes map with id, value*/
 				deviceIDs[it->first]->changeValue(it->first,it->second);	/*For every change in database, change value of device*/
         clog << "value changed ID:'" << it->first << "' Value:'" << it->second << "'" << endl;
       }
@@ -52,31 +54,33 @@ int main(int argc, char** argv){
 		execute(logic(allChanges));
 		allChanges.clear();
   }
-  sql.closeConnection();
+  sqlDB.closeConnection();
 	return 0;
 }
 
-saveChanges(map<int, int> changes){
-	map<int, string> names = sql.getNames();
+void saveChanges(map<int, int> changes){
+	map<int, string> names = sqlDB.getNames();
   for(map<int, int>::iterator i = changes.begin(); i!=changes.end(); ++i){
     allChanges[names[i->first]]=changes[i->first];
   }
 }
 
-execute(map<string, int> IO){
-	for(map<int, string>::iterator i = sql.getNames().begin(); i!=sql.getNames().end(); ++i){
+void execute(map<string, int> IO){
+	map<int,string> names = sqlDB.getNames();
+	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
 		if (IO.count(i->second)>0){
-			if (sql.getTypes()[i->first]=="actuator"){
+			if (sqlDB.getTypes()[i->first]=="actuator"){
 				deviceIDs[i->first]->changeValue(i->first, IO[i->second]);
 			}
-			sql.setPrevValSensor(i->first, IO[i->second);
-			sql.setStateValSensor(i->first, IO[i->second);
+			sqlDB.setPrevValSensor(i->first, IO[i->second]);
+			sqlDB.setStateValSensor(i->first, IO[i->second]);
 		}
 	}
 }
 
 int toggle(string name){
-	for(map<int, string>::iterator i = sql.getNames().begin(); i!=sql.getNames().end(); ++i){
+	map<int,string> names = sqlDB.getNames();
+	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
 		if(i->second == name){
 			if (deviceIDs[i->first]->getValue(i->first)){
 				return 0;
@@ -85,4 +89,11 @@ int toggle(string name){
 			}
 		}
 	}
+}
+
+map<string, int> logic(map<string, int> IO){
+  if (IO["bed_switch"]){
+    IO["bed_led"]=toggle("bed_led");
+  }
+	return IO;
 }

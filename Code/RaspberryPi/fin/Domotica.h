@@ -23,11 +23,14 @@
 #define PASSWD "100%Domotics"
 #define DB "domotics"
 
+//DataBase sqlDB;
 std::map<int, Device*> deviceIDs;    /*id, device*/
 std::map<std::string, Device*> devices;   /*name, device*/
 std::map<std::string, int> allChanges;         /*subType, value*/
-saveChanges(map<int, int> changes, map<int, string> types);
-execute(map<string, int> IO, map<int, string> types);
-int toggle(string name);
 
-#include "Logic.h"
+void saveChanges(std::map<int, int> changes);
+void execute(std::map<std::string, int> IO);
+int toggle(std::string name);
+std::map<std::string, int> logic(std::map<std::string, int> IO);
+
+//#include "Logic.h"

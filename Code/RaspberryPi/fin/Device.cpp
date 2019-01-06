@@ -9,7 +9,7 @@
 #include "Device.h"
 
 
-Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids, std::map<int, std::string> types): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
+Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
   // switch(name){
   //   case "bed": Bed dev;
   //     break;

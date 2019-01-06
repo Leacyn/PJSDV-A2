@@ -26,7 +26,7 @@ vector<struct deviceData> DataBase::getDeviceData(){
 	vector<struct deviceData> v;
 	try{
 		stmt = con->createStatement();
-		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Sensor.type AS type, CONCAT(Devices.name,"_",Sensor.sub_type) AS name, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
+		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Sensor.type AS type, CONCAT(Devices.name,\"_\",Sensor.sub_type) AS name, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
 
 		string prevDev = "";
 		string IP;
