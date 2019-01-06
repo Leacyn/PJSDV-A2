@@ -25,4 +25,6 @@
 
 std::map<int, Device*> deviceIDs;    /*id, device*/
 std::map<std::string, Device*> devices;   /*name, device*/
-std::map<int, int> changes;         /*id, value*/
+std::map<std::string, int> allChanges;         /*subType, value*/
+saveChanges(map<int, int> changes, map<int, string> types);
+execute(map<string, int> IO, map<int, string> types);

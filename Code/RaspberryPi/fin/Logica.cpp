@@ -1,5 +1,5 @@
-void logica(){
-
+std::map<std::string, int> logic(std::map<std::string, int> IO){
+  
 
 /* volgende statements:
 
@@ -22,5 +22,5 @@ Zoemer    	!B!DI!L!MR!Z
 alle LEDS	  !B!DI!L!M!RZ
 
 */
-
+  return IO;
 }

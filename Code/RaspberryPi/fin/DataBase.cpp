@@ -26,12 +26,12 @@ vector<struct deviceData> DataBase::getDeviceData(){
 	vector<struct deviceData> v;
 	try{
 		stmt = con->createStatement();
-		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Sensor.sub_type AS type, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
+		res = stmt->executeQuery("SELECT Sensor.id AS sensor_id, Sensor.type AS type, CONCAT(Devices.name,"_",Sensor.sub_type) AS name, Devices.name AS device, Devices.ipAddress AS ip FROM Sensor INNER JOIN Devices ON Sensor.device = Devices.name ORDER BY name ASC");
 
 		string prevDev = "";
 		string IP;
 		vector<int> IDs;
-		map<int, string> types;
+
 
 		while(res->next()){
 			string currDev = res->getString("device").c_str();
@@ -41,12 +41,12 @@ vector<struct deviceData> DataBase::getDeviceData(){
 					data.name = prevDev;
 					data.ipAddress = IP;
 					data.IDs = IDs;
-					data.idType = types;
 					v.push_back(data);
 					IDs.clear();
 				}
 				IP = res->getString("ip").c_str();
 			}
+			names[res->getInt("sensor_id")]=res->getString("name").c_str();
 			types[res->getInt("sensor_id")]=res->getString("type").c_str();
 			IDs.push_back(res->getInt("sensor_id"));
 			prevDev = currDev;
@@ -55,7 +55,6 @@ vector<struct deviceData> DataBase::getDeviceData(){
 		finalData.name = prevDev;
 		finalData.ipAddress = IP;
 		finalData.IDs = IDs;
-		finalData.idType = types;
 		v.push_back(finalData);
 		delete res;
   	delete stmt;
@@ -138,4 +137,12 @@ void DataBase::closeConnection(void){
 	delete stmt;
 	delete res;
 	delete pstmt;
+}
+
+std::map<int, string> DataBase::getNames(){
+	return names;
+}
+
+std::map<int, string> DataBase::getTypes(){
+	return types;
 }

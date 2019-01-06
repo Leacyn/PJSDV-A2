@@ -14,7 +14,7 @@ struct deviceData{
   std::string name;
   std::vector<int> IDs;
   std::string ipAddress;
-  std::map<int,std::string> idType;
+  //std::map<int,std::string> idType;
 };
 
 #endif

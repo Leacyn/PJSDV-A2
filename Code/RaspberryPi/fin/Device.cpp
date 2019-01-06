@@ -9,26 +9,26 @@
 #include "Device.h"
 
 
-Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids, std::map<int, std::string> types): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids), idType(types){
-  switch(name){
-    case "bed": Bed dev;
-      break;
-    case "chair": Chair dev;
-      break;
-    case "door": Door dev;
-      break;
-    case "lamp": Lamp dev;
-      break;
-    case "fridge": Fride dev;
-      break;
-    case "wall": Wall dev;
-      break;
-    case "column": Column dev;
-      break;
-    default: Default dev;
-      cerr << "WARNING: No Logic Class Found For Type: " << name << ". ::Using Default::" << endl;
-      break;
-  }
+Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids, std::map<int, std::string> types): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
+  // switch(name){
+  //   case "bed": Bed dev;
+  //     break;
+  //   case "chair": Chair dev;
+  //     break;
+  //   case "door": Door dev;
+  //     break;
+  //   case "lamp": Lamp dev;
+  //     break;
+  //   case "fridge": Fride dev;
+  //     break;
+  //   case "wall": Wall dev;
+  //     break;
+  //   case "column": Column dev;
+  //     break;
+  //   default: Default dev;
+  //     cerr << "WARNING: No Logic Class Found For Type: " << name << ". ::Using Default::" << endl;
+  //     break;
+  // }
   std::map<int,int> tempmap;
   for(int i:sensorIDs){
     tempmap[i] = 0;
@@ -53,11 +53,13 @@ std::map<int,int> Device::check(){
       returnmap[i->first] = check;
     }
   }
-  IO = checkLogic();
   return returnmap;
 }
 
-std::map<std::string, int> Device::checkLogic(){
-  
-  IO = dev.check(IO);
-}
+// std::map<std::string, int> Device::checkLogic(){
+//   std::map<string, int> typeVal;
+//   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
+//     typeVal[idType[i->first]]=IO[i->first];
+//   }
+//   IO = dev.check(typeVal);
+// }
