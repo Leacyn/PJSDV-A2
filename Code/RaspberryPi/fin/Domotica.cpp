@@ -7,6 +7,7 @@
   ----------------------------------*/
 
 #include "Domotica.h"
+#include "Logic.cpp"
 
 using namespace std;
 
@@ -43,13 +44,7 @@ int main(int argc, char** argv){
 
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
 			saveChanges((it->second)->check());
-			//changes = (it->second)->check();
-			//changes = checkLogic(sql.getTypes(),changes);
-  		// for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
-    	// 	sql.setPrevValSensor(i->first, i->second);
-    	// 	sql.setStateValSensor(i->first, i->second);
-      // }
-    }
+		}
 
 		execute(logic(allChanges));
 		allChanges.clear();
@@ -89,11 +84,4 @@ int toggle(string name){
 			}
 		}
 	}
-}
-
-map<string, int> logic(map<string, int> IO){
-  if (IO["bed_switch"]){
-    IO["bed_led"]=toggle("bed_led");
-  }
-	return IO;
 }
