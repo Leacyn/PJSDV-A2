@@ -56,6 +56,10 @@ std::map<int,int> Device::check(){
   return returnmap;
 }
 
+int Device::getValue(int id){
+  return IO[id];
+}
+
 // std::map<std::string, int> Device::checkLogic(){
 //   std::map<string, int> typeVal;
 //   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){

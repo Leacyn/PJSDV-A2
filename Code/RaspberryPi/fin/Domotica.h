@@ -28,3 +28,6 @@ std::map<std::string, Device*> devices;   /*name, device*/
 std::map<std::string, int> allChanges;         /*subType, value*/
 saveChanges(map<int, int> changes, map<int, string> types);
 execute(map<string, int> IO, map<int, string> types);
+int toggle(string name);
+
+#include "Logic.h"

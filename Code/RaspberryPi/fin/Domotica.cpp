@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 
 
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
-			saveChanges((it->second)->check(), sql.getNames());
+			saveChanges((it->second)->check());
 			//changes = (it->second)->check();
 			//changes = checkLogic(sql.getTypes(),changes);
   		// for(map<int,int>::iterator i = changes.begin(); i!=changes.end(); ++i){/*for each sensor/ actuator*/
@@ -49,27 +49,40 @@ int main(int argc, char** argv){
       // }
     }
 
-		execute(logic(allChanges), sql.getNames());
+		execute(logic(allChanges));
 		allChanges.clear();
   }
   sql.closeConnection();
 	return 0;
 }
 
-saveChanges(map<int, int> changes, map<int, string> types){
+saveChanges(map<int, int> changes){
+	map<int, string> names = sql.getNames();
   for(map<int, int>::iterator i = changes.begin(); i!=changes.end(); ++i){
-    allChanges[types[i->first]]=changes[i->first];
+    allChanges[names[i->first]]=changes[i->first];
   }
 }
 
-execute(map<string, int> IO, map<int, string> types){
-	for(map<int, string>::iterator i = types.begin(); i!=types.end(); ++i){
+execute(map<string, int> IO){
+	for(map<int, string>::iterator i = sql.getNames().begin(); i!=sql.getNames().end(); ++i){
 		if (IO.count(i->second)>0){
 			if (sql.getTypes()[i->first]=="actuator"){
 				deviceIDs[i->first]->changeValue(i->first, IO[i->second]);
 			}
 			sql.setPrevValSensor(i->first, IO[i->second);
 			sql.setStateValSensor(i->first, IO[i->second);
+		}
+	}
+}
+
+int toggle(string name){
+	for(map<int, string>::iterator i = sql.getNames().begin(); i!=sql.getNames().end(); ++i){
+		if(i->second == name){
+			if (deviceIDs[i->first]->getValue(i->first)){
+				return 0;
+			}else{
+				return 1;
+			}
 		}
 	}
 }

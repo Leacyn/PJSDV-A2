@@ -33,7 +33,7 @@ public:
   Device(const char *wemosAddress,std::string Name, std::vector<int> ids);
   void changeValue(int id, int value);
   std::map<int,int> check();
-
+  int getValue(int id);
 private:
   //std::map<int, std::string> idType;
   std::map<int, int> IO;

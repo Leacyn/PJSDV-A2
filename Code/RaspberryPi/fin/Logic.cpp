@@ -1,4 +1,19 @@
-std::map<std::string, int> logic(std::map<std::string, int> IO){
+/*-----------------------------------
+  Logic definition
+  version: 1.0
+  contributors:
+  Vincent Geers 13009672
+  Stijn van Es 17018498
+  ----------------------------------*/
+
+#include "logic.h"
+
+using namespace std;
+
+map<string, int> logic(map<string, int> IO){
+  if (IO["bed_switch"]){
+    IO["bed_led"]=toggle("bed_led");
+  }
   
 
 /* volgende statements:
