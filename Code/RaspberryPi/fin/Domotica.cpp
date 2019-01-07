@@ -77,15 +77,10 @@ int toggle(string name){
 	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
 		if(i->second == name){
 			return !(deviceIDs[i->first]->getValue(i->first));
-			// if (deviceIDs[i->first]->getValue(i->first)){
-			// 	return 0;
-			// }else{
-			// 	return 1;
-			// }
 		}
 	}
 }
 
 void logSleep(int val){
-
+	sqlDB.insertIntoSleep(val);
 }

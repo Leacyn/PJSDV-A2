@@ -32,6 +32,7 @@ class DataBase
 		void setStateValSensor(int id, int value);
 		void setPrevValSensor(int id, int value);
 		void setSensorValue(int id, int value);
+		void insertIntoSleep(int value)
 		std::vector<struct deviceData> getDeviceData();
 	protected:
 		std::map<int, std::string> types;

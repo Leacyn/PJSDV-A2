@@ -69,7 +69,6 @@ vector<struct deviceData> DataBase::getDeviceData(){
 void DataBase::setStateValSensor(int id, int value){
 	try {
   	pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ? WHERE id = ?");
-
     pstmt->setInt(1, value);
     pstmt->setInt(2, id);
     pstmt->executeUpdate();
@@ -86,6 +85,17 @@ void DataBase::reset(){
 		delete stmt;
 	} catch (sql::SQLException &e) {
 		sqlError(e);
+	}
+}
+
+void DataBase::insertIntoSleep(int value){
+	try{
+		pstmt = con->prepareStatement("insert into Sleep (value) VALUES (?)");
+		pstmt->setInt(1, value);
+		pstmt->execute();
+		delete pstmt;
+	} catch (sql::SQLException &e) {
+  	sqlError(e);
 	}
 }
 
