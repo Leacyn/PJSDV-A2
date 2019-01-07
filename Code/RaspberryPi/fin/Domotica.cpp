@@ -40,12 +40,9 @@ int main(int argc, char** argv){
         clog << "value changed ID:'" << it->first << "' Value:'" << it->second << "'" << endl;
       }
     }
-
-
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
 			saveChanges((it->second)->check());
 		}
-
 		execute(logic(allChanges));
 		allChanges.clear();
   }
@@ -77,11 +74,12 @@ int toggle(string name){
 	map<int,string> names = sqlDB.getNames();
 	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
 		if(i->second == name){
-			if (deviceIDs[i->first]->getValue(i->first)){
-				return 0;
-			}else{
-				return 1;
-			}
+			return !(deviceIDs[i->first]->getValue(i->first));
+			// if (deviceIDs[i->first]->getValue(i->first)){
+			// 	return 0;
+			// }else{
+			// 	return 1;
+			// }
 		}
 	}
 }
