@@ -15,4 +15,5 @@ std::map Bed::check(std::map<int, int> IO){
   }else{
     IO["led"]=0;
   }
+  return IO;
 }
