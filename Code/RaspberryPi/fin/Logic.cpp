@@ -12,6 +12,8 @@ using namespace std;
 
 
 map<string, int> logic(map<string, int> IO){
+
+
   if (IO.count("bed_switch")>0){
     IO["bed_led"]=toggle("bed_led");
   }
@@ -29,6 +31,10 @@ map<string, int> logic(map<string, int> IO){
 
   if (IO.count("door_switch")>0){
     IO["door_led"]=toggle("door_led");
+  }
+
+  if (IO.count("bed_pressure")>0){
+    logSleep(IO["bed_pressure"]);
   }
 /* volgende statements:
 

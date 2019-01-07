@@ -28,6 +28,7 @@ std::map<int, Device*> deviceIDs;    /*id, device*/
 std::map<std::string, Device*> devices;   /*name, device*/
 std::map<std::string, int> allChanges;         /*subType, value*/
 
+void logSleep(int val);
 void saveChanges(std::map<int, int> changes);
 void execute(std::map<std::string, int> IO);
 int toggle(std::string name);

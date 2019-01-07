@@ -67,8 +67,7 @@ void execute(map<string, int> IO){
 			if (sqlDB.getTypes()[i->first]=="actuator"){
 				deviceIDs[i->first]->changeValue(i->first, IO[i->second]);
 			}
-			sqlDB.setPrevValSensor(i->first, IO[i->second]);
-			sqlDB.setStateValSensor(i->first, IO[i->second]);
+			sqlDB.setSensorValue(i->first, IO[i->second]);
 		}
 	}
 }
@@ -85,4 +84,8 @@ int toggle(string name){
 			// }
 		}
 	}
+}
+
+void logSleep(int val){
+
 }
