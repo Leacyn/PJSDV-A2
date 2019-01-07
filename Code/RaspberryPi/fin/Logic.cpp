@@ -6,18 +6,16 @@
   Stijn van Es 17018498
   ----------------------------------*/
 
-#include "Logic.h"
+
 
 using namespace std;
 
-// int changed(string){
-//   if ()
-// }
 
 map<string, int> logic(map<string, int> IO){
-  if (IO["bed_switch"] && IO.count("bed_switch")>0){
+  if (IO.count("bed_switch")>0){
     IO["bed_led"]=toggle("bed_led");
   }
+
 
 
 
