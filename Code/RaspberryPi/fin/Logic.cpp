@@ -17,8 +17,19 @@ map<string, int> logic(map<string, int> IO){
   }
 
 
+  if (IO.count("lamp_motion")>0){
+    IO["lamp_led"]=IO["lamp_motion"];
+  }
 
 
+  if (IO.count("column_smoke")>0){
+    IO["column_buzzer"]=IO["column_smoke"];
+  }
+
+
+  if (IO.count("door_switch")>0){
+    IO["door_led"]=toggle("door_led");
+  }
 /* volgende statements:
 
 B = Bedschakelaar	  actuatoren/outputs
