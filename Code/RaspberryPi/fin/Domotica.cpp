@@ -36,8 +36,10 @@ int main(int argc, char** argv){
 	while(1){
     if(sqlDB.checkStateChange()){/*Returns true when changes have been made on website*/
       for(map<int,int>::iterator it = sqlDB.changes.begin(); it != sqlDB.changes.end(); ++it){/*all changes are set to the sql.changes map with id, value*/
-				deviceIDs[it->first]->changeValue(it->first,it->second);	/*For every change in database, change value of device*/
-        clog << "value changed ID:'" << it->first << "' Value:'" << it->second << "'" << endl;
+				if(sqlDB.getTypes()[it->first]=="actuator"){
+					deviceIDs[it->first]->changeValue(it->first,it->second);	/*For every change in database, change value of device*/
+				}
+				clog << "value changed ID:'" << it->first << "' Value:'" << it->second << "'" << endl;
       }
     }
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
@@ -53,7 +55,8 @@ int main(int argc, char** argv){
 void saveChanges(map<int, int> changes){
 	map<int, string> names = sqlDB.getNames();
   for(map<int, int>::iterator i = changes.begin(); i!=changes.end(); ++i){
-    allChanges[names[i->first]]=changes[i->first];
+		if(sqlDB.getTypes()[i->first]=="sensor")
+    	allChanges[names[i->first]]=changes[i->first];
   }
 }
 

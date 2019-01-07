@@ -35,7 +35,7 @@ class TCP {
 	protected:
 		StaticJsonBuffer<200> jBuffer;
 		const char *serverAddress;
-		char buffer[256];
+		char *buffer;//[256];
 		int port;
 		int sock;
 		int valread;

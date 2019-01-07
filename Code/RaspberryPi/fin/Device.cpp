@@ -31,6 +31,7 @@ std::map<int,int> Device::check(){
     int check = Client.sendRead(i->first);
     if(check != IO[i->first]){
       IO[i->first] = check;
+      std::clog << "received change: " << IO[i->first] << std::endl; 
       returnmap[i->first] = check;
     }
   }

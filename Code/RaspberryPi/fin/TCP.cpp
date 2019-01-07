@@ -13,6 +13,7 @@ using namespace std;
 
 
 TCP::TCP(const char  *address, int portNumber){
+	buffer = (char*)malloc(512);
 	port = portNumber;
 	serverAddress = address;
 	clog << endl << "connecting to " << serverAddress << ", " << port << endl;
@@ -40,23 +41,23 @@ void TCP::sendMsg(int id, std::string cmd, int Value){
 	char *message = new char[smsg.length()];
 	strcpy(message, smsg.c_str());
 	send(sock , message , strlen(message) , 0 );
-	cout << "Message sent";
+	//cout << "Message sent";
 	receiveJson();
-	cout << endl << "(" << id << " " << msg.ID << ")" << "(" << cmd << " " <<  msg.command << ")" << "(" << Value << " " << msg.value << ")" << endl;
-	if(id == msg.ID && !(cmd.compare(msg.command)) && Value == msg.value){
-		cout << " Message varified" << endl;
-	}
+	//cout << endl << "(" << id << " " << msg.ID << ")" << "(" << cmd << " " <<  msg.command << ")" << "(" << Value << " " << msg.value << ")" << endl;
+	// if(id == msg.ID && !(cmd.compare(msg.command)) && Value == msg.value){
+	// 	//cout << " Message varified" << endl;
+	// }
 
-	free(message);
+	delete message;
 }
 
 std::string TCP::receiveJson(void){
-
-	int recieved = recv(sock, buffer,sizeof(buffer) + 1, 0);
-	//cout << (string)buffer <<"    |     " << recieved;
+	jBuffer.clear();
+	int recieved = recv(sock, buffer,128/*sizeof(buffer)*/, 0);
+	//cout << endl << buffer <<"    |     " << recieved;
 	JsonObject& message = jBuffer.parseObject((string)buffer);
 
-	if(!message.success()) cout << "parserfail";
+	if(!message.success()) cerr << "parserfail\n";
 	//else {message.printTo(cout);}
 	msg.ID = message.get<signed int>("id");
 	msg.command =  message.get<std::string>("command");
@@ -90,6 +91,7 @@ void TCP::sendWrite(int id, int val){
 int TCP::sendRead(int id){
 	sendMsg(id, "r", 0);
 	receiveJson();
+	std::clog << msg.value<<", "<<id;
 	return msg.value;
 	// if (id==2){
 	// 	return 1;
