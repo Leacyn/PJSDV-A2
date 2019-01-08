@@ -45,6 +45,7 @@ int main(int argc, char** argv){
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
 			saveChanges((it->second)->check());
 		}
+		currentTime = time(0);
 		execute(logic(allChanges));
 		allChanges.clear();
   }

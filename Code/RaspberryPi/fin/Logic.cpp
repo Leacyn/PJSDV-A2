@@ -12,7 +12,7 @@ using namespace std;
 
 
 map<string, int> logic(map<string, int> IO){
-
+  
 
   if (IO.count("bed_switch")>0){
     clog << "toggleled "<< IO["bed_switch"]<<endl;

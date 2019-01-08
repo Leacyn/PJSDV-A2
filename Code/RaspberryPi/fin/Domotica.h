@@ -13,6 +13,7 @@
 #include <map>
 #include <vector>
 #include <utility>
+#include <time.h>
 #include "deviceStruct.h"
 #include "Device.h"
 #include "DataBase.h"
@@ -27,6 +28,7 @@
 std::map<int, Device*> deviceIDs;    /*id, device*/
 std::map<std::string, Device*> devices;   /*name, device*/
 std::map<std::string, int> allChanges;         /*subType, value*/
+time_t currentTime;
 
 void logSleep(int val);
 void saveChanges(std::map<int, int> changes);
