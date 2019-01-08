@@ -124,6 +124,23 @@ void DataBase::setPrevValSensor(int id, int value){
 	}
 }
 
+int DataBase::getVal(string name){
+	int result;
+	try {
+		pstmt = con->prepareStatement("select stateVal from Sensor where CONCAT(device,\"_\",sub_type) = ?");
+		pstmt->setString(1, name);
+		res = pstmt->executeQuery();
+		while (res->next()){
+			//changes.insert(pair<int, int>(res->getInt("id"),res->getInt("stateVal")));
+			result = res->getInt("stateVal");
+		}
+		delete pstmt;
+	} catch (sql::SQLException &e) {
+		sqlError(e);
+	}
+	return result;
+}
+
 int DataBase::checkStateChange(){
 	changes.clear();
 	try{

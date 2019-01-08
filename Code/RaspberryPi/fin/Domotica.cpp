@@ -73,12 +73,15 @@ void execute(map<string, int> IO){
 }
 
 int toggle(string name){
-	map<int,string> names = sqlDB.getNames();
-	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
-		if(i->second == name){
-			return !(deviceIDs[i->first]->getValue(i->first));
-		}
-	}
+	int val = sqlDB.getVal(name);
+	return !(val);
+	// map<int,string> names = sqlDB.getNames();
+	// for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
+	// 	if(i->second == name){
+	// 		//clog << (deviceIDs[i->first]->getValue(i->first));
+	//
+	// 	}
+	// }
 }
 
 void logSleep(int val){

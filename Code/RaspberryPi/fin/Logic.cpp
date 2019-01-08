@@ -15,7 +15,10 @@ map<string, int> logic(map<string, int> IO){
 
 
   if (IO.count("bed_switch")>0){
+    clog << "toggleled "<< IO["bed_switch"]<<endl;
+
     IO["bed_led"]=toggle("bed_led");
+
   }
 
 
@@ -29,7 +32,7 @@ map<string, int> logic(map<string, int> IO){
   }
 
 
-  if (IO.count("door_switch")>0){
+  if (IO.count("door_switch_binnen")>0, IO.count("door_switch_buiten")>0){
     IO["door_led"]=toggle("door_led");
   }
 
