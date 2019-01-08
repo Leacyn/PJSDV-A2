@@ -30,6 +30,7 @@ std::map<std::string, Device*> devices;   /*name, device*/
 std::map<std::string, int> allChanges;         /*subType, value*/
 time_t currentTime;
 
+int getCurrentTime();
 void logSleep(int val);
 void saveChanges(std::map<int, int> changes);
 void execute(std::map<std::string, int> IO);

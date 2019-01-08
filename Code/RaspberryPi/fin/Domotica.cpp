@@ -45,7 +45,6 @@ int main(int argc, char** argv){
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*for each device*/
 			saveChanges((it->second)->check());
 		}
-		currentTime = time(0);
 		execute(logic(allChanges));
 		allChanges.clear();
   }
@@ -73,16 +72,14 @@ void execute(map<string, int> IO){
 	}
 }
 
+int getCurrentTime(){
+	int t = time(0);
+	return (t%60)+((i/60)%60)+((((i/60)/60)%24)+1);
+}
+
 int toggle(string name){
 	int val = sqlDB.getVal(name);
 	return !(val);
-	// map<int,string> names = sqlDB.getNames();
-	// for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){
-	// 	if(i->second == name){
-	// 		//clog << (deviceIDs[i->first]->getValue(i->first));
-	//
-	// 	}
-	// }
 }
 
 void logSleep(int val){
