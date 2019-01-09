@@ -6,8 +6,10 @@
   Stijn van Es 17018498
   ----------------------------------*/
 
-int startedSitting;
+int startedSitting=0;
 int sitting = 0;
+int fridgeOpen = 0;
+int fridgeOpeningTime =0;
 
 using namespace std;
 
@@ -30,15 +32,17 @@ map<string, int> logic(map<string, int> IO){
 
   if (IO.count("chair_pressure")>0){ /*Check if anyone is sitting and set the time for when said person started sitting*/
     if ((IO["chair_pressure"]>0)&&(!sitting)){
+      logSwitch("chair", "sitting");
       startedSitting = time(0);
       sitting = 1;
     } else if (IO["chair_pressure"]<=0){
+      logSwitch("chair", "not sitting");
       sitting = 0;
       startedSitting = 0;
       IO["chair_vibration"]=OFF;
     }
   }
-  if (sitting && ((time(0) - startedSitting) > (15 * 60))){/*If anyone is sitting for more than 15 min chair starts vibrating*/
+  if (sitting && ((time(0) - startedSitting) > (20 * 60))){/*If anyone is sitting for more than 15 min chair starts vibrating*/
     IO["chair_vibration"]=ON;
   }
 
@@ -66,6 +70,23 @@ map<string, int> logic(map<string, int> IO){
 
   if (IO.count("bed_pressure")>0){/*Log sleep pattern*/
     logSleep(IO["bed_pressure"]);
+  }
+
+  if (IO.count("fridge_door_switch")>0){/*Check if fridge door is open*/
+    //logSwitch("fridge_door_switch");
+    if (!IO["fridge_door_switch"] && !fridgeOpen){
+      logSwitch("fridge", "open");
+      fridgeOpen = 1;
+      fridgeOpeningTime = time(0);
+    } else if (IO["fridge_door_switch"]){
+      logSwitch("fridge", "closed");
+      fridgeOpen = 0;
+      IO["column_buzzer"]=OFF;
+    }
+  }
+
+  if (fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 * 60))){/*If fridge door is open for more than 5 minutes start buzzer*/
+    IO["column_buzzer"]=ON;
   }
 /* volgende statements:
 
