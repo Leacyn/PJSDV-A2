@@ -22,8 +22,9 @@ map<string, int> logic(map<string, int> IO){
     IO["wall_led"]=OFF;
     IO["door_led"]=OFF;
   }
-  if ((currentTime > 7*60*60) && (currentTime < (7*60*60)+30)){/*If current between 7:00 and 7:00:30 turn light on*/
+  if ((currentTime > 7*60*60) && (currentTime < (7*60*60)+30)){/*If current between 7:00 and 7:00:30 turn light on and open curtains*/
     IO["bed_led"]=ON;
+    IO["wall_window"]=OFF;
   }
 
 
