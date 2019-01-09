@@ -74,7 +74,7 @@ void execute(map<string, int> IO){
 
 int getCurrentTime(){
 	int t = time(0);
-	return (t%60)+((i/60)%60)+((((i/60)/60)%24)+1);
+	return (t%60)+(((t/60)%60)*60)+(((((t/60)/60)%24)+1)*60*60);
 }
 
 int toggle(string name){

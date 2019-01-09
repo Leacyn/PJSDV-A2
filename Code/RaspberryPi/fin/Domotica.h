@@ -24,11 +24,14 @@
 #define PASSWD "100%Domotics"
 #define DB "domotics"
 
+#define OFF 0
+#define ON 1
+
 //DataBase sqlDB;
 std::map<int, Device*> deviceIDs;    /*id, device*/
 std::map<std::string, Device*> devices;   /*name, device*/
 std::map<std::string, int> allChanges;         /*subType, value*/
-time_t currentTime;
+
 
 int getCurrentTime();
 void logSleep(int val);
