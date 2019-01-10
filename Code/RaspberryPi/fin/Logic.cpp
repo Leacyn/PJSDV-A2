@@ -10,6 +10,8 @@ int startedSitting=0;
 int sitting = 0;
 int fridgeOpen = 0;
 int fridgeOpeningTime =0;
+int tooLong = 0;
+int timeOn = 0;
 
 using namespace std;
 
@@ -32,11 +34,11 @@ map<string, int> logic(map<string, int> IO){
 
   if (IO.count("chair_pressure")>0){ /*Check if anyone is sitting and set the time for when said person started sitting*/
     if ((IO["chair_pressure"]>0)&&(!sitting)){
-      logSwitch("chair", "sitting");
+      //logSwitch("chair", "sitting");
       startedSitting = time(0);
       sitting = 1;
     } else if (IO["chair_pressure"]<=0){
-      logSwitch("chair", "not sitting");
+      //logSwitch("chair", "not sitting");
       sitting = 0;
       startedSitting = 0;
       IO["chair_vibration"]=OFF;
@@ -52,7 +54,14 @@ map<string, int> logic(map<string, int> IO){
   }
 
   if (IO.count("lamp_motion")>0){/*Set led when motion is detected*/
-    IO["lamp_led"]=IO["lamp_motion"];
+    if (IO["lamp_motion"]){
+      timeOn = time(0);
+    }
+    if (((time(0) - timeOn) < (5 * 60)) || !timeOn){
+      IO["lamp_led"] = ON;
+    }else {
+      IO["lamp_led"] = OFF;
+    }
   }
 
   if (IO.count("column_smoke")>0){/*Enable buzzer when smoke is detected*/
@@ -73,19 +82,24 @@ map<string, int> logic(map<string, int> IO){
   }
 
   if (IO.count("fridge_door_switch")>0){/*Check if fridge door is open*/
-    //logSwitch("fridge_door_switch");
     if (!IO["fridge_door_switch"] && !fridgeOpen){
-      logSwitch("fridge", "open");
+      IO["fridge_cooling"] = 0;
+      //logSwitch("fridge", "open");
       fridgeOpen = 1;
       fridgeOpeningTime = time(0);
     } else if (IO["fridge_door_switch"]){
-      logSwitch("fridge", "closed");
+      IO["fridge_cooling"] = 1;
+      //logSwitch("fridge", "closed");
       fridgeOpen = 0;
+      tooLong = 0;
       IO["column_buzzer"]=OFF;
     }
   }
 
-  if (fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 * 60))){/*If fridge door is open for more than 5 minutes start buzzer*/
+
+  if (!tooLong && fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 ))){/*If fridge door is open for more than 5 minutes start buzzer*/
+    tooLong=1;
+    //clog << "too long open \n";
     IO["column_buzzer"]=ON;
   }
 /* volgende statements:

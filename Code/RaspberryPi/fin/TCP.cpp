@@ -91,11 +91,11 @@ void TCP::sendWrite(int id, int val){
 int TCP::sendRead(int id){
 	sendMsg(id, "r", 0);
 	receiveJson();
-<<<<<<< HEAD
-	std::clog << msg.value<<", "<<id<<endl;
-=======
+//<<<<<<< HEAD
+	//std::clog << msg.value<<", "<<id<<endl;
+//=======
 	std::clog << msg.value<<", "<<id << "\n";
->>>>>>> ff3ff03c4e70447f5ffdbd56196daaabc86db33f
+//>>>>>>> ff3ff03c4e70447f5ffdbd56196daaabc86db33f
 	return msg.value;
 	// if (id==2){
 	// 	return 1;
