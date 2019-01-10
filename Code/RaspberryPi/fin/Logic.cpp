@@ -34,11 +34,11 @@ map<string, int> logic(map<string, int> IO){
 
   if (IO.count("chair_pressure")>0){ /*Check if anyone is sitting and set the time for when said person started sitting*/
     if ((IO["chair_pressure"]>0)&&(!sitting)){
-      //logSwitch("chair", "sitting");
+      logSwitch("chair", "sitting");
       startedSitting = time(0);
       sitting = 1;
     } else if (IO["chair_pressure"]<=0){
-      //logSwitch("chair", "not sitting");
+      logSwitch("chair", "not sitting");
       sitting = 0;
       startedSitting = 0;
       IO["chair_vibration"]=OFF;
@@ -70,6 +70,11 @@ map<string, int> logic(map<string, int> IO){
 
   if (IO.count("door_switch_buiten")>0){ /*Open door when switch (outside) is pressed*/
     IO["door_servo"]=toggle("door_servo");
+    if (IO["door_servo"]){
+      logSwitch("door", "open");
+    } else {
+      logSwitch("door", "closed");
+    }
     IO["door_led"]=OFF;
   }
 
@@ -84,12 +89,12 @@ map<string, int> logic(map<string, int> IO){
   if (IO.count("fridge_door_switch")>0){/*Check if fridge door is open*/
     if (!IO["fridge_door_switch"] && !fridgeOpen){
       IO["fridge_cooling"] = 0;
-      //logSwitch("fridge", "open");
+      logSwitch("fridge", "open");
       fridgeOpen = 1;
       fridgeOpeningTime = time(0);
     } else if (IO["fridge_door_switch"]){
       IO["fridge_cooling"] = 1;
-      //logSwitch("fridge", "closed");
+      logSwitch("fridge", "closed");
       fridgeOpen = 0;
       tooLong = 0;
       IO["column_buzzer"]=OFF;
@@ -99,7 +104,7 @@ map<string, int> logic(map<string, int> IO){
 
   if (!tooLong && fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 ))){/*If fridge door is open for more than 5 minutes start buzzer*/
     tooLong=1;
-    //clog << "too long open \n";
+    //clog << "open for too long \n";
     IO["column_buzzer"]=ON;
   }
 /* volgende statements:
