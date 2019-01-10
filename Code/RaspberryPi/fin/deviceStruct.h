@@ -10,7 +10,8 @@
 #include <string>
 #include <vector>
 
-struct deviceData{/*struct with data for a device*/
+/*struct with data for a device*/
+struct deviceData{
   std::string name;
   std::vector<int> IDs;
   std::string ipAddress;

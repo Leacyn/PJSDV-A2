@@ -11,24 +11,26 @@
 
 using namespace std;
 
-
+/*setup initializes all devices specified in database*/
 int /*Domotica::*/setup(){
 	cout << endl;
 
   vector<struct deviceData> data = sqlDB.getDeviceData();
-  int deviceAmount = 0;
   for (struct deviceData d : data){
-    deviceAmount++;
-    Device *dev = new Device (d.ipAddress.c_str(), d.name,d.IDs);
+    Device *dev = new Device (d.ipAddress.c_str(), d.name,d.IDs);/*create pointer to new device*/
     for (int id : d.IDs){
-      deviceIDs.insert(pair<int, Device*>(id, dev));
+      deviceIDs.insert(pair<int, Device*>(id, dev));/*create map of all ids in relation to device object*/
     }
-    devices.insert(pair<string, Device*>(d.name, dev));
+    devices.insert(pair<string, Device*>(d.name, dev));/*create map of all device names in relation to device object*/
 	}
 	clog << endl << "devices have been initialised" << endl << endl;
 	return 1;
 }
 
+/*
+1. Loop checks state change in database and sends state changes to the devices
+2. checks state of all sensors and actuators and logs it in database
+*/
 int /*Domotica::*/loop(){
 	while(1){
     if(sqlDB.checkStateChange()){/*Returns true when changes have been made on website*/
@@ -49,6 +51,7 @@ int /*Domotica::*/loop(){
 	return 0;
 }
 
+/*Compile a map (alllChanges) with all changes from every device */
 void /*Domotica::*/saveChanges(map<int, int> changes){
 	map<int, string> names = sqlDB.getNames();
   for(map<int, int>::iterator i = changes.begin(); i!=changes.end(); ++i){
@@ -57,6 +60,7 @@ void /*Domotica::*/saveChanges(map<int, int> changes){
   }
 }
 
+/*execute IO output from logic on devices*/
 void /*Domotica::*/execute(map<string, int> IO){
 	map<int,string> names = sqlDB.getNames();/*get map id, name */
 	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){/*for each existing name in database*/
@@ -69,14 +73,16 @@ void /*Domotica::*/execute(map<string, int> IO){
 	}
 }
 
+/*returns current time in seconds since 00:00*/
 int /*Domotica::*/getCurrentTime(){
 	int t = time(0);
-	return (t%60)+(((t/60)%60)*60)+(((((t/60)/60)%24)+1)*60*60);/*return current time in seconds since 00:00*/
+	return (t%60)+(((t/60)%60)*60)+(((((t/60)/60)%24)+1)*60*60);
 }
 
+/*returns opposite of current state*/
 int /*Domotica::*/toggle(string name){
 	int val = sqlDB.getVal(name);
-	return !(val);/*return opposite of current state*/
+	return !(val);
 }
 
 void /*Domotica::*/logSleep(int val){

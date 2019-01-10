@@ -16,7 +16,9 @@
 #include <iostream>
 
 #include "TCP.h"
-
+/*
+Device is a class which specifies the device and its IO. Through this class, a connection is set up with each wemos
+*/
 class Device{
 
 public:

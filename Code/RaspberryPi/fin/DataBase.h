@@ -20,6 +20,9 @@
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
 
+/*
+This class sets up a connection to the database. It also runs queries and updates the tables of this database.
+*/
 class DataBase
 {
 	public:

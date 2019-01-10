@@ -10,25 +10,29 @@
 
 using namespace std;
 
-
-map<string, int> /*Domotica::*/logic(map<string, int> IO){/*execute logic on IO map (name, value)*/
+/*execute logic on IO map (name, value)*/
+map<string, int> /*Domotica::*/logic(map<string, int> IO){
 
   int currentTime = getCurrentTime();/*Get current time in seconds since 00:00*/
 
-  if ((currentTime > 22*60*60) && (currentTime < (22*60*60)+30)){ /*If current between 22:00 and 22:00:30 turn light off*/
+
+/*If current between 22:00 and 22:00:30 turn light off*/
+  if ((currentTime > 22*60*60) && (currentTime < (22*60*60)+30)){
     IO["bed_led"]=OFF;
     IO["lamp_led"]=OFF;
     IO["wall_window"]=ON;
     IO["wall_led"]=OFF;
     IO["door_led"]=OFF;
   }
-  if ((currentTime > 7*60*60) && (currentTime < (7*60*60)+30)){/*If current between 7:00 and 7:00:30 turn light on and open curtains*/
+
+/*If current between 7:00 and 7:00:30 turn light on and open curtains*/
+  if ((currentTime > 7*60*60) && (currentTime < (7*60*60)+30)){
     IO["bed_led"]=ON;
     IO["wall_window"]=OFF;
   }
 
-
-  if (IO.count("chair_pressure")>0){ /*Check if anyone is sitting and set the time for when said person started sitting*/
+/*Check if someone sits in the chair, starts a wait timer*/
+  if (IO.count("chair_pressure")>0){
     if ((IO["chair_pressure"]>0)&&(!sitting)){
       logSwitch("chair", "sitting");
       startedSitting = time(0);
@@ -40,16 +44,19 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){/*execute logic on IO 
       IO["chair_vibration"]=OFF;
     }
   }
-  if (sitting && ((time(0) - startedSitting) > (20 * 60))){/*If anyone is sitting for more than 15 min chair starts vibrating*/
+
+/*If someone sits for more than 15 min in the chair it starts vibrating*/
+  if (sitting && ((time(0) - startedSitting) > (20 * 60))){
     IO["chair_vibration"]=ON;
   }
 
-
-  if (IO.count("bed_switch")>0){/*Toggle led on switch press*/
+/*Toggle bed led on switch press*/
+  if (IO.count("bed_switch")>0){
     IO["bed_led"]=toggle("bed_led");
   }
 
-  if (IO.count("lamp_motion")>0){/*Set led when motion is detected*/
+/*turn room lamp on when motion is detected*/
+  if (IO.count("lamp_motion")>0){
     if (IO["lamp_motion"]){
       timeOn = time(0);
     }
@@ -60,11 +67,13 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){/*execute logic on IO 
     }
   }
 
-  if (IO.count("column_smoke")>0){/*Enable buzzer when smoke is detected*/
+/*Enable buzzer when smoke is detected*/
+  if (IO.count("column_smoke")>0){
     IO["column_buzzer"]=IO["column_smoke"];
   }
 
-  if (IO.count("door_switch_buiten")>0){ /*Open door when switch (outside) is pressed*/
+/*Open door when switch (outside) is pressed*/
+  if (IO.count("door_switch_buiten")>0){
     IO["door_servo"]=toggle("door_servo");
     if (IO["door_servo"]){
       logSwitch("door", "open");
@@ -74,15 +83,18 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){/*execute logic on IO 
     IO["door_led"]=OFF;
   }
 
-  if (IO.count("door_switch_binnen")>0){/*Toggle led on switch press*/
+/*Toggle door led on switch press*/
+  if (IO.count("door_switch_binnen")>0){
     IO["door_led"]=toggle("door_led");
   }
 
-  if (IO.count("bed_pressure")>0){/*Log sleep pattern*/
+/*Log sleep pattern*/
+  if (IO.count("bed_pressure")>0){
     logSleep(IO["bed_pressure"]);
   }
 
-  if (IO.count("fridge_door_switch")>0){/*Check if fridge door is open*/
+/*Check if fridge door is open if so, set timer, log status*/
+  if (IO.count("fridge_door_switch")>0){
     if (!IO["fridge_door_switch"] && !fridgeOpen){
       IO["fridge_cooling"] = 0;
       logSwitch("fridge", "open");
@@ -97,12 +109,15 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){/*execute logic on IO 
     }
   }
 
-
-  if (!tooLong && fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 ))){/*If fridge door is open for more than 5 minutes start buzzer*/
+/*If fridge door is open for more than 5 minutes start buzzer*/
+  if (!tooLong && fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 ))){
     tooLong=1;
     //clog << "open for too long \n";
     IO["column_buzzer"]=ON;
   }
+
+
+
 /* volgende statements:
 
 B = Bedschakelaar	  actuatoren/outputs

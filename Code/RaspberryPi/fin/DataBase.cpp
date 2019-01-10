@@ -4,10 +4,14 @@
   contributors:
   Stijn van Es 17018498
 ----------------------------------*/
+/*
+Requirement is that the database has been defined and is initialised
+*/
 #include "DataBase.h"
 
 using namespace std;
 
+/*Constructor, set up connection to database with provided parameters*/
 DataBase::DataBase(string path, string user, string password, string db){
 	try {
 		/* Create a connection */
@@ -22,6 +26,7 @@ DataBase::DataBase(string path, string user, string password, string db){
 	clog << "Database connected" << endl;
 }
 
+/*Gets all device data, puts it in a public map (id, value). returns whether changes occured*/
 vector<struct deviceData> DataBase::getDeviceData(){
 	vector<struct deviceData> v;
 	try{
@@ -38,7 +43,7 @@ vector<struct deviceData> DataBase::getDeviceData(){
 			string currDev = res->getString("device").c_str();
 			if (prevDev == "" || prevDev!=currDev){
 				if (prevDev != ""){
-					struct deviceData data;/*create a DataStruct and put it inn vector v*/
+					struct deviceData data;/*create a DataStruct and put it in vector v*/
 					data.name = prevDev;
 					data.ipAddress = IP;
 					data.IDs = IDs;
@@ -80,9 +85,9 @@ void DataBase::setStateValSensor(int id, int value){
   }
 }
 
+/*set all previous values in database to current state*/
 void DataBase::reset(){
 	try {
-		/*set all previous values in database to current state*/
 		stmt = con->createStatement();
 		stmt->executeUpdate("UPDATE Sensor SET prevVal = stateVal");
 		delete stmt;
@@ -91,9 +96,9 @@ void DataBase::reset(){
 	}
 }
 
+/*insert new log entry into Sleep*/
 void DataBase::insertIntoSleep(int value){
 	try{
-		/*insert new log entry into Sleep*/
 		pstmt = con->prepareStatement("insert into Sleep (value) VALUES (?)");
 		pstmt->setInt(1, value);
 		pstmt->execute();
@@ -103,9 +108,9 @@ void DataBase::insertIntoSleep(int value){
 	}
 }
 
+/*insert new log entry*/
 void DataBase::insertIntoLog(string dev, string state){
 	try{
-		/*insert new log entry*/
 		pstmt = con->prepareStatement("insert into Log (device, state) VALUES (?, ?)");
 		pstmt->setString(1, dev);
 		pstmt->setString(2, state);
@@ -116,9 +121,9 @@ void DataBase::insertIntoLog(string dev, string state){
 	}
 }
 
+/*edit current state value and previous state value where id*/
 void DataBase::setSensorValue(int id, int value){
 	try {
-		/*edit current state value and previous state value where id*/
 		pstmt = con->prepareStatement("UPDATE Sensor SET stateVal = ?, prevVal = ? WHERE id = ?");
 		pstmt->setInt(1, value);
 		pstmt->setInt(2, value);
@@ -130,9 +135,9 @@ void DataBase::setSensorValue(int id, int value){
 	}
 }
 
+/*edit previous state value where id*/
 void DataBase::setPrevValSensor(int id, int value){
 	try {
-		/*edit previous state value where id*/
 		pstmt = con->prepareStatement("UPDATE Sensor SET prevVal = ? WHERE id = ?");
 		pstmt->setInt(1, value);
 		pstmt->setInt(2, id);
@@ -143,15 +148,14 @@ void DataBase::setPrevValSensor(int id, int value){
 	}
 }
 
+/*get current sensor value where <device name>_<subtype>*/
 int DataBase::getVal(string name){
-	/*get current sensor value where <device name>_<subtype>*/
 	int result;
 	try {
 		pstmt = con->prepareStatement("select stateVal from Sensor where CONCAT(device,\"_\",sub_type) = ?");
 		pstmt->setString(1, name);
 		res = pstmt->executeQuery();
 		while (res->next()){
-			//changes.insert(pair<int, int>(res->getInt("id"),res->getInt("stateVal")));
 			result = res->getInt("stateVal");
 		}
 		delete pstmt;
@@ -161,10 +165,11 @@ int DataBase::getVal(string name){
 	return result;
 }
 
+/*get new value in case the state indicates a change in value
+(where current value differs from previous value)*/
 int DataBase::checkStateChange(){
 	changes.clear();/*remove old changes*/
 	try{
-		/*get value where current value differs from previous value*/
 		stmt = con->createStatement();
 		res = stmt->executeQuery("SELECT id, stateVal FROM Sensor WHERE stateVal != prevVal");
 		while (res->next()){
@@ -183,7 +188,8 @@ int DataBase::checkStateChange(){
 	}
 }
 
-void DataBase::sqlError(sql::SQLException e){/*output if errors occur*/
+/*output if errors occur*/
+void DataBase::sqlError(sql::SQLException e){
   	cerr << "CRIT, SQLException in " << __FILE__;
   	cerr << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
   	cerr << "CRIT, " << e.what();
@@ -191,6 +197,7 @@ void DataBase::sqlError(sql::SQLException e){/*output if errors occur*/
   	cerr << ", SQLState: " << e.getSQLState() << " )" << endl;
 }
 
+/*close connection savely*/
 void DataBase::closeConnection(void){
 	delete con;
 	delete stmt;

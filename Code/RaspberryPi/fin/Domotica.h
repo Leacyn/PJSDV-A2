@@ -39,10 +39,14 @@
   int loop();
   int setup();
 
-  /*start setup and loop*/
+  /*start setup and loop
+1. The main program starts with the setup
+2. Loop runs continiously
+Both defined in Domotica.cpp
+  */
   int main(int argc, char** argv){if(setup())return loop();else return 0;}
 
-  /*set up connection to database*/
+  /*Initialise class - set up connection to database*/
   DataBase sqlDB(DBPATH, USER, PASSWD, DB);
 
   int getCurrentTime();
