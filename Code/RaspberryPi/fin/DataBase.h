@@ -23,18 +23,24 @@
 class DataBase
 {
 	public:
-		std::map<int, int> changes;/*id,val*/
+		std::map<int, int> changes;							/*map (id, val) of changes in database made by website*/
+
+		DataBase(std::string path, std::string user, std::string password, std::string db); /*constructor*/
+
 		std::map<int, std::string> getTypes();
 		std::map<int, std::string> getNames();
-		DataBase(std::string path, std::string user, std::string password, std::string db);
+		int getVal(std::string name);
+		std::vector<struct deviceData> getDeviceData();
+
 		void closeConnection(void);
 		int checkStateChange();
+
 		void setStateValSensor(int id, int value);
 		void setPrevValSensor(int id, int value);
 		void setSensorValue(int id, int value);
+
 		void insertIntoSleep(int value);
-		int getVal(std::string name);
-		std::vector<struct deviceData> getDeviceData();
+		void insertIntoLog(std::string dev, std::string state);
 	protected:
 		std::map<int, std::string> types;
 		std::map<int, std::string> names;

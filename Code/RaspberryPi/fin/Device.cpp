@@ -11,31 +11,31 @@
 
 Device::Device(const char *wemosAddress, std::string Name, std::vector<int> ids): ServerAddress(wemosAddress), Client(wemosAddress,PORT), name(Name), sensorIDs(ids){
   std::map<int,int> tempmap;
-  for(int i:sensorIDs){
+  for(int i:sensorIDs){ /*set value is 0 for every id belonging to this device*/
     tempmap[i] = 0;
   }
   IO = tempmap;
-  std::clog << name << " connected" << std::endl;
+  std::cout << name << " initialised" << std::endl;
 }
 
 
 
-void Device::changeValue(int id, int value){
+void Device::changeValue(int id, int value){/*send value to actuator*/
   Client.sendWrite(id, value);
-  IO[id] = value;
+  IO[id] = value;/*update value table*/
 }
 
-std::map<int,int> Device::check(){
+std::map<int,int> Device::check(){/*check value of every sensor of current device*/
   std::map<int, int> returnmap;
-  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){
-    int check = Client.sendRead(i->first);
+  for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){/*for every id of current device*/
+    int check = Client.sendRead(i->first);/*send read request*/
     if(check != IO[i->first]){
-      IO[i->first] = check;
-      std::clog << "received change: " << IO[i->first] << std::endl; 
+      IO[i->first] = check;/*update value table for every change*/
+      std::clog << "received change: " << IO[i->first] << std::endl;
       returnmap[i->first] = check;
     }
   }
-  return returnmap;
+  return returnmap;/*return map (id, val) with changes only*/
 }
 
 int Device::getValue(int id){

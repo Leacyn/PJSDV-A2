@@ -6,17 +6,13 @@
   Stijn van Es 17018498
   ----------------------------------*/
 
-int startedSitting=0;
-int sitting = 0;
-int fridgeOpen = 0;
-int fridgeOpeningTime =0;
-int tooLong = 0;
-int timeOn = 0;
+
 
 using namespace std;
 
 
-map<string, int> logic(map<string, int> IO){
+map<string, int> /*Domotica::*/logic(map<string, int> IO){/*execute logic on IO map (name, value)*/
+
   int currentTime = getCurrentTime();/*Get current time in seconds since 00:00*/
 
   if ((currentTime > 22*60*60) && (currentTime < (22*60*60)+30)){ /*If current between 22:00 and 22:00:30 turn light off*/

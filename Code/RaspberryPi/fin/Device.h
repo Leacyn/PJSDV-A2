@@ -16,16 +16,6 @@
 #include <iostream>
 
 #include "TCP.h"
-// #include "Classes/Default"
-
-// #include "Classes/Bed.h"
-// #include "Classes/Chair.h"
-// #include "Classes/Column.h"
-// #include "Classes/Door.h"
-// #include "Classes/Lamp.h"
-// #include "Classes/Fridge.h"
-// #include "Classes/Wall.h"
-
 
 class Device{
 
@@ -35,13 +25,11 @@ public:
   std::map<int,int> check();
   int getValue(int id);
 private:
-  //std::map<int, std::string> idType;
   std::map<int, int> IO;
   std::vector<int> sensorIDs;
   const char* ServerAddress;
   TCP Client;
   std::string name;
-  //std::map<int, int> checkLogic();
 };
 
 #endif

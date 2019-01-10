@@ -6,6 +6,9 @@
   Stijn van Es 17018498
 ----------------------------------*/
 
+// #ifndef DOMOTICA_H
+// #define DOMOTICA_H
+
 /* C++ includes */
 #include <stdlib.h>
 #include <iostream>
@@ -19,7 +22,7 @@
 #include "DataBase.h"
 
 /*Define SQL login data*/
-#define PATH "tcp://127.0.0.1:3306"
+#define DBPATH "tcp://127.0.0.1:3306"
 #define USER "editor"
 #define PASSWD "100%Domotics"
 #define DB "domotics"
@@ -27,17 +30,36 @@
 #define OFF 0
 #define ON 1
 
-//DataBase sqlDB;
-std::map<int, Device*> deviceIDs;    /*id, device*/
-std::map<std::string, Device*> devices;   /*name, device*/
-std::map<std::string, int> allChanges;         /*subType, value*/
+// class Domotica{
+// protected:
+  std::map<int, Device*> deviceIDs;         /*id, device*/
+  std::map<std::string, Device*> devices;   /*name, device*/
+  std::map<std::string, int> allChanges;    /*subType, value*/
 
+  int loop();
+  int setup();
 
-int getCurrentTime();
-void logSleep(int val);
-void saveChanges(std::map<int, int> changes);
-void execute(std::map<std::string, int> IO);
-int toggle(std::string name);
-std::map<std::string, int> logic(std::map<std::string, int> IO);
+  /*start setup and loop*/
+  int main(int argc, char** argv){if(setup())return loop();else return 0;}
 
-//#include "Logic.h"
+  /*set up connection to database*/
+  DataBase sqlDB(DBPATH, USER, PASSWD, DB);
+
+  int getCurrentTime();
+  void logSwitch(std::string dev, std::string state);
+  void logSleep(int val);
+  void saveChanges(std::map<int, int> changes);
+  void execute(std::map<std::string, int> IO);
+  int toggle(std::string name);
+  std::map<std::string, int> logic(std::map<std::string, int> IO);
+
+  /*logic variables*/
+  int startedSitting=0;
+  int sitting = 0;
+  int fridgeOpen = 0;
+  int fridgeOpeningTime =0;
+  int tooLong = 0;
+  int timeOn = 0;
+//};
+
+// #endif

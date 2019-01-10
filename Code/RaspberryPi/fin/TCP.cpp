@@ -32,6 +32,7 @@ TCP::TCP(const char  *address, int portNumber){
   if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
   	cerr << endl << "CRIT, Connection Failed" << endl;
   }
+	clog << " connected" << endl;
 }
 
 void TCP::sendMsg(int id, std::string cmd, int Value){
