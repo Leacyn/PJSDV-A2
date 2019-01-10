@@ -11,6 +11,11 @@
 
 using namespace std;
 
+/*Initialise class - set up connection to database*/
+DataBase sqlDB(DBPATH, USER, PASSWD, DB);
+
+int main(int argc, char** argv){if(setup())return loop();else return 0;}
+
 /*setup initializes all devices specified in database*/
 int /*Domotica::*/setup(){
 	cout << endl;

@@ -44,10 +44,7 @@
 2. Loop runs continiously
 Both defined in Domotica.cpp
   */
-  int main(int argc, char** argv){if(setup())return loop();else return 0;}
 
-  /*Initialise class - set up connection to database*/
-  DataBase sqlDB(DBPATH, USER, PASSWD, DB);
 
   int getCurrentTime();
   void logSwitch(std::string dev, std::string state);
