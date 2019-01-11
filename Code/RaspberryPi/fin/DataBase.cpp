@@ -5,7 +5,7 @@
   Stijn van Es 17018498
 ----------------------------------*/
 /*
-Requirement is that the database has been defined and is initialised
+A defined and initialized MySQL database is required
 */
 #include "DataBase.h"
 
