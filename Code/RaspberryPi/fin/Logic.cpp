@@ -2,16 +2,13 @@
   Logic definition
   version: 1.0
   contributors:
-  Vincent Geers 13009672
   Stijn van Es 17018498
   ----------------------------------*/
-
-
 
 using namespace std;
 
 /*execute logic on IO map (name, value)*/
-map<string, int> /*Domotica::*/logic(map<string, int> IO){
+map<string, int> Domotica::logic(map<string, int> IO){
 
   int currentTime = getCurrentTime();/*Get current time in seconds since 00:00*/
 
@@ -41,18 +38,23 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){
       logSwitch("chair", "not sitting");
       sitting = 0;
       startedSitting = 0;
-      IO["chair_vibration"]=OFF;
+      IO["chair_vibration"]= OFF;
     }
   }
 
 /*If someone sits for more than 15 min in the chair it starts vibrating*/
-  if (sitting && ((time(0) - startedSitting) > (20 * 60))){
-    IO["chair_vibration"]=ON;
+  if (sitting && ((time(0) - startedSitting) > (20 ))){
+    IO["chair_vibration"]=2;
   }
 
 /*Toggle bed led on switch press*/
   if (IO.count("bed_switch")>0){
     IO["bed_led"]=toggle("bed_led");
+  }
+
+/*Toggle chair led on switch press*/
+  if (IO.count("chair_switch")>0){
+    IO["chair_led"]=toggle("chair_led");
   }
 
 /*turn room lamp on when motion is detected*/
@@ -69,7 +71,11 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){
 
 /*Enable buzzer when smoke is detected*/
   if (IO.count("column_smoke")>0){
-    IO["column_buzzer"]=IO["column_smoke"];
+    if (IO["column_smoke"] == 4||IO["column_smoke"] == 3) {
+      IO["column_buzzer"]=OFF;
+    } else {
+      IO["column_buzzer"]=ON;
+    }
   }
 
 /*Open door when switch (outside) is pressed*/
@@ -105,7 +111,7 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){
       logSwitch("fridge", "closed");
       fridgeOpen = 0;
       tooLong = 0;
-      IO["column_buzzer"]=OFF;
+      IO["column_led"]=OFF;
     }
   }
 
@@ -113,10 +119,34 @@ map<string, int> /*Domotica::*/logic(map<string, int> IO){
   if (!tooLong && fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 ))){
     tooLong=1;
     //clog << "open for too long \n";
-    IO["column_buzzer"]=ON;
+    IO["column_led"]=ON;
   }
 
+/*If LDR output is too high than close curtains. If LDR output is too low than power led*/
+  if (IO.count("wall_LDR")>0){
+    if (flagLDRwindow){
+      if (IO["wall_LDR"] < 8){
+        flagLDRwindow = 0;
+        IO["wall_window"]=OFF;
+      }
+    } else if (IO["wall_LDR"] >= 8){
+        IO["wall_window"]=ON;
+        flagLDRwindow = 1;
+    }
+    if (flagLDRled){
+      if (IO["wall_LDR"] > 3){
+        flagLDRled = 0;
+        IO["wall_led"]=OFF;
+      }
+    } else if (IO["wall_LDR"] <= 3){
+        IO["wall_led"]=7;
+        flagLDRled = 1;
+    }
+  }
 
+  if (IO.count("wall_dimmer")>0 && IO["wall_dimmer"]!=1){
+    IO["wall_led"] = IO["wall_dimmer"];
+  }
 
 /* volgende statements:
 

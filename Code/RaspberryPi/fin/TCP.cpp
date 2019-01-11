@@ -90,6 +90,6 @@ void TCP::sendWrite(int id, int val){
 int TCP::sendRead(int id){
 	sendMsg(id, "r", 0);
 	receiveJson();
-	clog << msg.value<<", "<<id << endl;
+	//clog << msg.value<<", "<<id << endl;
 	return msg.value;
 }

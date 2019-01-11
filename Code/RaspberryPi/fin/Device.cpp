@@ -32,7 +32,7 @@ std::map<int,int> Device::check(){
     int check = Client.sendRead(i->first);/*send read request*/
     if(check != IO[i->first]){
       IO[i->first] = check;/*update value table for every change*/
-      std::clog << "received change: " << IO[i->first] << std::endl;
+      std::clog << "received change: " << IO[i->first] << ", " << i->first << std::endl;
       returnmap[i->first] = check;
     }
   }

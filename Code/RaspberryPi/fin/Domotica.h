@@ -6,8 +6,8 @@
   Stijn van Es 17018498
 ----------------------------------*/
 
-// #ifndef DOMOTICA_H
-// #define DOMOTICA_H
+#ifndef DOMOTICA_H
+#define DOMOTICA_H
 
 /* C++ includes */
 #include <stdlib.h>
@@ -21,30 +21,21 @@
 #include "Device.h"
 #include "DataBase.h"
 
-/*Define SQL login data*/
-#define DBPATH "tcp://127.0.0.1:3306"
-#define USER "editor"
-#define PASSWD "100%Domotics"
-#define DB "domotics"
 
 #define OFF 0
 #define ON 1
 
-// class Domotica{
-// protected:
+class Domotica{
+public:
+  Domotica(std::string path, std::string user, std::string pass, std::string db);
+  int loop();
+  int setup();
+protected:
   std::map<int, Device*> deviceIDs;         /*id, device*/
   std::map<std::string, Device*> devices;   /*name, device*/
   std::map<std::string, int> allChanges;    /*subType, value*/
 
-  int loop();
-  int setup();
-
-  /*start setup and loop
-1. The main program starts with the setup
-2. Loop runs continiously
-Both defined in Domotica.cpp
-  */
-
+  DataBase sqlDB;
 
   int getCurrentTime();
   void logSwitch(std::string dev, std::string state);
@@ -61,6 +52,8 @@ Both defined in Domotica.cpp
   int fridgeOpeningTime =0;
   int tooLong = 0;
   int timeOn = 0;
-//};
+  int flagLDRled = 0;
+  int flagLDRwindow = 0;
+};
 
-// #endif
+#endif
