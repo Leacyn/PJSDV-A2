@@ -1,3 +1,9 @@
+/*-----------------------------------
+  Main definition
+  version: 1.0
+  contributors:
+  Stijn van Es 17018498
+  ----------------------------------*/
 #include "Domotica.h"
 
 /*Define SQL login data*/
@@ -12,7 +18,7 @@
 Both defined in Domotica
 */
 int main(int argc, char** argv){
-  Domotica dom(DBPATH, USER, PASSWD, DB);
+  Domotica dom(DBPATH, USER, PASSWD, DB);/*Create 'Domotica' object and send mySQL login data*/
   if(dom.setup())
     return dom.loop();
   else

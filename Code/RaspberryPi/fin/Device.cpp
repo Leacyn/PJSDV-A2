@@ -25,7 +25,7 @@ void Device::changeValue(int id, int value){
   IO[id] = value;/*update value table*/
 }
 
-/*check value of every sensor of current device*/
+/*check value for every sensor of current device*/
 std::map<int,int> Device::check(){
   std::map<int, int> returnmap;
   for(std::map<int, int>::iterator i = IO.begin(); i!=IO.end(); ++i){/*for every id of current device*/

@@ -20,12 +20,11 @@
 Device is a class which specifies the device and its IO. Through this class, a connection is set up with each wemos
 */
 class Device{
-
 public:
   Device(const char *wemosAddress,std::string Name, std::vector<int> ids);
   void changeValue(int id, int value);
-  std::map<int,int> check();
   int getValue(int id);
+  std::map<int,int> check();
 private:
   std::map<int, int> IO;
   std::vector<int> sensorIDs;

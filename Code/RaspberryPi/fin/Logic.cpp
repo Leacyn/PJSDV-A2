@@ -118,7 +118,6 @@ map<string, int> Domotica::logic(map<string, int> IO){
 /*If fridge door is open for more than 5 minutes start buzzer*/
   if (!tooLong && fridgeOpen && ((time(0) - fridgeOpeningTime) > (5 ))){
     tooLong=1;
-    //clog << "open for too long \n";
     IO["column_led"]=ON;
   }
 
@@ -144,30 +143,10 @@ map<string, int> Domotica::logic(map<string, int> IO){
     }
   }
 
+/*Set light intensity of wall led strip based on dimmer*/
   if (IO.count("wall_dimmer")>0 && IO["wall_dimmer"]!=1){
     IO["wall_led"] = IO["wall_dimmer"];
   }
 
-/* volgende statements:
-
-B = Bedschakelaar	  actuatoren/outputs
-D = deurswitch	       B' = bedLED
-I = interface	         D' = DeurLED
-L = ldr	               DS = DeurServo
-M = beweginssensor	   M' = Venster
-R = rookmelder      	 S' = SchemerLed
-S = druksensor stoel	 Z' = Zuilzoemer
-Z = zuilswitch
-
-Actief	     ALS
-BedLed	    B!DI!L!M!R!Z
-DeurLed	    !BDI!L!M!R!Z
-DeurServeo	!B!DI!L!M!R!Z
-Venster	    !B!DIL!M!R!Z
-SchemerLED	!B!DI!LM!R!Z
-Zoemer    	!B!DI!L!MR!Z
-alle LEDS	  !B!DI!L!M!RZ
-
-*/
   return IO;
 }

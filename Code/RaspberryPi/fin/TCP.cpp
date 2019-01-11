@@ -9,6 +9,7 @@
 
 using namespace std;
 
+/*Constructor, setup connection to endpoint*/
 TCP::TCP(const char  *address, int portNumber){
 	/*allocate memory for the recieving data buffer*/
 	buffer = (char*)malloc(512);
@@ -38,27 +39,22 @@ TCP::TCP(const char  *address, int portNumber){
 }
 
 
-
+/*Send message {id, cmd, val} and wait for verification from endpoint*/
 void TCP::sendMsg(int id, std::string cmd, int Value){
-	jBuffer.clear(); // clear json buffer for more stable conversion
-	string smsg= encode(id,cmd,Value); // encode parameters to a json string
+	jBuffer.clear(); /*clear json buffer for more stable conversion*/
+	string smsg= encode(id,cmd,Value); /*encode parameters to a json string*/
 	char *message = new char[smsg.length()];
-	strcpy(message, smsg.c_str()); // copy the encoded string to message
-	send(sock , message , strlen(message) , 0 ); //send message to device
-	receiveJson();
-	// check if message arrived correctly
-	//cout << endl << "(" << id << " " << msg.ID << ")" << "(" << cmd << " " <<  msg.command << ")" << "(" << Value << " " << msg.value << ")" << endl;
-	// if(id == msg.ID && !(cmd.compare(msg.command)) && Value == msg.value){
-	// 	//cout << " Message varified" << endl;
-	// }
-	delete message; // clean up memory
+	strcpy(message, smsg.c_str()); /*copy the encoded string to message*/
+	send(sock , message , strlen(message) , 0 ); /*send message to device*/
+	receiveJson();/*check if message arrived correctly*/
+	delete message; /*clean up memory*/
 }
 
+/*recieve tcp data, parce it through the json buffer and put the data in the msg struct for later use*/
 std::string TCP::receiveJson(void){
-	/*recieve tcp data, parce it through the json buffer and put the data in the msg struct for later use*/
 	jBuffer.clear();
-	recv(sock, buffer,128, 0);//recieve data from tcp the socket and push to buffer
-	JsonObject& message = jBuffer.parseObject((string)buffer);// parsing json object
+	recv(sock, buffer,128, 0);/*recieve data from tcp the socket and push to buffer*/
+	JsonObject& message = jBuffer.parseObject((string)buffer);/*parsing json object*/
 	if(!message.success()) cerr << "parserfail\n";
 	msg.ID = message.get<signed int>("id");
 	msg.command =  message.get<std::string>("command");
@@ -67,9 +63,8 @@ std::string TCP::receiveJson(void){
 	return buffer;
 }
 
-
+/*take the parameters, make a json object out of it, and return it via a std::string.*/
 string TCP::encode(int id, std::string command, int value){
-	// take the parameters, make a json object out of it, and return it via a std::string.
 	string buffer;
 	JsonObject& message = jBuffer.createObject();
 	message["id"] = id;
@@ -82,17 +77,15 @@ string TCP::encode(int id, std::string command, int value){
 	return buffer;
 }
 
+/*interface function to more easily determine read/write messages*/
 void TCP::sendWrite(int id, int val){
-	//interface function to more easily determine read/write messages
 	sendMsg(id,"w", val);
 	clog << "send {w, "  << id << ", " << val << "}" << endl;
 }
 
-
+/*interface function to more easily determine read/write messages*/
 int TCP::sendRead(int id){
-	//interface function to more easily determine read/write messages
 	sendMsg(id, "r", 0);
 	receiveJson();
-	//clog << msg.value<<", "<<id << endl;
 	return msg.value;
 }

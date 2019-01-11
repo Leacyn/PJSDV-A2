@@ -1,5 +1,5 @@
 /*-----------------------------------
-  Domotica main definition
+  Domotica class definition
   version: 1.0
   contributors:
   Vincent Geers 13009672
@@ -55,7 +55,7 @@ int Domotica::loop(){
 	return 0;
 }
 
-/*Compile a map (alllChanges) with all changes from every device */
+/*Compile a map (allChanges) with all changes from every device */
 void Domotica::saveChanges(map<int, int> changes){
 	map<int, string> names = sqlDB.getNames();
   for(map<int, int>::iterator i = changes.begin(); i!=changes.end(); ++i){
@@ -70,7 +70,7 @@ void Domotica::execute(map<string, int> IO){
 	for(map<int, string>::iterator i = names.begin(); i!=names.end(); ++i){/*for each existing name in database*/
 		if (IO.count(i->second)>0){/*if id corresponding to name occures in IO map*/
 			if (sqlDB.getTypes()[i->first]=="actuator"){
-				deviceIDs[i->first]->changeValue(i->first, IO[i->second]);/*send new value to device where id belongs to if id belongs to an actuator*/
+				deviceIDs[i->first]->changeValue(i->first, IO[i->second]);/*send new value to device where id belongs to an actuator*/
 			}
 			sqlDB.setSensorValue(i->first, IO[i->second]);/*set new value to database*/
 		}
