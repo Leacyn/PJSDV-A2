@@ -9,22 +9,24 @@
 
 using namespace std;
 
-//message
-
-
 TCP::TCP(const char  *address, int portNumber){
+	/*allocate memory for the recieving data buffer*/
 	buffer = (char*)malloc(512);
+	/*assign given values to private members*/
 	port = portNumber;
 	serverAddress = address;
+
 	clog << endl << "connecting to " << serverAddress << ", " << port << endl;
-  if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+	/*create the socket for the connection to the devices */
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
   	cerr << endl << "CRIT, Socket creation error" << endl;
   }
+	/*set memory to the values*/
   memset(&serv_addr, '0', sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
   serv_addr.sin_port = htons(port);
 
-  /* Convert IPv4 and IPv6 addresses from text to binary form */
+  /* Convert IPv4 addresses from text to binary form */
   if(inet_pton(AF_INET, serverAddress, &serv_addr.sin_addr)<=0){
   	cerr << endl << "CRIT, Invalid address / Address not supported" << endl;
   }
@@ -35,19 +37,15 @@ TCP::TCP(const char  *address, int portNumber){
 	clog << " connected" << endl;
 }
 
+
+
 void TCP::sendMsg(int id, std::string cmd, int Value){
 	jBuffer.clear();
 	string smsg= encode(id,cmd,Value);
-	//cout << "LOG, " << smsg;
 	char *message = new char[smsg.length()];
 	strcpy(message, smsg.c_str());
 	send(sock , message , strlen(message) , 0 );
-	//cout << "Message sent";
 	receiveJson();
-	//cout << endl << "(" << id << " " << msg.ID << ")" << "(" << cmd << " " <<  msg.command << ")" << "(" << Value << " " << msg.value << ")" << endl;
-	// if(id == msg.ID && !(cmd.compare(msg.command)) && Value == msg.value){
-	// 	//cout << " Message varified" << endl;
-	// }
 
 	delete message;
 }
