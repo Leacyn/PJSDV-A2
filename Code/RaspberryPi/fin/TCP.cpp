@@ -94,9 +94,4 @@ int TCP::sendRead(int id){
 	receiveJson();
 	clog << msg.value<<", "<<id << endl;
 	return msg.value;
-	// if (id==2){
-	// 	return 1;
-	// } else {
-	// 	return 0;
-	// }
 }
