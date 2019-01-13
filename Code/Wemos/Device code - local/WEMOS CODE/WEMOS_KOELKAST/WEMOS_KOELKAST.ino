@@ -3,7 +3,7 @@
   version: 0.4
   contributors: 2
   Jordy van der Wijngaard 12073997
-  Willem
+  Willem van der Gaag 13009672
 ----------------------------------*/
 
 #include <Wire.h>
@@ -14,17 +14,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*defining port and pin numbers for TCP connection*/
 #define PORT 54000
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+/*defining WPA login data for WiFi connection.*/
 char* network = "MichielDeRouter";
 char* pass =  "100%Domotica";
+
 String sending = "";
 String returnval = "";
-
 WiFiServer wifiServer(PORT);
 StaticJsonBuffer<200> jsonBuffer;
+
+/*defining static ip information.*/
 IPAddress ip(10, 5, 5, 106);
 IPAddress GW(10, 5, 5, 1);
 IPAddress netmask(255, 255, 255, 0);
@@ -38,17 +42,17 @@ struct Data {
   int id;
   String cmd;
   int state;
-}; 
+};
 
 struct Data Ontvangst, Switch, tempHeatsink, tempKoelkast;
 
 void initOutputs();
-void leesTemp(); 
-void wijzigVentilator(int); 
-void wijzigKoeling(int); 
-void leesSwitch(); 
+void leesTemp();
+void wijzigVentilator(int);
+void wijzigKoeling(int);
+void leesSwitch();
 
-void setup(void) 
+void setup(void)
 {
   Wire.begin();
   Serial.begin(9600);
@@ -68,12 +72,12 @@ void setup(void)
   Serial.println(WiFi.localIP());
 
   wifiServer.begin();
-  
-  initOutputs();   
+
+  initOutputs();
   initSensoradres();
 }
 
-void loop(void) 
+void loop(void)
 {
   Wire.begin();
   jsonBuffer.clear();
@@ -83,19 +87,19 @@ void loop(void)
   }
 
   WiFiClient pi = wifiServer.available();
-  
+
   leesSwitch();
-  
+
   if (pi) {
     Serial.println("client connected");
     while (pi.connected()) {
       if (pi.available() > 0) {
-        
+
         Serial.println("recieving:");
         JsonObject& temp = jsonBuffer.parseObject(pi);
-        
+
         if (!temp.success())Serial.println("error parsing");
-        
+
         pi.flush();
         temp.printTo(returnval);
 
@@ -107,17 +111,17 @@ void loop(void)
       if(returnval.length() > 5){
       pi.print(returnval);
       }
-      
+
       returnval = "";
 
        if (sending.length() > 5) {
           pi.print(sending);
           sending = "";
         }
-      
+
       jsonBuffer.clear();
     }
-    
+
     Serial.println("client disconnected");
 
   }
@@ -138,21 +142,21 @@ void initOutputs()
 }
 
 void leesTemp()
-{ 
+{
   Wire.beginTransmission(0x36);             // Temperatuur sensoren initialisatie
   Wire.write(byte(0xA2));
   Wire.write(byte(0x03));
   Wire.endTransmission();
-    
-  //Read analog 10bit inputs 0&1            
+
+  //Read analog 10bit inputs 0&1
   Wire.requestFrom(0x36, 4);
   unsigned int anin0 = Wire.read() & 0x03;
   anin0 = anin0 << 8;                       // lees temperatuur koelkast
   anin0 = anin0 | Wire.read();
 
   tempHeatsink.state = anin0;
-  
-  unsigned int anin1 = Wire.read() & 0x03;    
+
+  unsigned int anin1 = Wire.read() & 0x03;
   anin1 = anin1 << 8;                        // lees temperatuur heatsink
   anin1 = anin1 | Wire.read();
 
@@ -165,12 +169,12 @@ void wijzigVentilator()
     Hiervoor geldt hetzelfde als de temperatuur sensoren. De activatie hiervan is afhankelijk van de temperatuursensoren dus
     kunnen we gewoon de Wemos dit laten doen.
    */
-  
+
   Wire.beginTransmission(0x38);       // ventilator initialisatie
   Wire.write(byte(0x03));
   Wire.write(byte(0x0F));
   Wire.endTransmission();
-  
+
   // Zet ventilator op HIGH
   Wire.beginTransmission(0x38);
   Wire.write(byte(0x01));
@@ -180,8 +184,8 @@ void wijzigVentilator()
 
 // Kijk naar deze functie!!
 void wijzigKoeling()
-{ 
-  digitalWrite(D5, Ontvangst.state);     // Zet koelelement state op basis van ontvangen data 
+{
+  digitalWrite(D5, Ontvangst.state);     // Zet koelelement state op basis van ontvangen data
 }
 
 void leesSwitch()

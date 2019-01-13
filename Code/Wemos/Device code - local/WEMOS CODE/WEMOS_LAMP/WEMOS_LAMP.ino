@@ -3,7 +3,7 @@
   version: 0.4
   contributors: 2
   Jordy van der Wijngaard 12073997
-  Willem
+  Willem van der Gaag 13009672
 ----------------------------------*/
 
 #include <FastLED.h>
@@ -23,13 +23,16 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+/*defining WPA login data for WiFi connection.*/
 char* network = "MichielDeRouter";
 char* pass =  "100%Domotica";
+
 String sending = "";
 String returnval = "";
-
 WiFiServer wifiServer(PORT);
 StaticJsonBuffer<200> jsonBuffer;
+
+/*defining static ip information.*/
 IPAddress ip(10, 5, 5, 103);
 IPAddress GW(10, 5, 5, 1);
 IPAddress netmask(255, 255, 255, 0);
@@ -43,7 +46,7 @@ struct Data {
   int id;
   String cmd;
   int state;
-}; 
+};
 
 CRGB leds[NUM_LEDS];
 
@@ -108,9 +111,9 @@ void loop() {
       if(returnval.length() > 5){
       pi.print(returnval);
       }
-      
+
       returnval = "";
-      
+
       if (sending.length() > 5) {
           pi.print(sending);
           sending = "";
@@ -182,8 +185,8 @@ void wijzigLed()
     leds[0] = CRGB::Gray;
     FastLED.show();
   }
-  else{  
-    leds[0] = CRGB::Black;  
+  else{
+    leds[0] = CRGB::Black;
     FastLED.show();         // lamp uit als er geen beweging is
   }
 }

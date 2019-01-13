@@ -3,7 +3,7 @@
   version: 0.4
   contributors: 2
   Jordy van der Wijngaard 12073997
-  Willem
+  Willem van der Gaag 13009672
 ----------------------------------*/
 
 #include <Wire.h>
@@ -23,13 +23,16 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+/*defining WPA login data for WiFi connection.*/
 char* network = "Jordy en Manouk";
 char* pass =  "gkTgbmvX3yfh";
+
 String sending = "";
 String returnval = "";
-
 WiFiServer wifiServer(PORT);
 StaticJsonBuffer<200> jsonBuffer;
+
+/*defining static ip information.*/
 IPAddress ip(192, 168, 178, 30);
 IPAddress GW(192, 168, 178, 1);
 IPAddress netmask(255, 255, 255, 0);
@@ -47,7 +50,7 @@ struct Data {
   int id;
   String cmd;
   int state;
-}; 
+};
 
 CRGB leds[NUM_LEDS];
 
@@ -73,7 +76,7 @@ void setup(void) {
   Serial.println(WiFi.localIP());
 
   wifiServer.begin();
-  
+
   pinMode(D0, INPUT);
   FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
   pinMode(D5, OUTPUT);
@@ -91,18 +94,18 @@ void loop(void) {
   }
 
   WiFiClient pi = wifiServer.available();
-  
+
   if (pi) {
     Serial.println("client connected");
-    
+
     while (pi.connected()) {
       if (pi.available()) {
-        
+
         Serial.println("receiving:");
         JsonObject& temp = jsonBuffer.parseObject(pi);
-        
+
         if (!temp.success())Serial.println("error parsing");
-        
+
         pi.flush();
         temp.printTo(returnval);
 
@@ -114,14 +117,14 @@ void loop(void) {
       if(returnval.length() > 5){
         pi.print(returnval);
       }
-      
+
       returnval = "";
-      
+
       if (sending.length() > 5) {
           pi.print(sending);
           sending = "";
         }
-        
+
       jsonBuffer.clear();
     }
     Serial.println("client disconnected");
@@ -130,16 +133,16 @@ void loop(void) {
 
 void wijzigLed()
 {
-  if (Ontvangst.state) {            
-    leds[0] = CRGB::White;               
+  if (Ontvangst.state) {
+    leds[0] = CRGB::White;
     leds[1] = CRGB::White;
     leds[2] = CRGB::White;
     FastLED.show();
   }
-  else{  
-    leds[0] = CRGB::Black;  
-    leds[1] = CRGB::Black;  
-    leds[2] = CRGB::Black;  
+  else{
+    leds[0] = CRGB::Black;
+    leds[1] = CRGB::Black;
+    leds[2] = CRGB::Black;
     FastLED.show();
   }
 
@@ -170,7 +173,7 @@ void leesLDR()
   Wire.endTransmission();
 
   //Read analog 10bit inputs 0&1
-  Wire.requestFrom(0x36, 4);                 
+  Wire.requestFrom(0x36, 4);
   unsigned int anin0 = Wire.read() & 0x03;
   anin0 = anin0 << 8;
   anin0 = anin0 | Wire.read();
@@ -190,7 +193,7 @@ void leesDimmer()
   Wire.endTransmission();
 
   //Read analog 10bit inputs 0&1
-  Wire.requestFrom(0x36, 4);                 
+  Wire.requestFrom(0x36, 4);
   unsigned int anin0 = Wire.read() & 0x03;
   anin0 = anin0 << 8;
   anin0 = anin0 | Wire.read();

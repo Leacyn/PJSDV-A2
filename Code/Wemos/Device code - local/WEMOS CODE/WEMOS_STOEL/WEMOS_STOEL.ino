@@ -3,7 +3,7 @@
   version: 0.4
   contributors: 2
   Jordy van der Wijngaard 12073997
-  Willem
+  Willem van der Gaag 13009672
 ----------------------------------*/
 
 #include <Wire.h>
@@ -18,13 +18,16 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+/*defining WPA login data for WiFi connection.*/
 char* network = "Jordy en Manouk";
 char* pass =  "gkTgbmvX3yfh";
+
 String sending = "";
 String returnval = "";
-
 WiFiServer wifiServer(PORT);
 StaticJsonBuffer<200> jsonBuffer;
+
+/*defining static ip information.*/
 IPAddress ip(192, 168, 178, 30);
 IPAddress GW(192, 168, 178, 1);
 IPAddress netmask(255, 255, 255, 0);
@@ -42,7 +45,7 @@ struct Data {
   int id;
   String cmd;
   int state;
-}; 
+};
 
 int currentState = 0;
 int prevState = 0;
@@ -68,7 +71,7 @@ void setup(void) {
   Serial.println(WiFi.localIP());
 
   wifiServer.begin();
-  
+
   pinMode(D0, INPUT);
 
   Led.state = 0;
@@ -88,18 +91,18 @@ void loop(void) {
   }
 
   WiFiClient pi = wifiServer.available();
-  
+
   if (pi) {
     Serial.println("client connected");
-    
+
     while (pi.connected()) {
       if (pi.available()) {
-        
+
         Serial.println("receiving:");
         JsonObject& temp = jsonBuffer.parseObject(pi);
-        
+
         if (!temp.success())Serial.println("error parsing");
-        
+
         pi.flush();
         temp.printTo(returnval);
 
@@ -111,14 +114,14 @@ void loop(void) {
       if(returnval.length() > 5){
         pi.print(returnval);
       }
-      
+
       returnval = "";
-      
+
       if (sending.length() > 5) {
           pi.print(sending);
           sending = "";
         }
-        
+
       jsonBuffer.clear();
     }
     Serial.println("client disconnected");
@@ -128,7 +131,7 @@ void loop(void) {
 void wijzigTril()
 {
   Tril.state = Ontvangst.state;
-  
+
   // Begin transmissie met leds
   Wire.beginTransmission(0x38);
   Wire.write(byte(0x03));
@@ -145,7 +148,7 @@ void wijzigTril()
 void wijzigLed()
 {
   Led.state = Ontvangst.state;
-  
+
   // Begin transmissie met leds
   Wire.beginTransmission(0x38);
   Wire.write(byte(0x03));
@@ -183,7 +186,7 @@ void leesSwitch()
     }
 
     prevState = currentState;
-    
+
   }
 
 
@@ -193,7 +196,7 @@ void leesDruksensor()
   Wire.write(byte(0xA2));
   Wire.write(byte(0x03));
   Wire.endTransmission();
-  
+
   //Read analog 10bit inputs 0&1
   Wire.requestFrom(0x36, 4);
   unsigned int anin0 = Wire.read() & 0x03;

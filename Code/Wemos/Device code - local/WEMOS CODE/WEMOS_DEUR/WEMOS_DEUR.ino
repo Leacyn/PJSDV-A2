@@ -3,7 +3,7 @@
   version: 0.4
   contributors: 2
   Jordy van der Wijngaard 12073997
-  Willem
+  Willem van der Gaag 13009672
 ----------------------------------*/
 
 #include <Wire.h>
@@ -19,13 +19,16 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+/*defining WPA login data for WiFi connection.*/
 char* network = "MichielDeRouter";
 char* pass =  "100%Domotica";
+
 String sending = "";
 String returnval = "";
-
 WiFiServer wifiServer(PORT);
 StaticJsonBuffer<200> jsonBuffer;
+
+/*defining static ip information.*/
 IPAddress ip(10, 5, 5, 107);
 IPAddress GW(10, 5, 5, 1);
 IPAddress netmask(255, 255, 255, 0);
@@ -58,7 +61,7 @@ void initSensoradres();
 int pos = 0;    // variable to store the servo position
 
 void setup() {
- 
+
   Wire.begin();
   Serial.begin(9600);
   WiFi.softAPdisconnect(true);
@@ -77,7 +80,7 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   wifiServer.begin();
-   
+
   initSensoradres();
 
   myservo.attach(D5);  // attaches the servo on pin 9 to the servo object
@@ -87,38 +90,38 @@ void loop() {
 
   Wire.begin();
   jsonBuffer.clear();
- 
+
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("Disconnected trying to reconnect:");
     reconnect();
   }
 
   WiFiClient pi = wifiServer.available();
-  
+
   if (pi) {
     Serial.println("client connected");
     while (pi.connected()) {
-    
+
       if (pi.available()) {
-        
+
         Serial.println("recieving: ");
         JsonObject& temp = jsonBuffer.parseObject(pi);
-        
+
         if (!temp.success())Serial.println("error parsing");
-        
+
         pi.flush();
         temp.printTo(returnval);
 
         temp.printTo(Serial);
         recieveObject(temp);
-        
+
         kiesSensor(); // bepaal waar de data naartoe moet
       }
 
       if(returnval.length() > 5){
       pi.print(returnval);
       }
-      
+
       returnval = "";
 
       if (sending.length() > 5) {
@@ -127,7 +130,7 @@ void loop() {
         }
       jsonBuffer.clear();
     }
-    
+
     Serial.println("client disconnected");
   }
 }
@@ -188,21 +191,21 @@ void kiesSensor()
 
 void wijzigServo()
 {
-  if (Ontvangst.state == 1) {                    
+  if (Ontvangst.state == 1) {
     for (pos = 82; pos >= -30; pos -= 1) {        // deur openen als knop aan de buitenkant wordt ingedrukt
       // in steps of 1 degree
-      myservo.write(pos);                        
+      myservo.write(pos);
       delay(10);
     }
   }
-  
+
    if(Ontvangst.state == 0)
    {
       for (pos = -30; pos <= 82; pos += 1) {        // deur sluiten na 5s
       //Switch.state = 0;
       leesSwitchbuit();
       myservo.write(pos);
-      }  
+      }
    }
 }
 // Nog doen!!
@@ -216,7 +219,7 @@ void leesSwitchbuit(){
   Wire.beginTransmission(0x38);                   // kijken of knop wordt ingedrukt
   Wire.write(byte(0x00));
   Wire.endTransmission();
-  
+
   Wire.requestFrom(0x38, 4);
   unsigned int answer = Wire.read();
 
@@ -232,7 +235,7 @@ void leesSwitchbuit(){
       }
     }
 
-    prevState = currentState;  
+    prevState = currentState;
 }
 
 //void leesSwitchbin()
@@ -241,13 +244,13 @@ void leesSwitchbuit(){
 //  Wire.beginTransmission(0x38);                   // kijken of knop wordt ingedrukt
 //  Wire.write(byte(0x00));
 //  Wire.endTransmission();
-//  
+//
 //  Wire.requestFrom(0x38, 4);
 //  unsigned int answer = Wire.read();
 //
 //  delay(20);
 //
-//  Switch.state = answer % 2; // convert uitgelezen waarde naar boolean //return deze naar PI  
+//  Switch.state = answer % 2; // convert uitgelezen waarde naar boolean //return deze naar PI
 //}
 
 String SendJson(struct Data temp) {
