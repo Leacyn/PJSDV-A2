@@ -46,7 +46,7 @@ int Domotica::loop(){
       }
     }
     for(map<string, Device*>::iterator it = devices.begin(); it!=devices.end(); ++it){/*check changesfor each device*/
-			saveChanges((it->second)->check());/*Compile a map (alllChanges) with all changes from every device */
+			saveChanges((it->second)->check());/*Compile a map (allChanges) with all changes from every device */
 		}
 		execute(logic(allChanges));/*execute all logic on the current changes and send changes to device*/
 		allChanges.clear();
