@@ -73,8 +73,12 @@ map<string, int> Domotica::logic(map<string, int> IO){
   if (IO.count("column_smoke")>0){
     if (IO["column_smoke"] == 4||IO["column_smoke"] == 3) {
       IO["column_buzzer"]=OFF;
+      // trillen uit
+      IO["chair_vibration"]=0;
     } else {
       IO["column_buzzer"]=ON;
+      // trillen aan
+      IO["chair_vibration"]=2;
     }
   }
 
@@ -95,8 +99,12 @@ map<string, int> Domotica::logic(map<string, int> IO){
   }
 
 /*Log sleep pattern*/
-  if (IO.count("bed_pressure")>0){
+  if (IO.count("bed_pressure")>15){
     logSleep(IO["bed_pressure"]);
+    IO["wall_window"]=ON;
+  }
+  else{
+  	IO["wall_window"]=OFF;
   }
 
 /*Check if fridge door is open if so, set timer, log status*/
@@ -106,12 +114,26 @@ map<string, int> Domotica::logic(map<string, int> IO){
       logSwitch("fridge", "open");
       fridgeOpen = 1;
       fridgeOpeningTime = time(0);
+      
+      // deur open als koelkast open is
+      IO["door_servo"]=ON;
+      
+      
     } else if (IO["fridge_door_switch"]){
       IO["fridge_cooling"] = 1;
       logSwitch("fridge", "closed");
       fridgeOpen = 0;
       tooLong = 0;
       IO["column_led"]=OFF;
+      
+      //deur dicht
+      IO["door_servo"]=OFF;
+    }
+    // state deur doorgeven
+    if (IO["door_servo"]){
+      logSwitch("door", "open");
+    } else {
+      logSwitch("door", "closed");
     }
   }
 
@@ -147,6 +169,8 @@ map<string, int> Domotica::logic(map<string, int> IO){
   if (IO.count("wall_dimmer")>0 && IO["wall_dimmer"]!=1){
     IO["wall_led"] = IO["wall_dimmer"];
   }
+  
+
 
   return IO;
 }

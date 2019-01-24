@@ -67,11 +67,7 @@ void setup() {
   /*begin met het starten van de seriele verbinding, het starten van de wire library en het starten van de wifi verbinding*/
   Wire.begin();
   Serial.begin(9600);
-  while(1)
-  {
-    leesSwitchbin();
-    Serial.print("/n");
-  }
+
   WiFi.softAPdisconnect(true);
   WiFi.disconnect(true);
   WiFi.begin(network, pass);

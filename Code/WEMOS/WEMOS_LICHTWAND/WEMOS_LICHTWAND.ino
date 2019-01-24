@@ -23,7 +23,7 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
-*defining WPA login data for WiFi connection.*/
+/*defining WPA login data for WiFi connection.*/
 char* network = "MichielDeRouter"; // SSID
 char* pass =  "100%Domotica";      // Wachtwoord
 
