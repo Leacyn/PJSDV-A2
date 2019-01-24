@@ -99,10 +99,12 @@ map<string, int> Domotica::logic(map<string, int> IO){
   }
 
 /*Log sleep pattern*/
-  if (IO.count("bed_pressure")>15){
+  if (IO.count("bed_pressure")>0){
     logSleep(IO["bed_pressure"]);
+    // wand aan
     IO["wall_window"]=ON;
   }
+  
   else{
   	IO["wall_window"]=OFF;
   }
